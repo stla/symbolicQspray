@@ -1,0 +1,27 @@
+Package: symbolicQspray
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: GPL-3
+URL: https://github.com/stla/symbolicQspray
+BugReports: https://github.com/stla/symbolicQspray/issues
+Depends:
+    ratioOfQsprays
+Imports: 
+    Rcpp,
+    methods,
+    gmp,
+    utils
+LinkingTo: 
+    BH,
+    qspray,
+    ratioOfQsprays
+    Rcpp,
+    RcppArmadillo
+    RcppCGAL
+Remotes: stla/qspray, stla/ratioOfQsprays
+Encoding: UTF-8
+RoxygenNote: 7.3.1
+SystemRequirements: C++17, gmp, mpfr
