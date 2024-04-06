@@ -22,7 +22,7 @@
 #' X1 <- Qlone(1)
 #' X2 <- Qlone(2)
 #' X3 <- Qlone(3)
-#' Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3
+#' ( Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3 )
 #' ( qspray <- evalSymbolicQspray(Qspray, a = c(2, 3)) )
 #' ( roq <- evalSymbolicQspray(Qspray, X = c(4, 3, 2)) )
 #' evalSymbolicQspray(Qspray, a = c(2, 3), X = c(4, 3, 2))
@@ -37,6 +37,11 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
       coeffs = as.character(coeffs)
     )
     if(is.null(X)) {
+      if(is.null(attr(Qspray, "X"))) {
+        attr(qspray, "x") <- "X"
+      } else {
+        attr(qspray, "X") <- attr(Qspray, "X")
+      }
       qspray
     } else {
       evalQspray(qspray, values_re = X)
@@ -47,11 +52,16 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
     })
     scalars <- lapply(monomials, evalQspray, values_re = X)
     coeffs <- Qspray@coeffs
-    out <- as.ratioOfQsprays(0L)
+    roq <- as.ratioOfQsprays(0L)
     for(i in seq_along(scalars)) {
-      out <- out + scalars[[i]] * coeffs[[i]]
+      roq <- roq + scalars[[i]] * coeffs[[i]]
     }
-    out
+    if(is.null(attr(Qspray, "a"))) {
+      attr(roq, "x") <- "a"
+    } else {
+      attr(roq, "x") <- attr(Qspray, "a")
+    }
+    roq
   } else {
     Qspray
   }

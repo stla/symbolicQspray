@@ -16,17 +16,27 @@ setClass(
 setMethod(
   "show", "symbolicQspray",
   function(object) {
-    cat(showSymbolicQsprayCanonical("a", "X", " %//% ")(object), "\n")
+    a <- attr(object, "a")
+    if(is.null(a)) a <- "a"
+    X <- attr(object, "X")
+    if(is.null(X)) X <- "X"
+    quotientBar <- attr(object, "quotientBar")
+    if(is.null(quotientBar)) quotientBar <- " %//% "
+    cat(showSymbolicQsprayCanonical(a, X, quotientBar)(object), "\n")
   }
 )
 
 as_symbolicQspray_scalar <- function(x) {
+  attrs <- attributes(x)
   x <- as.ratioOfQsprays(x)
   if(x == 0L) {
-    new("symbolicQspray", powers = list(), coeffs = list())
+    Qspray <- new("symbolicQspray", powers = list(), coeffs = list())
   } else {
-    new("symbolicQspray", powers = list(integer(0L)), coeffs = list(x))
+    Qspray <-
+      new("symbolicQspray", powers = list(integer(0L)), coeffs = list(x))
   }
+  attributes(Qspray) <- attrs
+  Qspray
 }
 
 setGeneric(
@@ -123,22 +133,26 @@ setMethod(
   "-",
   signature(e1 = "symbolicQspray", e2 = "missing"),
   function(e1, e2) {
-    new(
+    Qspray <- new(
       "symbolicQspray",
       powers = e1@powers, coeffs = lapply(e1@coeffs, function(x) -x)
     )
+    attributes(Qspray) <- attributes(e1)
+    Qspray
   }
 )
 
 
 symbolicQsprayPower <- function(e1, n) {
   stopifnot(isPositiveInteger(n))
-  symbolicQspray_from_list(SymbolicQspray_power(
+  Qspray <- symbolicQspray_from_list(SymbolicQspray_power(
     e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list), as.integer(n)
   ))
+  attributes(Qspray) <- attributes(e1)
+  Qspray
 }
 symbolicQspray_arith_scalar <- function(e1, e2) {
-  switch(
+  Qspray <- switch(
     .Generic,
     "+" = e1 + as.symbolicQspray(e2),
     "-" = e1 - as.symbolicQspray(e2),
@@ -149,9 +163,11 @@ symbolicQspray_arith_scalar <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(Qspray) <- attributes(e1)
+  Qspray
 }
 scalar_arith_symbolicQspray <- function(e1, e2) {
-  switch(
+  Qspray <- switch(
     .Generic,
     "+" = as.symbolicQspray(e1) + e2,
     "-" = -as.symbolicQspray(e1) + e2,
@@ -160,6 +176,8 @@ scalar_arith_symbolicQspray <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(Qspray) <- attributes(e2)
+  Qspray
 }
 qspray_from_list <- function(x) {
   powers <- x[["powers"]]
@@ -200,7 +218,7 @@ symbolicQspray_from_list <- function(x) {
   }
 }
 symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
-  switch(
+  Qspray <- switch(
     .Generic,
     "+" = symbolicQspray_from_list(
       SymbolicQspray_add(
@@ -224,6 +242,8 @@ symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
       "Binary operator %s not defined for symbolicQspray objects.", dQuote(.Generic)
     ))
   )
+  attributes(Qspray) <- attributes(e2)
+  Qspray
 }
 setMethod(
   "Arith",
@@ -298,7 +318,9 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = SymbolicQspray_equality(e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list)),
+      "==" = SymbolicQspray_equality(
+        e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list)
+      ),
       "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for 'symbolicQspray' objects.", dQuote(.Generic)

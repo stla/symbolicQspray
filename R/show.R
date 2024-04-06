@@ -65,7 +65,16 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
 #' @importFrom ratioOfQsprays showRatioOfQspraysCanonical
 #'
 #' @note The \code{show} method for \code{symbolicQspray} objects uses
-#'   \code{showSymbolicQsprayCanonical("a", "X", " \%//\% ")}.
+#'   \code{showSymbolicQsprayCanonical("a", "X", " \%//\% ")} by default.
+#'   But this can be controlled as follows. If a
+#'   \code{symbolicQspray} object has an attribute \code{"a"}, then the value
+#'   of this attribute will replace \code{"a"} in the \code{show} output.
+#'   If it has a \code{"X"} attribute, then the value of this attribute will
+#'   replace \code{"X"}.
+#'   It is also possible to control the \code{quotientBar} argument by
+#'   assigning a \code{"quotientBar"} attribute to the \code{symbolicQspray}
+#'   object to be printed.
+#'
 #' @examples
 #' Qspray <- rSymbolicQspray()
 #' showSymbolicQsprayCanonical(quotientBar = " / ")
