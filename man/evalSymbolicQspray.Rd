@@ -30,7 +30,7 @@ a2 <- qlone(2)
 X1 <- Qlone(1)
 X2 <- Qlone(2)
 X3 <- Qlone(3)
-Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3
+( Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3 )
 ( qspray <- evalSymbolicQspray(Qspray, a = c(2, 3)) )
 ( roq <- evalSymbolicQspray(Qspray, X = c(4, 3, 2)) )
 evalSymbolicQspray(Qspray, a = c(2, 3), X = c(4, 3, 2))

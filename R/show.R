@@ -86,3 +86,28 @@ showSymbolicQsprayCanonical <- function(
     var = X, ...
   )
 }
+
+#' @title Set show options to a 'symbolicQspray' object
+#' @description Set some attributes to a \code{symbolicQspray} object
+#'   to control the way it is displayed. See#' the note in the
+#'   documentation of \code{\link[showSymbolicQsprayCanonical]} for details.
+#'
+#' @param Qspray a \code{symbolicQspray} object
+#' @param a value for the \code{"a"} attribute
+#' @param X value for the \code{"X"} attribute
+#' @param quotientBar value for the \code{"quotientBar"} attribute
+#'
+#' @return The input \code{symbolicQspray} object with new attributes.
+#' @export
+#'
+#' @examples
+#' ( Qspray <- rSymbolicQspray() )
+#' withAttributes(Qspray, a = "x", X = "A", quotientBar = " / ")
+withAttributes <- function(
+    Qspray, a = "a", X = "X", quotientBar = " %//% "
+  ) {
+  attr(Qspray, "a") <- a
+  attr(Qspray, "X") <- X
+  attr(Qspray, "quotientBar") <- quotientBar
+  Qspray
+}
