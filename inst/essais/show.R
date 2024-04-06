@@ -1,4 +1,4 @@
-showQspray <- function(showMonomial) {
+showQspray <- function(showMonomial, compact = FALSE) {
   function(qspray) {
     if(length(qspray@coeffs) == 0L) {
       return("0")
@@ -12,7 +12,9 @@ showQspray <- function(showMonomial) {
     # }
     coeffs <- gmp::as.bigq(qspray@coeffs)
     plus <- vapply(coeffs, function(x) x >= 0L, FUN.VALUE = logical(1L))
-    signs <- c(ifelse(plus[-1L], " + ", " - "), "")
+    plusSign <- ifelse(compact, "+", " + ")
+    minusSign <- ifelse(compact, "-", " - ")
+    signs <- c(ifelse(plus[-1L], plusSign, minusSign), "")
     abscoeffs <- as.character(abs(coeffs))
     terms <- paste0(
       ifelse(abscoeffs == "1", "", paste0(abscoeffs, "*")), monomials
@@ -25,20 +27,28 @@ showQspray <- function(showMonomial) {
   }
 }
 
-showMonomial <- function(exponents) {
-  paste0(vapply(seq_along(exponents), function(i) {
-    e <- exponents[i]
-    if(e != 0L) {
-      if(e == 1L) {
-        sprintf("x%d", i)
+showMonomialCanonical <- function(var) {
+  function(exponents) {
+    paste0(vapply(seq_along(exponents), function(i) {
+      e <- exponents[i]
+      if(e != 0L) {
+        if(e == 1L) {
+          sprintf("%s%d", var, i)
+        } else {
+          sprintf("%s%d^%d", var, i, e)
+        }
       } else {
-        sprintf("x%d^%d", i, e)
+        ""
       }
-    } else {
-      ""
-    }
-  }, character(1L)), collapse = "")
+    }, character(1L)), collapse = "")
+  }
 }
+
+showQsprayCanonical <- function(var, ...) {
+  showQspray(showMonomialCanonical(var), ...)
+}
+
+showMonomial <- showMonomialCanonical("a")
 
 qspray <- rQspray()
 
@@ -47,7 +57,7 @@ showQspray(showMonomial)(qspray+1)
 showQspray(showMonomial)(qspray+2)
 showQspray(showMonomial)(qspray-3)
 
-showRatioOfQsprays <- function(showQspray) {
+showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
   function(roq) {
     if(isQone(roq@denominator)) {
       sprintf(
@@ -55,18 +65,24 @@ showRatioOfQsprays <- function(showQspray) {
       )
     } else {
       sprintf(
-        "[ %s ]  %%/%%  [ %s ]",
+        "[ %s ]%s[ %s ]",
         showQspray(roq@numerator),
+        quotientBar,
         showQspray(roq@denominator)
       )
     }
   }
 }
 
+showRatioOfQspraysCanonical <- function(var, quotientBar = "  %//%  ", ...) {
+  showRatioOfQsprays(showQsprayCanonical(var), quotientBar = quotientBar, ...)
+}
+
+
 roq <- rRatioOfQsprays()
 showRatioOfQsprays(showQspray(showMonomial))(roq)
 
-showSymbolicQspray <- function(showRatioOfQsprays) {
+showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
   function(qspray) {
     if(length(qspray@coeffs) == 0L) {
       return("0")
@@ -77,9 +93,9 @@ showSymbolicQspray <- function(showRatioOfQsprays) {
         e <- x[i]
         if(e != 0L) {
           if(e == 1L) {
-            sprintf("X%d", i)
+            sprintf("%s%d", var, i)
           } else {
-            sprintf("X%d^%d", i, e)
+            sprintf("%s%d^%d", var, i, e)
           }
         } else {
           ""
@@ -106,3 +122,14 @@ showSymbolicQspray <- function(showRatioOfQsprays) {
 
 #Qspray <- rSymbolicQspray()
 showSymbolicQspray(showRatioOfQsprays(showQspray(showMonomial)))(Qspray)
+
+showSymbolicQsprayCanonical <- function(
+  a = "a", X = "X", quotientBar = "  %//%  ", ...
+) {
+  showSymbolicQspray(
+    showRatioOfQspraysCanonical(var = a, quotientBar = quotientBar),
+    var = X, ...
+  )
+}
+
+showSymbolicQsprayCanonical("a", "X")(Qspray)
