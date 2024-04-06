@@ -29,6 +29,7 @@ SystemRequirements: C++17, gmp, mpfr
 Collate: 
     'RcppExports.R'
     'creation.R'
+    'evaluation.R'
     'internal.R'
     'show.R'
     'symbolicQspray.R'

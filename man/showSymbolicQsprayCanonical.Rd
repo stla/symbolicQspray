@@ -4,7 +4,7 @@
 \alias{showSymbolicQsprayCanonical}
 \title{Print a 'symbolicQspray' object}
 \usage{
-showSymbolicQsprayCanonical(a = "a", X = "X", quotientBar = "  \%//\%  ", ...)
+showSymbolicQsprayCanonical(a = "a", X = "X", quotientBar = " \%//\% ", ...)
 }
 \arguments{
 \item{a}{a string, usually a letter, to denote the unindexed variables
@@ -27,7 +27,7 @@ Print a \code{symbolicQspray} object.
 }
 \note{
 The \code{show} method for \code{symbolicQspray} objects uses
-  \code{showSymbolicQsprayCanonical("a", "X", "  \%//\%  ")}.
+  \code{showSymbolicQsprayCanonical("a", "X", " \%//\% ")}.
 }
 \examples{
 Qspray <- rSymbolicQspray()

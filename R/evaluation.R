@@ -31,7 +31,11 @@
 evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
   if(!is.null(a)) {
     coeffs <- c_bigq(lapply(Qspray@coeffs, evalRatioOfQsprays, values_re = a))
-    qspray <- new("qspray", powers = Qspray@powers, coeffs = coeffs)
+    qspray <- new(
+      "qspray",
+      powers = Qspray@powers,
+      coeffs = as.character(coeffs)
+    )
     if(is.null(X)) {
       qspray
     } else {
