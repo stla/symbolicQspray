@@ -117,3 +117,28 @@ setMethod(
   }
 )
 
+
+#' @name symbolicQspray-unary
+#' @title Unary operators for 'symbolicQspray objects
+#' @description Unary operators for \code{symbolicQspray} objects.
+#' @aliases +,symbolicQspray,missing-method -,symbolicQspray,missing-method
+#' @param e1 object of class \code{symbolicQspray}
+#' @param e2 nothing
+#' @return A \code{symbolicQspray} object.
+setMethod(
+  "+",
+  signature(e1 = "symbolicQspray", e2 = "missing"),
+  function(e1, e2) e1
+)
+#' @rdname symbolicQspray-unary
+setMethod(
+  "-",
+  signature(e1 = "symbolicQspray", e2 = "missing"),
+  function(e1, e2) {
+    new(
+      "symbolicQspray",
+      powers = e1@powers, coeffs = lapply(e1@coeffs, function(x) -x)
+    )
+  }
+)
+
