@@ -8,6 +8,7 @@ License: GPL-3
 URL: https://github.com/stla/symbolicQspray
 BugReports: https://github.com/stla/symbolicQspray/issues
 Depends:
+    qspray,
     ratioOfQsprays
 Imports: 
     Rcpp,

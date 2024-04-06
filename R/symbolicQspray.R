@@ -31,3 +31,89 @@ setMethod(
     cat(showSymbolicQspray(object), "\n")
   }
 )
+
+as_symbolicQspray_scalar <- function(x) {
+  x <- as.ratioOfQsprays(x)
+  if(x == 0L) {
+    new("symbolicQspray", powers = list(), coeffs = list())
+  } else {
+    new("symbolicQspray", powers = list(integer(0L)), coeffs = list(x))
+  }
+}
+
+setGeneric(
+  "as.symbolicQspray", function(x) {
+    NULL
+  }
+)
+
+#' @name as.symbolicQspray
+#' @aliases as.symbolicQspray,character-method as.symbolicQspray,qspray-method as.symbolicQspray,ratioOfQsprays-method as.symbolicQspray,symbolicQspray-method as.symbolicQspray,numeric-method as.symbolicQspray,bigz-method as.symbolicQspray,bigq-method
+#' @exportMethod as.symbolicQspray
+#' @docType methods
+#' @title Coercion to a 'symbolicQspray' object
+#'
+#' @param x a \code{symbolicQspray} object or an object for which
+#'   \code{\link[ratioOfQsprays]{as.ratioOfQsprays}} is applicable
+#'
+#' @return A \code{symbolicQspray} object.
+#' @export
+#'
+#' @examples
+#' as.symbolicQspray(2)
+#' as.symbolicQspray("1/3")
+setMethod(
+  "as.symbolicQspray", "character",
+  function(x) {
+    as_symbolicQspray_scalar(x)
+  }
+)
+
+#' @rdname as.symbolicQspray
+setMethod(
+  "as.symbolicQspray", "qspray",
+  function(x) {
+    as_symbolicQspray_scalar(x)
+  }
+)
+
+#' @rdname as.symbolicQspray
+setMethod(
+  "as.symbolicQspray", "ratioOfQsprays",
+  function(x) {
+    as_symbolicQspray_scalar(x)
+  }
+)
+
+#' @rdname as.symbolicQspray
+setMethod(
+  "as.symbolicQspray", "symbolicQspray",
+  function(x) {
+    x
+  }
+)
+
+#' @rdname as.symbolicQspray
+setMethod(
+  "as.symbolicQspray", "numeric",
+  function(x) {
+    as_symbolicQspray_scalar(x)
+  }
+)
+
+#' @rdname as.symbolicQspray
+setMethod(
+  "as.symbolicQspray", "bigz",
+  function(x) {
+    as_symbolicQspray_scalar(x)
+  }
+)
+
+#' @rdname as.symbolicQspray
+setMethod(
+  "as.symbolicQspray", "bigq",
+  function(x) {
+    as_symbolicQspray_scalar(x)
+  }
+)
+
