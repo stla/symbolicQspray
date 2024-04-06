@@ -326,7 +326,8 @@ setMethod(
     switch(
       .Generic,
       "==" = SymbolicQspray_equality(
-        e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list)
+        e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list),
+        e2@powers, lapply(e2@coeffs, ratioOfQsprays_as_list)
       ),
       "!=" = !(e1 == e2),
       stop(gettextf(
