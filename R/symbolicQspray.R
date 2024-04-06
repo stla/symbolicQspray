@@ -142,3 +142,92 @@ setMethod(
   }
 )
 
+
+symbolicQspray_arith_scalar <- function(e1, e2) {
+  switch(
+    .Generic,
+    "+" = e1 + as.symbolicQspray(e2),
+    "-" = e1 - as.symbolicQspray(e2),
+    "*" = e1 * as.symbolicQspray(e2),
+    "/" = e1 * as.symbolicQspray(1L/as.ratioOfQsprays(e2)),
+    stop(gettextf(
+      "Binary operator %s not defined for these two objects.", dQuote(.Generic)
+    ))
+  )
+}
+scalar_arith_symbolicQspray <- function(e1, e2) {
+  switch(
+    .Generic,
+    "+" = as.symbolicQspray(e1) + e2,
+    "-" = -as.symbolicQspray(e1) + e2,
+    "*" = as.symbolicQspray(e1) * e2,
+    stop(gettextf(
+      "Binary operator %s not defined for these two objects.", dQuote(.Generic)
+    ))
+  )
+}
+qspray_from_list <- function(x) {
+  powers <- x[["powers"]]
+  if(is.null(powers)) {
+    new("qspray", powers = list(), coeffs = character(0L))
+  }
+  else {
+    new("qspray", powers = powers, coeffs = x[["coeffs"]])
+  }
+}
+qspray_as_list <- function(x) {
+  list("powers" = x@powers, "coeffs" = x@coeffs)
+}
+ratioOfQsprays_from_list <- function(x) {
+  new(
+    "ratioOfQsprays",
+    numerator   = qspray_from_list(x[["numerator"]]),
+    denominator = qspray_from_list(x[["denominator"]])
+  )
+}
+ratioOfQsprays_as_list <- function(x) {
+  list(
+    "numerator"   = qspray_as_list(x@numerator),
+    "denominator" = qspray_as_list(x@denominator)
+  )
+}
+symbolicQspray_from_list <- function(x) {
+  powers <- x[["powers"]]
+  if(is.null(powers)) {
+    new("symbolicQspray", powers = list(), coeffs = list())
+  }
+  else {
+    new(
+      "symbolicQspray",
+      powers = powers,
+      coeffs = lapply(x[["coeffs"]], ratioOfQsprays_from_list)
+    )
+  }
+}
+symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
+  switch(
+    .Generic,
+    "+" = symbolicQspray_from_list(
+      SymbolicQspray_add(
+        e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list),
+        e2@powers, lapply(e2@coeffs, ratioOfQsprays_as_list)
+      )
+    ),
+    "-" = symbolicQspray_from_list(
+      SymbolicQspray_subtract(
+        e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list),
+        e2@powers, lapply(e2@coeffs, ratioOfQsprays_as_list)
+      )
+    ),
+    "*" = symbolicQspray_from_list(
+      SymbolicQspray_mult(
+        e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list),
+        e2@powers, lapply(e2@coeffs, ratioOfQsprays_as_list)
+      )
+    ),
+    stop(gettextf(
+      "Binary operator %s not defined for symbolicQspray objects.", dQuote(.Generic)
+    ))
+  )
+}
+
