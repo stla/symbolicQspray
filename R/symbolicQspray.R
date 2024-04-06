@@ -16,7 +16,7 @@ setClass(
 setMethod(
   "show", "symbolicQspray",
   function(object) {
-    cat(showSymbolicQsprayCanonical("a", "X", "  %//%  ")(object), "\n")
+    cat(showSymbolicQsprayCanonical("a", "X", " %//% ")(object), "\n")
   }
 )
 
@@ -134,7 +134,7 @@ setMethod(
 symbolicQsprayPower <- function(e1, n) {
   stopifnot(isPositiveInteger(n))
   symbolicQspray_from_list(SymbolicQspray_power(
-    e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list), n
+    e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list), as.integer(n)
   ))
 }
 symbolicQspray_arith_scalar <- function(e1, e2) {

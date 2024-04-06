@@ -28,7 +28,7 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
         } else {
           ""
         }
-      }, character(1L)), collapse = "")
+      }, character(1L)), collapse = ".")
     }, FUN.VALUE = character(1L))
     coeffs <- paste0(
       "{ ",
@@ -44,7 +44,7 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
     } else {
       toPaste <- paste0(coeffs, " * ", monomials)
     }
-    paste0(toPaste, collapse = " + ")
+    paste0(toPaste, collapse = "  +  ")
   }
 }
 
@@ -65,12 +65,12 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
 #' @importFrom ratioOfQsprays showRatioOfQspraysCanonical
 #'
 #' @note The \code{show} method for \code{symbolicQspray} objects uses
-#'   \code{showSymbolicQsprayCanonical("a", "X", "  \%//\%  ")}.
+#'   \code{showSymbolicQsprayCanonical("a", "X", " \%//\% ")}.
 #' @examples
 #' Qspray <- rSymbolicQspray()
 #' showSymbolicQsprayCanonical(quotientBar = " / ")
 showSymbolicQsprayCanonical <- function(
-    a = "a", X = "X", quotientBar = "  %//%  ", ...
+    a = "a", X = "X", quotientBar = " %//% ", ...
 ) {
   showSymbolicQspray(
     showRatioOfQspraysCanonical(var = a, quotientBar = quotientBar),
