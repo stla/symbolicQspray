@@ -143,6 +143,12 @@ setMethod(
 )
 
 
+symbolicQsprayPower <- function(qspray, n) {
+  stopifnot(isPositiveInteger(n))
+  SymbolicQspray_power(
+    e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list, n)
+  )
+}
 symbolicQspray_arith_scalar <- function(e1, e2) {
   switch(
     .Generic,
@@ -150,6 +156,7 @@ symbolicQspray_arith_scalar <- function(e1, e2) {
     "-" = e1 - as.symbolicQspray(e2),
     "*" = e1 * as.symbolicQspray(e2),
     "/" = e1 * as.symbolicQspray(1L/as.ratioOfQsprays(e2)),
+    "^" = symbolicQsprayPower(e2),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))

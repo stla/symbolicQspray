@@ -80,6 +80,15 @@ Rcpp::List SymbolicQspray_multiply(
 
 // -------------------------------------------------------------------------- //
 // [[Rcpp::export]]
+Rcpp::List SymbolicQspray_power(
+    const Rcpp::List& Powers, const Rcpp::List& Coeffs, unsigned int n
+) {
+  SymbolicQspray sqspray = makeSymbolicQspray(Powers, Coeffs);
+  return returnSymbolicQspray(sqspray.power(n));
+}
+
+// -------------------------------------------------------------------------- //
+// [[Rcpp::export]]
 bool SymbolicQspray_equality(
     const Rcpp::List& Powers1, const Rcpp::List& Coeffs1,
     const Rcpp::List& Powers2, const Rcpp::List& Coeffs2
