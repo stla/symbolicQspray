@@ -19,7 +19,18 @@ showSymbolicQspray <- function(qspray) {
   }
   qspray <- orderedQspray(qspray)
   monomials <- vapply(qspray@powers, function(x) {
-    paste0("X", x)
+    paste0(vapply(seq_along(x), function(i) {
+      e <- x[i]
+      if(e != 0L) {
+        if(e == 1L) {
+          sprintf("X%d", i)
+        } else {
+          sprintf("X%d^%d", i, e)
+        }
+      } else {
+        ""
+      }
+    }, character(1L)), collapse = "")
   }, FUN.VALUE = character(1L))
   coeffs <- vapply(qspray@coeffs, capture.output, character(1L))
   paste0(paste0(coeffs, " ", monomials), collapse = " + ")
@@ -156,7 +167,7 @@ symbolicQspray_arith_scalar <- function(e1, e2) {
     "-" = e1 - as.symbolicQspray(e2),
     "*" = e1 * as.symbolicQspray(e2),
     "/" = e1 * as.symbolicQspray(1L/as.ratioOfQsprays(e2)),
-    "^" = symbolicQsprayPower(e2),
+    "^" = symbolicQsprayPower(e1, e2),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
@@ -227,7 +238,7 @@ symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
       )
     ),
     "*" = symbolicQspray_from_list(
-      SymbolicQspray_mult(
+      SymbolicQspray_multiply(
         e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list),
         e2@powers, lapply(e2@coeffs, ratioOfQsprays_as_list)
       )
