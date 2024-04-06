@@ -30,4 +30,5 @@ Collate:
     'RcppExports.R'
     'creation.R'
     'internal.R'
+    'show.R'
     'symbolicQspray.R'

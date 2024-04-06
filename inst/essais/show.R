@@ -7,9 +7,6 @@ showQspray <- function(showMonomial, compact = FALSE) {
     nterms <- length(qspray@coeffs)
     constantTerm <- getConstantTerm(qspray)
     monomials <- vapply(qspray@powers, showMonomial, FUN.VALUE = character(1L))
-    # if(constantTerm != 0L) {
-    #   monomials[nterms] <- as.character(abs(constantTerm))
-    # }
     coeffs <- gmp::as.bigq(qspray@coeffs)
     plus <- vapply(coeffs, function(x) x >= 0L, FUN.VALUE = logical(1L))
     plusSign <- ifelse(compact, "+", " + ")

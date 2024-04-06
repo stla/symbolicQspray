@@ -13,37 +13,10 @@ setClass(
   slots = c(powers = "list", coeffs = "list")
 )
 
-showSymbolicQspray <- function(qspray) {
-  if(length(qspray@coeffs) == 0L) {
-    return("0")
-  }
-  qspray <- orderedQspray(qspray)
-  monomials <- vapply(qspray@powers, function(x) {
-    paste0(vapply(seq_along(x), function(i) {
-      e <- x[i]
-      if(e != 0L) {
-        if(e == 1L) {
-          sprintf("X%d", i)
-        } else {
-          sprintf("X%d^%d", i, e)
-        }
-      } else {
-        ""
-      }
-    }, character(1L)), collapse = "")
-  }, FUN.VALUE = character(1L))
-  coeffs <- paste0(
-    "{ ",
-    vapply(qspray@coeffs, capture.output, character(1L)),
-    "}"
-  )
-  paste0(paste0(coeffs, " * ", monomials), collapse = " + ")
-}
-
 setMethod(
   "show", "symbolicQspray",
   function(object) {
-    cat(showSymbolicQspray(object), "\n")
+    cat(showSymbolicQsprayCanonical("a", "X", "  %//%  ")(object), "\n")
   }
 )
 
