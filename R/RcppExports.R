@@ -13,6 +13,10 @@ SymbolicQspray_multiply <- function(Powers1, Coeffs1, Powers2, Coeffs2) {
     .Call(`_symbolicQspray_SymbolicQspray_multiply`, Powers1, Coeffs1, Powers2, Coeffs2)
 }
 
+SymbolicQspray_power <- function(Powers, Coeffs, n) {
+    .Call(`_symbolicQspray_SymbolicQspray_power`, Powers, Coeffs, n)
+}
+
 SymbolicQspray_equality <- function(Powers1, Coeffs1, Powers2, Coeffs2) {
     .Call(`_symbolicQspray_SymbolicQspray_equality`, Powers1, Coeffs1, Powers2, Coeffs2)
 }

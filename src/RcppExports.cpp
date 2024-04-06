@@ -52,6 +52,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// SymbolicQspray_power
+Rcpp::List SymbolicQspray_power(const Rcpp::List& Powers, const Rcpp::List& Coeffs, unsigned int n);
+RcppExport SEXP _symbolicQspray_SymbolicQspray_power(SEXP PowersSEXP, SEXP CoeffsSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type Powers(PowersSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type Coeffs(CoeffsSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(SymbolicQspray_power(Powers, Coeffs, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // SymbolicQspray_equality
 bool SymbolicQspray_equality(const Rcpp::List& Powers1, const Rcpp::List& Coeffs1, const Rcpp::List& Powers2, const Rcpp::List& Coeffs2);
 RcppExport SEXP _symbolicQspray_SymbolicQspray_equality(SEXP Powers1SEXP, SEXP Coeffs1SEXP, SEXP Powers2SEXP, SEXP Coeffs2SEXP) {
@@ -71,6 +84,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_symbolicQspray_SymbolicQspray_add", (DL_FUNC) &_symbolicQspray_SymbolicQspray_add, 4},
     {"_symbolicQspray_SymbolicQspray_subtract", (DL_FUNC) &_symbolicQspray_SymbolicQspray_subtract, 4},
     {"_symbolicQspray_SymbolicQspray_multiply", (DL_FUNC) &_symbolicQspray_SymbolicQspray_multiply, 4},
+    {"_symbolicQspray_SymbolicQspray_power", (DL_FUNC) &_symbolicQspray_SymbolicQspray_power, 3},
     {"_symbolicQspray_SymbolicQspray_equality", (DL_FUNC) &_symbolicQspray_SymbolicQspray_equality, 4},
     {NULL, NULL, 0}
 };
