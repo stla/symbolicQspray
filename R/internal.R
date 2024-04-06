@@ -1,3 +1,10 @@
+passShowAttributes <- function(source, target) {
+  lapply(c("a", "X", "quotientBar"), function(a) {
+    attr(target, a) <<- attr(source, a)
+  })
+  target
+}
+
 isPositiveInteger <- function(x) {
   is.numeric(x) && length(x) == 1L && !is.na(x) && floor(x) == x
 }

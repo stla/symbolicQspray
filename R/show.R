@@ -17,8 +17,7 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
     }
     qspray <- orderedQspray(qspray)
     monomials <- vapply(qspray@powers, function(exponents) {
-      exponents <- exponents[exponents != 0L]
-      paste0(vapply(seq_along(exponents), function(i) {
+      paste0(vapply(which(exponents != 0L), function(i) {
         e <- exponents[i]
         if(e == 1L) {
           sprintf("%s%d", var, i)
@@ -88,7 +87,7 @@ showSymbolicQsprayCanonical <- function(
 #' @title Set show options to a 'symbolicQspray' object
 #' @description Set some attributes to a \code{symbolicQspray} object
 #'   to control the way it is displayed. See the note in the
-#'   documentation of \code{\link[showSymbolicQsprayCanonical]} for details.
+#'   documentation of \code{\link{showSymbolicQsprayCanonical}} for details.
 #'
 #' @param Qspray a \code{symbolicQspray} object
 #' @param a value for the \code{"a"} attribute

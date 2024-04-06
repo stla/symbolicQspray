@@ -97,3 +97,5 @@ bool SymbolicQspray_equality(
   SymbolicQspray sqspray2 = makeSymbolicQspray(Powers2, Coeffs2);
   return sqspray1 == sqspray2;
 }
+
+

@@ -1,0 +1,14 @@
+# symbolicQspray
+
+*Symbolic multivariate polynomials.*
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/stla/symbolicQspray/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stla/symbolicQspray/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
+___
+
+```{r, message=FALSE, collapse=TRUE}
+
+```
+

@@ -35,8 +35,7 @@ as_symbolicQspray_scalar <- function(x) {
     Qspray <-
       new("symbolicQspray", powers = list(integer(0L)), coeffs = list(x))
   }
-  attributes(Qspray) <- attrs
-  Qspray
+  passShowAttributes(x, Qspray)
 }
 
 setGeneric(
@@ -137,8 +136,7 @@ setMethod(
       "symbolicQspray",
       powers = e1@powers, coeffs = lapply(e1@coeffs, function(x) -x)
     )
-    attributes(Qspray) <- attributes(e1)
-    Qspray
+    passShowAttributes(e1, Qspray)
   }
 )
 
@@ -148,8 +146,7 @@ symbolicQsprayPower <- function(e1, n) {
   Qspray <- symbolicQspray_from_list(SymbolicQspray_power(
     e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list), as.integer(n)
   ))
-  attributes(Qspray) <- attributes(e1)
-  Qspray
+  passShowAttributes(e1, Qspray)
 }
 symbolicQspray_arith_scalar <- function(e1, e2) {
   Qspray <- switch(
@@ -163,8 +160,7 @@ symbolicQspray_arith_scalar <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
-  attributes(Qspray) <- attributes(e1)
-  Qspray
+  passShowAttributes(e1, Qspray)
 }
 scalar_arith_symbolicQspray <- function(e1, e2) {
   Qspray <- switch(
@@ -176,8 +172,19 @@ scalar_arith_symbolicQspray <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
-  attributes(Qspray) <- attributes(e2)
-  Qspray
+  passShowAttributes(e2, Qspray)
+}
+ratioOfQsprays_arith_symbolicQspray <- function(e1, e2) {
+  Qspray <- switch(
+    .Generic,
+    "+" = as.symbolicQspray(e1) + e2,
+    "-" = -as.symbolicQspray(e1) + e2,
+    "*" = as.symbolicQspray(e1) * e2,
+    stop(gettextf(
+      "Binary operator %s not defined for these two objects.", dQuote(.Generic)
+    ))
+  )
+  passShowAttributes(e2, Qspray)
 }
 qspray_from_list <- function(x) {
   powers <- x[["powers"]]
@@ -242,7 +249,7 @@ symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
       "Binary operator %s not defined for symbolicQspray objects.", dQuote(.Generic)
     ))
   )
-  attributes(Qspray) <- attributes(e2)
+  passShowAttributes(e2, Qspray)
   Qspray
 }
 setMethod(
