@@ -22,6 +22,7 @@ Qlone <- function(n) {
 #' @description Generates a random \code{symbolicQspray} object.
 #'
 #' @return A \code{symbolicQspray} object.
+#' @export
 #' @importFrom qspray rQspray
 #' @importFrom ratioOfQsprays rRatioOfQsprays
 rSymbolicQspray <- function() {

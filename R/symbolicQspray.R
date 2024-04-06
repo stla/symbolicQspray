@@ -33,7 +33,7 @@ showSymbolicQspray <- function(qspray) {
     }, character(1L)), collapse = "")
   }, FUN.VALUE = character(1L))
   coeffs <- vapply(qspray@coeffs, capture.output, character(1L))
-  paste0(paste0(coeffs, " ", monomials), collapse = " + ")
+  paste0(paste0(coeffs, "* ", monomials), collapse = " + ")
 }
 
 setMethod(
@@ -154,7 +154,7 @@ setMethod(
 )
 
 
-symbolicQsprayPower <- function(qspray, n) {
+symbolicQsprayPower <- function(e1, n) {
   stopifnot(isPositiveInteger(n))
   SymbolicQspray_power(
     e1@powers, lapply(e1@coeffs, ratioOfQsprays_as_list, n)
