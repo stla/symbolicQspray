@@ -16,17 +16,14 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
       return("0")
     }
     qspray <- orderedQspray(qspray)
-    monomials <- vapply(qspray@powers, function(x) {
-      paste0(vapply(seq_along(x), function(i) {
-        e <- x[i]
-        if(e != 0L) {
-          if(e == 1L) {
-            sprintf("%s%d", var, i)
-          } else {
-            sprintf("%s%d^%d", var, i, e)
-          }
+    monomials <- vapply(qspray@powers, function(exponents) {
+      exponents <- exponents[exponents != 0L]
+      paste0(vapply(seq_along(exponents), function(i) {
+        e <- exponents[i]
+        if(e == 1L) {
+          sprintf("%s%d", var, i)
         } else {
-          ""
+          sprintf("%s%d^%d", var, i, e)
         }
       }, character(1L)), collapse = ".")
     }, FUN.VALUE = character(1L))
@@ -38,7 +35,7 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
     nterms <- length(coeffs)
     if(monomials[nterms] == "") {
       toPaste <- c(
-        paste0(coeffs[-nterms], " * ", monomials[-nterms]),
+        sprintf("%s * %s", coeffs[-nterms], monomials[-nterms]),
         coeffs[nterms]
       )
     } else {
@@ -76,8 +73,9 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
 #'   object to be printed.
 #'
 #' @examples
+#' set.seed(421)
 #' Qspray <- rSymbolicQspray()
-#' showSymbolicQsprayCanonical(quotientBar = " / ")
+#' showSymbolicQsprayCanonical(quotientBar = " / ")(Qspray)
 showSymbolicQsprayCanonical <- function(
     a = "a", X = "X", quotientBar = " %//% ", ...
 ) {
@@ -89,7 +87,7 @@ showSymbolicQsprayCanonical <- function(
 
 #' @title Set show options to a 'symbolicQspray' object
 #' @description Set some attributes to a \code{symbolicQspray} object
-#'   to control the way it is displayed. See#' the note in the
+#'   to control the way it is displayed. See the note in the
 #'   documentation of \code{\link[showSymbolicQsprayCanonical]} for details.
 #'
 #' @param Qspray a \code{symbolicQspray} object
@@ -105,7 +103,7 @@ showSymbolicQsprayCanonical <- function(
 #' withAttributes(Qspray, a = "x", X = "A", quotientBar = " / ")
 withAttributes <- function(
     Qspray, a = "a", X = "X", quotientBar = " %//% "
-  ) {
+) {
   attr(Qspray, "a") <- a
   attr(Qspray, "X") <- X
   attr(Qspray, "quotientBar") <- quotientBar

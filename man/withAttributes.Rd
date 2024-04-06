@@ -20,7 +20,7 @@ The input \code{symbolicQspray} object with new attributes.
 }
 \description{
 Set some attributes to a \code{symbolicQspray} object
-  to control the way it is displayed. See#' the note in the
+  to control the way it is displayed. See the note in the
   documentation of \code{\link[showSymbolicQsprayCanonical]} for details.
 }
 \examples{

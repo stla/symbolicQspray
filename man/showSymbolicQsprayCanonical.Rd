@@ -38,6 +38,7 @@ The \code{show} method for \code{symbolicQspray} objects uses
   object to be printed.
 }
 \examples{
+set.seed(421)
 Qspray <- rSymbolicQspray()
-showSymbolicQsprayCanonical(quotientBar = " / ")
+showSymbolicQsprayCanonical(quotientBar = " / ")(Qspray)
 }
