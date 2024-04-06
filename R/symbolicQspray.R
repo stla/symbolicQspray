@@ -3,5 +3,5 @@
 #' @importFrom ratioOfQsprays as.ratioOfQsprays
 #' @importFrom methods setMethod setClass new show
 #' @importFrom gmp as.bigq
-#' @include ratioOfQsprays.R
+#' @include symbolicQspray.R
 NULL

@@ -55,3 +55,36 @@ Rcpp::List SymbolicQspray_add(
   SymbolicQspray sqspray2 = makeSymbolicQspray(Powers2, Coeffs2);
   return returnSymbolicQspray(sqspray1 + sqspray2);
 }
+
+// -------------------------------------------------------------------------- //
+// [[Rcpp::export]]
+Rcpp::List SymbolicQspray_subtract(
+    const Rcpp::List& Powers1, const Rcpp::List& Coeffs1,
+    const Rcpp::List& Powers2, const Rcpp::List& Coeffs2
+) {
+  SymbolicQspray sqspray1 = makeSymbolicQspray(Powers1, Coeffs1);
+  SymbolicQspray sqspray2 = makeSymbolicQspray(Powers2, Coeffs2);
+  return returnSymbolicQspray(sqspray1 - sqspray2);
+}
+
+// -------------------------------------------------------------------------- //
+// [[Rcpp::export]]
+Rcpp::List SymbolicQspray_multiply(
+    const Rcpp::List& Powers1, const Rcpp::List& Coeffs1,
+    const Rcpp::List& Powers2, const Rcpp::List& Coeffs2
+) {
+  SymbolicQspray sqspray1 = makeSymbolicQspray(Powers1, Coeffs1);
+  SymbolicQspray sqspray2 = makeSymbolicQspray(Powers2, Coeffs2);
+  return returnSymbolicQspray(sqspray1 * sqspray2);
+}
+
+// -------------------------------------------------------------------------- //
+// [[Rcpp::export]]
+bool SymbolicQspray_equality(
+    const Rcpp::List& Powers1, const Rcpp::List& Coeffs1,
+    const Rcpp::List& Powers2, const Rcpp::List& Coeffs2
+) {
+  SymbolicQspray sqspray1 = makeSymbolicQspray(Powers1, Coeffs1);
+  SymbolicQspray sqspray2 = makeSymbolicQspray(Powers2, Coeffs2);
+  return sqspray1 == sqspray2;
+}

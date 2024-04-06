@@ -2,6 +2,7 @@
 #define ___SYMBOLICQSPRAY___
 
 #include "ratioOfQsprays.h"
+using namespace RATIOOFQSPRAYS;
 
 typedef Qspray<RatioOfQsprays<gmpq>>
   SymbolicQspray;
