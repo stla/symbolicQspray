@@ -230,4 +230,68 @@ symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
     ))
   )
 }
-
+setMethod(
+  "Arith",
+  signature(e1 = "symbolicQspray", e2 = "symbolicQspray"),
+  symbolicQspray_arith_symbolicQspray
+)
+setMethod(
+  "Arith",
+  signature(e1 = "symbolicQspray", e2 = "ratioOfQsprays"),
+  symbolicQspray_arith_scalar
+)
+setMethod(
+  "Arith",
+  signature(e1 = "ratioOfQsprays", e2 = "symbolicQspray"),
+  scalar_arith_symbolicQspray
+)
+setMethod(
+  "Arith",
+  signature(e1 = "symbolicQspray", e2 = "qspray"),
+  symbolicQspray_arith_scalar
+)
+setMethod(
+  "Arith",
+  signature(e1 = "qspray", e2 = "symbolicQspray"),
+  scalar_arith_symbolicQspray
+)
+setMethod(
+  "Arith",
+  signature(e1 = "symbolicQspray", e2 = "character"),
+  symbolicQspray_arith_scalar
+)
+setMethod(
+  "Arith",
+  signature(e1 = "character", e2 = "symbolicQspray"),
+  scalar_arith_symbolicQspray
+)
+setMethod(
+  "Arith",
+  signature(e1 = "symbolicQspray", e2 = "bigz"),
+  symbolicQspray_arith_scalar
+)
+setMethod(
+  "Arith",
+  signature(e1 = "bigz", e2 = "symbolicQspray"),
+  scalar_arith_symbolicQspray
+)
+setMethod(
+  "Arith",
+  signature(e1 = "symbolicQspray", e2 = "bigq"),
+  symbolicQspray_arith_scalar
+)
+setMethod(
+  "Arith",
+  signature(e1 = "bigq", e2 = "symbolicQspray"),
+  scalar_arith_symbolicQspray
+)
+setMethod(
+  "Arith",
+  signature(e1 = "symbolicQspray", e2 = "numeric"),
+  symbolicQspray_arith_scalar
+)
+setMethod(
+  "Arith",
+  signature(e1 = "numeric", e2 = "symbolicQspray"),
+  scalar_arith_symbolicQspray
+)
