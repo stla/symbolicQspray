@@ -1,6 +1,11 @@
-# symbolicQspray
+---
+title: "The 'symbolicQspray' package"
+author: "Stéphane Laurent"
+date: "`r Sys.Date()`"
+output: github_document
+---
 
-*Symbolic multivariate polynomials.*
+*Symbolic multivariate polynomials.* 
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/stla/symbolicQspray/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stla/symbolicQspray/actions/workflows/R-CMD-check.yaml)
@@ -8,7 +13,52 @@
 
 ___
 
-```{r, message=FALSE, collapse=TRUE}
+A `symbolicQspray` object represents a multivariate polynomial whose 
+coefficients are fractions of polynomials. For example:
 
+```{r, message=FALSE, collapse=TRUE}
+library(symbolicQspray)
+f <- function(a1, a2, X1, X2, X3) {
+  (a1/(a2^2+1)) * X1^2*X2  +  (a2+1) * X3
+}
+# "inner" variables:
+a1 <- qlone(1)
+a2 <- qlone(2)
+X1 <- Qlone(1)
+# "main" variables:
+X2 <- Qlone(2)
+X3 <- Qlone(3)
+# the 'symbolicQspray':
+( Qspray <- f(a1, a2, X1, X2, X3) )
+```
+
+Arithmetic on `symbolicQspray` objects is available:
+
+```{r, message=FALSE, collapse=TRUE}
+Qspray^2
+Qspray - Qspray
+```
+
+Substituting the "inner" variables (the variables occurring in the ratios of 
+polynomials) yields a `qspray` object:
+
+```{r, message=FALSE, collapse=TRUE}
+a <- c(2, "3/2")
+( qspray <- evalSymbolicQspray(Qspray, a = a) )
+```
+
+Substituting the "main" variables yields a `ratioOfQsprays` object:
+
+```{r, message=FALSE, collapse=TRUE}
+X <-  c(4, 3, "2/5")
+( ratioOfQsprays <- evalSymbolicQspray(Qspray, X = X) )
+```
+
+Checking the consistency:
+
+```{r, message=FALSE, collapse=TRUE}
+evalSymbolicQspray(Qspray, a = a, X = X)
+evalQspray(qspray, X)
+evalRatioOfQsprays(ratioOfQsprays, a)
 ```
 
