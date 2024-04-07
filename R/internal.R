@@ -1,8 +1,9 @@
 passShowAttributes <- function(source, target) {
-  lapply(c("showQspray", "showRatioOfQsprays", "showSymbolicQspray"),
-         function(a) {
-           attr(target, a) <<- attr(source, a)
-         })
+  attr(target, "showOpts") <- attr(source, "showOpts")
+  # lapply(c("showQspray", "showRatioOfQsprays", "showSymbolicQspray"),
+  #        function(a) {
+  #          attr(target, a) <<- attr(source, a)
+  #        })
   target
 }
 

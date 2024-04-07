@@ -37,11 +37,7 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
       coeffs = as.character(coeffs)
     )
     if(is.null(X)) {
-      if(is.null(attr(Qspray, "X"))) {
-        attr(qspray, "x") <- "X"
-      } else {
-        attr(qspray, "X") <- attr(Qspray, "X")
-      }
+      attr(qspray, "showOpts") <- attr(Qspray, "showOpts")
       qspray
     } else {
       evalQspray(qspray, values_re = X)
@@ -56,11 +52,7 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
     for(i in seq_along(scalars)) {
       roq <- roq + scalars[[i]] * coeffs[[i]]
     }
-    if(is.null(attr(Qspray, "a"))) {
-      attr(roq, "x") <- "a"
-    } else {
-      attr(roq, "x") <- attr(Qspray, "a")
-    }
+    attr(roq, "showOpts") <- attr(Qspray, "showOpts")
     roq
   } else {
     Qspray

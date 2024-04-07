@@ -1,7 +1,7 @@
 #' @useDynLib symbolicQspray, .registration=TRUE
 #' @importFrom Rcpp evalCpp
 #' @importFrom qspray orderedQspray
-#' @importFrom ratioOfQsprays as.ratioOfQsprays
+#' @importFrom ratioOfQsprays as.ratioOfQsprays showRatioOfQspraysCanonical
 #' @importFrom methods setMethod setClass new show
 #' @importFrom gmp as.bigq
 #' @importFrom utils capture.output
@@ -16,13 +16,14 @@ setClass(
 setMethod(
   "show", "symbolicQspray",
   function(object) {
-    showQspray <- attr(object, "showQspray") %||% showQsprayCanonical("a")
-    showRatioOfQsprays <-
-      attr(object, "showRatioOfQsprays") %||%
-      showRatioOfQsprays(showQspray)
-    f <- attr(object, "showSymbolicQspray") %||%
-      showSymbolicQspray(showRatioOfQsprays)
+    f <- getShowSymbolicQspray(object)
     cat(f(object), "\n")
+    # showQspray <- attr(object, "showQspray") %||% showQsprayCanonical("a")
+    # showRatioOfQsprays <-
+    #   attr(object, "showRatioOfQsprays") %||%
+    #   showRatioOfQsprays(showQspray)
+    # f <- attr(object, "showSymbolicQspray") %||%
+    #   showSymbolicQspray(showRatioOfQsprays)
   }
 )
 
