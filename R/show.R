@@ -4,13 +4,13 @@
 #'
 #' @param showRatioOfQsprays a function which prints a \code{ratioOfQsprays}
 #'   object
-#' @param var a string, usually a letter, to denote the unindexed variables
+#' @param X a string, usually a letter, to denote the unindexed variables
 #'
 #' @return A functions which prints a \code{symbolicQspray} object.
 #' @export
 #'
 #' @seealso \code{\link{showSymbolicQsprayCanonical}}
-showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
+showSymbolicQspray <- function(showRatioOfQsprays, X = "X") {
   function(qspray) {
     if(length(qspray@coeffs) == 0L) {
       return("0")
@@ -20,9 +20,9 @@ showSymbolicQspray <- function(showRatioOfQsprays, var = "X") {
       paste0(vapply(which(exponents != 0L), function(i) {
         e <- exponents[i]
         if(e == 1L) {
-          sprintf("%s%d", var, i)
+          sprintf("%s%d", X, i)
         } else {
-          sprintf("%s%d^%d", var, i, e)
+          sprintf("%s%d^%d", X, i, e)
         }
       }, character(1L)), collapse = ".")
     }, FUN.VALUE = character(1L))
@@ -80,7 +80,7 @@ showSymbolicQsprayCanonical <- function(
 ) {
   showSymbolicQspray(
     showRatioOfQspraysCanonical(var = a, quotientBar = quotientBar),
-    var = X, ...
+    X = X, ...
   )
 }
 
@@ -107,4 +107,59 @@ withAttributes <- function(
   attr(Qspray, "X") <- X
   attr(Qspray, "quotientBar") <- quotientBar
   Qspray
+}
+
+#' @title Set show option to a 'qspray' object
+#' @description Set show option to a \code{qspray} object
+#'
+#' @param x a \code{qspray} object
+#' @param which which option to set; this can be \code{"x"},
+#'   \code{"showMonomial"}, or \code{"showQspray"}
+#' @param value the value of the option
+#'
+#' @return This returns the updated \code{qspray}.
+#' @export
+#'
+#' @examples
+#' Qspray <- rSymbolicQspray()
+#' showSymbolicQsprayOption(Qspray, "a") <- "x"
+#' showSymbolicQsprayOption(Qspray, "X") <- "A"
+#' showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
+#' Qspray
+`showSymbolicQsprayOption<-` <- function(x, which, value) {
+  which <-
+    match.arg(which, c("a", "X", "quotientBar", "showRatioOfQsprays", "showSymbolicQspray"))
+  if(which == "a") {
+    attr(x, "a") <- value
+    attr(x, "showSymbolicQspray") <-
+      showSymbolicQsprayCanonical(
+        a = value,
+        X = attr(x, "X") %||% "X",
+        quotientBar = attr(x, "quotientBar") %||% " %//% "
+      )
+  } else if(which == "X") {
+    attr(x, "X") <- value
+    attr(x, "showSymbolicQspray") <-
+      showSymbolicQsprayCanonical(
+        a = attr(x, "a") %||% "a",
+        X = value,
+        quotientBar = attr(x, "quotientBar") %||% " %//% "
+      )
+  } else if(which == "quotientBar") {
+    attr(x, "quotientBar") <- value
+    attr(x, "showSymbolicQspray") <-
+      showSymbolicQsprayCanonical(
+        a = attr(x, "a") %||% "a",
+        X = attr(x, "X") %||% "X",
+        quotientBar = value
+      )
+  } else if(which == "showRatioOfQsprays") {
+    attr(x, "showSymbolicQspray") <- showSymbolicQspray(
+      showRatioOfQsprays = value,
+      X = attr(x, "X") %||% "X"
+    )
+  } else {
+    attr(x, "showSymbolicQspray") <- value
+  }
+  x
 }

@@ -16,13 +16,13 @@ setClass(
 setMethod(
   "show", "symbolicQspray",
   function(object) {
-    a <- attr(object, "a")
-    if(is.null(a)) a <- "a"
-    X <- attr(object, "X")
-    if(is.null(X)) X <- "X"
-    quotientBar <- attr(object, "quotientBar")
-    if(is.null(quotientBar)) quotientBar <- " %//% "
-    cat(showSymbolicQsprayCanonical(a, X, quotientBar)(object), "\n")
+    showQspray <- attr(object, "showQspray") %||% showQsprayCanonical("a")
+    showRatioOfQsprays <-
+      attr(object, "showRatioOfQsprays") %||%
+      showRatioOfQsprays(showQspray)
+    f <- attr(object, "showSymbolicQspray") %||%
+      showSymbolicQspray(showRatioOfQsprays)
+    cat(f(object), "\n")
   }
 )
 

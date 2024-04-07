@@ -12,7 +12,7 @@ test_that("evaluation", {
   a <- as.bigq(c(2L, 3L))
   X <- as.bigq(c(-4L, 3L, 2L))
   qspray <- evalSymbolicQspray(Qspray, a = a)
-  expect_true(qspray == f(a[1], a[2], X1, X2, X3))
+  expect_true(qspray == f(a[1], a[2], qlone(1), qlone(2), qlone(3)))
   ratioOfQsprays <- evalSymbolicQspray(Qspray, X = X)
   expect_true(ratioOfQsprays == f(a1, a2, X[1], X[2], X[3]))
   result <- evalSymbolicQspray(Qspray, a = a, X = X)

@@ -4,13 +4,13 @@
 \alias{showSymbolicQspray}
 \title{Print a 'symbolicQspray' object}
 \usage{
-showSymbolicQspray(showRatioOfQsprays, var = "X")
+showSymbolicQspray(showRatioOfQsprays, X = "X")
 }
 \arguments{
 \item{showRatioOfQsprays}{a function which prints a \code{ratioOfQsprays}
 object}
 
-\item{var}{a string, usually a letter, to denote the unindexed variables}
+\item{X}{a string, usually a letter, to denote the unindexed variables}
 }
 \value{
 A functions which prints a \code{symbolicQspray} object.
