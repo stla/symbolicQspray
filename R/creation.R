@@ -29,7 +29,7 @@ rSymbolicQspray <- function() {
   qspray <- rQspray()
   powers <- qspray@powers
   nterms <- length(powers)
-  coeffs <- replicate(nterms, rRatioOfQsprays())
+  coeffs <- replicate(nterms, rRatioOfQsprays(allow.zero = FALSE))
   new(
     "symbolicQspray",
     powers = powers,

@@ -154,14 +154,16 @@ withAttributes <- function(
   } else if(which == "showRatioOfQsprays") {
     f <- showSymbolicQspray(
       showRatioOfQsprays = value,
-      X = attr(showOpts, "X") %||% attr(value, "X") %||% "X"
+      showMonomial = showMonomialCanonical(
+        attr(showOpts, "X") %||% attr(value, "X") %||% "X"
+      )
     )
     attr(showOpts, "showMonomial") <-
       attr(showOpts, "showMonomial") %||%
       showMonomialCanonical(
         attr(showOpts, "X") %||% "X"
       )
-  } else if(which = "showMonomial") {
+  } else if(which == "showMonomial") {
     f <- showSymbolicQspray(
       showRatioOfQsprays = attr(showOpts, "showRatioOfQsprays") %||%
         showRatioOfQspraysCanonical(
