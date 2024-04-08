@@ -1,5 +1,5 @@
 Package: symbolicQspray
-Title: Multivariate Polynomials with Polynomials Coefficients
+Title: Multivariate Polynomials with Symbolic Coefficients
 Version: 0.0.0.9000
 Authors@R: 
     person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre"))
