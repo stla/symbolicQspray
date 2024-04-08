@@ -3,7 +3,12 @@ Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
     person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Introduces the 'symbolicQspray' objects. Such an object
+    defines a multivariate polynomial whose coefficients are fractions of
+    multivariate polynomials with rational coefficients. The package
+    allows arithmetic on such polynomials. It is based on the 'qspray' and 
+    'ratioOfQsprays' packages. Some functions from the 'qspray' package are 
+    applicable to 'symbolicQspray' objects.
 License: GPL-3
 URL: https://github.com/stla/symbolicQspray
 BugReports: https://github.com/stla/symbolicQspray/issues
@@ -11,10 +16,12 @@ Depends:
     qspray,
     ratioOfQsprays
 Imports: 
-    Rcpp,
-    methods,
     gmp,
+    methods,
+    Rcpp,
     utils
+Suggests: 
+    testthat (>= 3.0.0)
 LinkingTo: 
     BH,
     qspray,
@@ -22,7 +29,10 @@ LinkingTo:
     Rcpp,
     RcppArmadillo,
     RcppCGAL
-Remotes: stla/qspray, stla/ratioOfQsprays
+Remotes: 
+    stla/qspray,
+    stla/ratioOfQsprays
+Config/testthat/edition: 3
 Encoding: UTF-8
 RoxygenNote: 7.3.1
 SystemRequirements: C++17, gmp, mpfr
@@ -33,6 +43,3 @@ Collate:
     'internal.R'
     'show.R'
     'symbolicQspray.R'
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
