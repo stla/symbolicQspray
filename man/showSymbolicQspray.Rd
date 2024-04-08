@@ -4,7 +4,7 @@
 \alias{showSymbolicQspray}
 \title{Print a 'symbolicQspray' object}
 \usage{
-showSymbolicQspray(showRatioOfQsprays, X = "X")
+showSymbolicQspray(showRatioOfQsprays, showMonomial)
 }
 \arguments{
 \item{showRatioOfQsprays}{a function which prints a \code{ratioOfQsprays}
