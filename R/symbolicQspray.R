@@ -187,44 +187,6 @@ ratioOfQsprays_arith_symbolicQspray <- function(e1, e2) {
   )
   passShowAttributes(e2, Qspray)
 }
-qspray_from_list <- function(x) {
-  powers <- x[["powers"]]
-  if(is.null(powers)) {
-    new("qspray", powers = list(), coeffs = character(0L))
-  }
-  else {
-    new("qspray", powers = powers, coeffs = x[["coeffs"]])
-  }
-}
-qspray_as_list <- function(x) {
-  list("powers" = x@powers, "coeffs" = x@coeffs)
-}
-ratioOfQsprays_from_list <- function(x) {
-  new(
-    "ratioOfQsprays",
-    numerator   = qspray_from_list(x[["numerator"]]),
-    denominator = qspray_from_list(x[["denominator"]])
-  )
-}
-ratioOfQsprays_as_list <- function(x) {
-  list(
-    "numerator"   = qspray_as_list(x@numerator),
-    "denominator" = qspray_as_list(x@denominator)
-  )
-}
-symbolicQspray_from_list <- function(x) {
-  powers <- x[["powers"]]
-  if(is.null(powers)) {
-    new("symbolicQspray", powers = list(), coeffs = list())
-  }
-  else {
-    new(
-      "symbolicQspray",
-      powers = powers,
-      coeffs = lapply(x[["coeffs"]], ratioOfQsprays_from_list)
-    )
-  }
-}
 symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
   Qspray <- switch(
     .Generic,
