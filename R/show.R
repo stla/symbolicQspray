@@ -219,3 +219,12 @@ getShowSymbolicQspray <- function(Qspray) {
         )
     )
 }
+
+getShowSymbolicQsprayCoefficient <- function(Qspray) {
+  showOpts <- attr(Qspray, "showOpts")
+  attr(showOpts, "showRatioOfQsprays") %||%
+    showRatioOfQspraysCanonical(
+      attr(showOpts, "a") %||% "a",
+      quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+    )
+}

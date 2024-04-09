@@ -27,6 +27,23 @@ setMethod(
   }
 )
 
+setGeneric(
+  "showCoefficient"
+)
+
+#' @importFrom qspray showCoefficient
+#' @export
+setMethod(
+  "showCoefficient", "symbolicQspray",
+  function(x) {
+    f <- getShowSymbolicQsprayCoefficient(x)
+    function(coeff) {
+      sprintf("{ %s }", f(coeff))
+    }
+  }
+)
+
+
 setAs(
   "qspray", "symbolicQspray", function(from) {
     new(
