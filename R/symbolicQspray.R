@@ -2,7 +2,7 @@
 #' @importFrom Rcpp evalCpp
 #' @importFrom qspray orderedQspray
 #' @importFrom ratioOfQsprays as.ratioOfQsprays showRatioOfQspraysCanonical
-#' @importFrom methods setMethod setClass new show
+#' @importFrom methods setMethod setClass new show setAs
 #' @importFrom gmp as.bigq
 #' @importFrom utils capture.output
 #' @include symbolicQspray.R
@@ -24,6 +24,15 @@ setMethod(
     #   showRatioOfQsprays(showQspray)
     # f <- attr(object, "showSymbolicQspray") %||%
     #   showSymbolicQspray(showRatioOfQsprays)
+  }
+)
+
+setAs(
+  "qspray", "symbolicQspray", function(from) {
+    new(
+      "symbolicQspray",
+      powers = from@powers, coeffs = lapply(from@coeffs, as.ratioOfQsprays)
+    )
   }
 )
 
