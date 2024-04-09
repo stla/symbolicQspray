@@ -136,6 +136,11 @@ withAttributes <- function(
       c("a", "X", "quotientBar", "showMonomial", "showRatioOfQsprays", "showSymbolicQspray")
     )
   showOpts <- attr(x, "showOpts") %||% TRUE
+  f <- showSymbolicQsprayCanonical(
+    attr(showOpts, "a") %||% "a",
+    attr(showOpts, "X") %||% "X",
+    quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+  )
   if(which == "showSymbolicQspray") {
     f <- value
     attr(showOpts, "showRatioOfQsprays") <-

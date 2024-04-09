@@ -10,7 +10,7 @@ typedef Polynomial<RatioOfQsprays<gmpq>> symbolicPolynomial;
 // -------------------------------------------------------------------------- //
 namespace SYMBOLICQSPRAY {
 
-  // -------------------------------------------------------------------------- //
+  // ------------------------------------------------------------------------ //
   static inline Rcpp::List returnSymbolicQspray(SymbolicQspray SQ) { // to return a list to R
     symbolicPolynomial S = SQ.get();
     if(S.size() == 0) {
@@ -37,12 +37,13 @@ namespace SYMBOLICQSPRAY {
     }
   }
 
-  // -------------------------------------------------------------------------- //
+  // ------------------------------------------------------------------------ //
   static inline SymbolicQspray makeSymbolicQspray(
       const Rcpp::List& Powers, const Rcpp::List& Coeffs
   ) {
     symbolicPolynomial S;
-    for(int i = 0; i < Powers.size(); i++) {
+    int n = Powers.size();
+    for(int i = 0; i < n; i++) {
       Rcpp::IntegerVector Exponents = Powers(i);
       powers pows(Exponents.begin(), Exponents.end());
       Rcpp::List coeff = Coeffs(i);
