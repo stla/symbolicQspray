@@ -16,6 +16,9 @@ setClass(
 setMethod(
   "show", "symbolicQspray",
   function(object) {
+    if(is.null(attr(object, "showOpts"))) {
+      showSymbolicQsprayOption(object, "a") <- "a"
+    }
     f <- getShowSymbolicQspray(object)
     cat(f(object), "\n")
     # showQspray <- attr(object, "showQspray") %||% showQsprayCanonical("a")

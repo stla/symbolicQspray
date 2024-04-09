@@ -52,7 +52,7 @@ showSymbolicQspray <- function(showRatioOfQsprays, showMonomial) {
 #'
 #' @return A function which prints \code{symbolicQspray} objects.
 #' @export
-#' @importFrom ratioOfQsprays showRatioOfQspraysCanonical
+#' @importFrom ratioOfQsprays showRatioOfQspraysCanonical showRatioOfQspraysUnivariate
 #' @importFrom qspray showMonomialCanonical
 #'
 #' @note The \code{show} method for \code{symbolicQspray} objects uses
@@ -85,6 +85,15 @@ showSymbolicQsprayCanonical <- function(
   # attr(attr(f, "canonical"), "X") <- X
   # attr(attr(f, "canonical"), "quotientBar") <- quotientBar
   f
+}
+
+showSymbolicQsprayUnivariate <- function(
+    a = "a", X = "X", quotientBar = " %//% ", ...
+) {
+  showSymbolicQspray(
+    showRatioOfQspraysUnivariate(var = a, quotientBar = quotientBar),
+    showMonomialCanonical(X), ...
+  )
 }
 
 #' @title Set show options to a 'symbolicQspray' object
@@ -133,11 +142,25 @@ withAttributes <- function(
   which <-
     match.arg(
       which,
-      c("a", "X", "quotientBar", "showMonomial", "showRatioOfQsprays", "showSymbolicQspray")
+      c(
+        "a", "X", "quotientBar", "showMonomial",
+        "showRatioOfQsprays", "showSymbolicQspray"
+      )
     )
   showOpts <- attr(x, "showOpts") %||% TRUE
   attr(showOpts, which) <- value
-  f <- showSymbolicQsprayCanonical(
+  univariate <- max(vapply(x@coeffs, ratioOfQsprays:::numberOfVariables2, integer(1L))) == 1L
+  sSQ <- if(univariate) {
+    showSymbolicQsprayUnivariate
+  } else {
+    showSymbolicQsprayCanonical
+  }
+  sROQ <- if(univariate) {
+    showRatioOfQspraysUnivariate
+  } else {
+    showRatioOfQspraysCanonical
+  }
+  f <- sSQ(
     attr(showOpts, "a") %||% "a",
     attr(showOpts, "X") %||% "X",
     quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
@@ -147,7 +170,7 @@ withAttributes <- function(
     attr(showOpts, "showRatioOfQsprays") <-
       attr(showOpts, "showRatioOfQsprays") %||%
       attr(f, "showRatioOfQsprays") %||%
-      showRatioOfQspraysCanonical(
+      sROQ(
         attr(showOpts, "a") %||% "a",
         quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
       )
@@ -172,7 +195,7 @@ withAttributes <- function(
   } else if(which == "showMonomial") {
     f <- showSymbolicQspray(
       showRatioOfQsprays = attr(showOpts, "showRatioOfQsprays") %||%
-        showRatioOfQspraysCanonical(
+        sROQ(
           attr(showOpts, "a") %||% "a",
           quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
         )
