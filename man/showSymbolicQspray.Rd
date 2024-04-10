@@ -4,13 +4,29 @@
 \alias{showSymbolicQspray}
 \title{Print a 'symbolicQspray' object}
 \usage{
-showSymbolicQspray(showRatioOfQsprays, showMonomial)
+showSymbolicQspray(
+  showRatioOfQsprays,
+  showMonomial,
+  lbrace = "{ ",
+  rbrace = " }",
+  addition = "  +  ",
+  multiplication = " * "
+)
 }
 \arguments{
 \item{showRatioOfQsprays}{a function which prints a \code{ratioOfQsprays}
 object}
 
-\item{X}{a string, usually a letter, to denote the non-indexed variables}
+\item{showMonomial}{a function which prints a monomial, such as
+\code{\link[qspray:showMonomialXYZ]{showMonomialXYZ()}} (and not
+\code{showMonomialXYZ}!)}
+
+\item{lbrace, rbrace}{used to enclose the coefficients}
+
+\item{addition}{used to separate the terms}
+
+\item{multiplication}{used to separate the coefficient and the monomial
+within a term}
 }
 \value{
 A function which prints a \code{symbolicQspray} object.
@@ -18,6 +34,14 @@ A function which prints a \code{symbolicQspray} object.
 \description{
 Print a \code{symbolicQspray} object given a function to print
   a \code{ratioOfQsprays} object.
+}
+\examples{
+set.seed(421)
+( Qspray <- rSymbolicQspray() )
+showRatioOfQsprays <- showRatioOfQspraysXYZ(c("a", "b", "c"))
+showMonomial <- showMonomialX1X2X3("X")
+f <- showSymbolicQspray(showRatioOfQsprays, showMonomial, "{{{", "}}}")
+f(Qspray)
 }
 \seealso{
 \code{\link{showSymbolicQsprayX1X2X3}},

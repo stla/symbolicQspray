@@ -7,7 +7,7 @@
 Qlone(n)
 }
 \arguments{
-\item{n}{nonnegative integer, the index of the variable}
+\item{n}{positive integer, the index of the variable}
 }
 \value{
 A \code{symbolicQspray} object.
@@ -19,4 +19,5 @@ Creates a polynomial variable for a \code{symbolicQspray}.
 X <- Qlone(1)
 Y <- Qlone(2)
 (X + Y)^2
+Qlone(0) == 1
 }

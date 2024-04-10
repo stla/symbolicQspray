@@ -9,8 +9,8 @@ showSymbolicQsprayOption(x, which) <- value
 \arguments{
 \item{x}{a \code{symbolicQspray} object}
 
-\item{which}{which option to set; this can be \code{"a"}, \code{"X"}
-\code{"showMonomial"}, \code{"showRatioOfQsprays"} or
+\item{which}{which option to set; this can be \code{"a"}, \code{"X"},
+\code{"quotientBar"}, \code{"showMonomial"}, \code{"showRatioOfQsprays"} or
 \code{"showSymbolicQspray"}}
 
 \item{value}{the value for the option}
@@ -22,9 +22,13 @@ This returns the updated \code{symbolicQspray}.
 Set show option to a \code{symbolicQspray} object
 }
 \examples{
+set.seed(421)
 Qspray <- rSymbolicQspray()
 showSymbolicQsprayOption(Qspray, "a") <- "x"
 showSymbolicQsprayOption(Qspray, "X") <- "A"
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
+Qspray
+showSymbolicQsprayOption(Qspray, "showRatioOfQsprays") <-
+  showRatioOfQspraysXYZ()
 Qspray
 }

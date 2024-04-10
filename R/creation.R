@@ -1,7 +1,25 @@
+#' @title The null 'symbolicQspray' polynomial
+#' @description Returns the \code{symbolicQspray} polynomial
+#'   identically equal to 0.
+#' @return A \code{symbolicQspray} object.
+#' @export
+Qzero <- function() {
+  as.symbolicQspray(0L)
+}
+
+#' @title The unit 'symbolicQspray' polynomial
+#' @description Returns the \code{symbolicQspray} polynomial identically
+#'   equal to 1.
+#' @return A \code{symbolicQspray} object.
+#' @export
+Qone <- function() {
+  as.symbolicQspray(1L)
+}
+
 #' @title Polynomial variable
 #' @description Creates a polynomial variable for a \code{symbolicQspray}.
 #'
-#' @param n nonnegative integer, the index of the variable
+#' @param n positive integer, the index of the variable
 #'
 #' @return A \code{symbolicQspray} object.
 #' @export
@@ -9,8 +27,12 @@
 #' X <- Qlone(1)
 #' Y <- Qlone(2)
 #' (X + Y)^2
+#' Qlone(0) == 1
 Qlone <- function(n) {
-  stopifnot(isNonnegativeInteger(n))
+  stopifnot(isPositiveInteger(n))
+  if(n == 0L) {
+    return(Qone())
+  }
   powers    <- integer(n)
   powers[n] <- 1L
   new(

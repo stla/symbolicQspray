@@ -4,14 +4,31 @@
 #'
 #' @param showRatioOfQsprays a function which prints a \code{ratioOfQsprays}
 #'   object
-#' @param X a string, usually a letter, to denote the non-indexed variables
+#' @param showMonomial a function which prints a monomial, such as
+#'  \code{\link[qspray:showMonomialXYZ]{showMonomialXYZ()}} (and not
+#'  \code{showMonomialXYZ}!)
+#' @param lbrace,rbrace used to enclose the coefficients
+#' @param addition used to separate the terms
+#' @param multiplication used to separate the coefficient and the monomial
+#'   within a term
 #'
 #' @return A function which prints a \code{symbolicQspray} object.
 #' @export
 #'
 #' @seealso \code{\link{showSymbolicQsprayX1X2X3}},
 #'   \code{\link{showSymbolicQsprayXYZ}}.
-showSymbolicQspray <- function(showRatioOfQsprays, showMonomial) {
+#'
+#' @examples
+#' set.seed(421)
+#' ( Qspray <- rSymbolicQspray() )
+#' showRatioOfQsprays <- showRatioOfQspraysXYZ(c("a", "b", "c"))
+#' showMonomial <- showMonomialX1X2X3("X")
+#' f <- showSymbolicQspray(showRatioOfQsprays, showMonomial, "{{{", "}}}")
+#' f(Qspray)
+showSymbolicQspray <- function(
+  showRatioOfQsprays, showMonomial, lbrace = "{ ", rbrace = " }",
+  addition = "  +  ", multiplication = " * "
+) {
   f <- function(qspray) {
     if(isQzero(qspray)) {
       return("0")
@@ -19,20 +36,20 @@ showSymbolicQspray <- function(showRatioOfQsprays, showMonomial) {
     qspray <- orderedQspray(qspray)
     monomials <- vapply(qspray@powers, showMonomial, FUN.VALUE = character(1L))
     coeffs <- paste0(
-      "{ ",
+      lbrace,
       vapply(qspray@coeffs, showRatioOfQsprays, character(1L)),
-      " }"
+      rbrace
     )
     nterms <- numberOfTerms(qspray)
     if(monomials[nterms] == "") {
       toPaste <- c(
-        sprintf("%s * %s", coeffs[-nterms], monomials[-nterms]),
+        sprintf("%s%s%s", coeffs[-nterms], multiplication, monomials[-nterms]),
         coeffs[nterms]
       )
     } else {
-      toPaste <- paste0(coeffs, " * ", monomials)
+      toPaste <- paste0(coeffs, multiplication, monomials)
     }
-    paste0(toPaste, collapse = "  +  ")
+    paste0(toPaste, collapse = addition)
   }
   attr(f, "showRatioOfQsprays") <- showRatioOfQsprays
   attr(f, "showMonomial")       <- showMonomial
@@ -65,11 +82,11 @@ showSymbolicQsprayX1X2X3 <- function(
     a = "a", X = "X", quotientBar = " %//% ", ...
 ) {
   f <- showSymbolicQspray(
-    showRatioOfQspraysX1X2X3(var = a, quotientBar = quotientBar),
+    showRatioOfQspraysX1X2X3(a, quotientBar = quotientBar),
     showMonomialX1X2X3(X), ...
   )
   attr(f, "showRatioOfQsprays") <-
-    showRatioOfQspraysX1X2X3(var = a, quotientBar = quotientBar)
+    showRatioOfQspraysX1X2X3(a, quotientBar = quotientBar)
   attr(f, "showMonomial")       <- showMonomialX1X2X3(X)
   # attr(f, "X1X2X3") <- TRUE
   # attr(attr(f, "X1X2X3"), "a") <- a
@@ -114,8 +131,8 @@ showSymbolicQsprayXYZ <- function(
 #' @description Set show option to a \code{symbolicQspray} object
 #'
 #' @param x a \code{symbolicQspray} object
-#' @param which which option to set; this can be \code{"a"}, \code{"X"}
-#'   \code{"showMonomial"}, \code{"showRatioOfQsprays"} or
+#' @param which which option to set; this can be \code{"a"}, \code{"X"},
+#'   \code{"quotientBar"}, \code{"showMonomial"}, \code{"showRatioOfQsprays"} or
 #'   \code{"showSymbolicQspray"}
 #' @param value the value for the option
 #'
@@ -123,10 +140,14 @@ showSymbolicQsprayXYZ <- function(
 #' @export
 #'
 #' @examples
+#' set.seed(421)
 #' Qspray <- rSymbolicQspray()
 #' showSymbolicQsprayOption(Qspray, "a") <- "x"
 #' showSymbolicQsprayOption(Qspray, "X") <- "A"
 #' showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
+#' Qspray
+#' showSymbolicQsprayOption(Qspray, "showRatioOfQsprays") <-
+#'   showRatioOfQspraysXYZ()
 #' Qspray
 `showSymbolicQsprayOption<-` <- function(x, which, value) {
   which <-
