@@ -7,6 +7,10 @@ passShowAttributes <- function(source, target) {
   target
 }
 
+arity <- function(qspray) {
+  suppressWarnings(max(lengths(qspray@powers)))
+}
+
 #' @title (internal) Make a 'symbolicQspray' object from a list
 #' @description This function is for internal usage. It is exported because
 #'   it is also used for internal usage in others packages.

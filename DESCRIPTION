@@ -41,5 +41,6 @@ Collate:
     'creation.R'
     'evaluation.R'
     'internal.R'
-    'show.R'
     'symbolicQspray.R'
+    'queries.R'
+    'show.R'
