@@ -1,12 +1,14 @@
 #' @title Polynomial variable
-#' @description Create a polynomial variable for a \code{symbolicQspray}.
+#' @description Creates a polynomial variable for a \code{symbolicQspray}.
 #'
 #' @param n nonnegative integer, the index of the variable
 #'
-#' @return A \code{qspray} object.
+#' @return A \code{symbolicQspray} object.
 #' @export
 #' @examples
-#' Qlone(2)
+#' X <- Qlone(1)
+#' Y <- Qlone(2)
+#' (X + Y)^2
 Qlone <- function(n) {
   stopifnot(isNonnegativeInteger(n))
   powers    <- integer(n)

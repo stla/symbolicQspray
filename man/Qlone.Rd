@@ -10,11 +10,13 @@ Qlone(n)
 \item{n}{nonnegative integer, the index of the variable}
 }
 \value{
-A \code{qspray} object.
+A \code{symbolicQspray} object.
 }
 \description{
-Create a polynomial variable for a \code{symbolicQspray}.
+Creates a polynomial variable for a \code{symbolicQspray}.
 }
 \examples{
-Qlone(2)
+X <- Qlone(1)
+Y <- Qlone(2)
+(X + Y)^2
 }
