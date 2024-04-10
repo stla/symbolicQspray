@@ -21,7 +21,8 @@
 #' @examples
 #' set.seed(421)
 #' ( Qspray <- rSymbolicQspray() )
-#' showRatioOfQsprays <- showRatioOfQspraysXYZ(c("a", "b", "c"))
+#' showRatioOfQsprays <-
+#'   showRatioOfQspraysXYZ(c("a", "b", "c"), quotientBar = " / ")
 #' showMonomial <- showMonomialX1X2X3("X")
 #' f <- showSymbolicQspray(showRatioOfQsprays, showMonomial, "{{{", "}}}")
 #' f(Qspray)
@@ -67,7 +68,6 @@ showSymbolicQspray <- function(
 #'   spaces, e.g. \code{"/"}
 #' @param ... arguments other than \code{showRatioOfQsprays} and
 #'   \code{showMonomial} passed to \code{\link{showSymbolicQspray}}
-#'   (currently there is no such argument)
 #'
 #' @return A function which prints \code{symbolicQspray} objects.
 #' @export
@@ -107,7 +107,6 @@ showSymbolicQsprayX1X2X3 <- function(
 #'   spaces, e.g. \code{" / "}
 #' @param ... arguments other than \code{showRatioOfQsprays} and
 #'   \code{showMonomial} passed to \code{\link{showSymbolicQspray}}
-#'   (currently there is no such argument)
 #'
 #' @return A function which prints \code{symbolicQspray} objects.
 #' @export

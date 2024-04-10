@@ -50,17 +50,17 @@ setMethod(
 )
 
 
-setAs(
+setAs( # ???
   "qspray", "symbolicQspray", function(from) {
     new(
       "symbolicQspray",
-      powers = from@powers, coeffs = lapply(from@coeffs, as.ratioOfQsprays)
+      powers = list(integer(0L)),
+      coeffs = list(as.ratioOfQsprays(x))
     )
   }
 )
 
 as_symbolicQspray_scalar <- function(x) {
-  attrs <- attributes(x)
   x <- as.ratioOfQsprays(x)
   if(x == 0L) {
     Qspray <- new("symbolicQspray", powers = list(), coeffs = list())

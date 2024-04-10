@@ -38,7 +38,8 @@ Print a \code{symbolicQspray} object given a function to print
 \examples{
 set.seed(421)
 ( Qspray <- rSymbolicQspray() )
-showRatioOfQsprays <- showRatioOfQspraysXYZ(c("a", "b", "c"))
+showRatioOfQsprays <-
+  showRatioOfQspraysXYZ(c("a", "b", "c"), quotientBar = " / ")
 showMonomial <- showMonomialX1X2X3("X")
 f <- showSymbolicQspray(showRatioOfQsprays, showMonomial, "{{{", "}}}")
 f(Qspray)

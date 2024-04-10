@@ -23,8 +23,7 @@ the denominator of a \code{ratioOfQsprays} object, including surrounding
 spaces, e.g. \code{" / "}}
 
 \item{...}{arguments other than \code{showRatioOfQsprays} and
-\code{showMonomial} passed to \code{\link{showSymbolicQspray}}
-(currently there is no such argument)}
+\code{showMonomial} passed to \code{\link{showSymbolicQspray}}}
 }
 \value{
 A function which prints \code{symbolicQspray} objects.

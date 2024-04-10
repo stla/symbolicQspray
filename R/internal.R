@@ -1,5 +1,14 @@
 passShowAttributes <- function(source, target) {
   showOpts <- attr(source, "showOpts")
+  if( # if source has been created with as.symbolicQspray
+    inherits(source, "ratioOfQsprays")
+  ) {
+    sROQ <- attr(showOpts, "showRatioOfQsprays")
+    if(!is.null(sROQ)) {
+      showSymbolicQsprayOption(target, "showRatioOfQsprays") <- sROQ
+    }
+    return(target)
+  }
   inheritable <- isTRUE(attr(showOpts, "inheritable"))
   if(!inheritable) {
     test <- numberOfVariables(source) >= numberOfVariables(target)
