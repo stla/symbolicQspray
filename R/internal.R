@@ -1,9 +1,17 @@
 passShowAttributes <- function(source, target) {
-  attr(target, "showOpts") <- attr(source, "showOpts")
-  # lapply(c("showQspray", "showRatioOfQsprays", "showSymbolicQspray"),
-  #        function(a) {
-  #          attr(target, a) <<- attr(source, a)
-  #        })
+  showOpts <- attr(source, "showOpts")
+  inheritable <- isTRUE(attr(showOpts, "inheritable"))
+  if(!inheritable) {
+    test <- numberOfVariables(source) >= numberOfVariables(target)
+    if(test) {
+      n1 <- max(vapply(source@coeffs, numberOfVariables, integer(1L)))
+      n2 <- max(vapply(target@coeffs, numberOfVariables, integer(1L)))
+      test <- n1 >= n2
+    }
+  }
+  if(inheritable || test) {
+    attr(target, "showOpts") <- showOpts
+  }
   target
 }
 

@@ -116,7 +116,7 @@ showSymbolicQsprayXYZ <- function(
 #' @param x a \code{symbolicQspray} object
 #' @param which which option to set; this can be \code{"a"}, \code{"X"}
 #'   \code{"showMonomial"}, \code{"showRatioOfQsprays"} or
-#'   \code{"showSymbolicQspray}
+#'   \code{"showSymbolicQspray"}
 #' @param value the value for the option
 #'
 #' @return This returns the updated \code{symbolicQspray}.
@@ -170,7 +170,7 @@ showSymbolicQsprayXYZ <- function(
       quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
     )
   }
-  if(which == "a" %||% which == "quotientBar") {
+  if(which == "a" || which == "quotientBar") {
     sM <- attr(showOpts, "showMonomial") %||% sM0
     sROQ <- sROQ0
     f <- showSymbolicQspray(sROQ, sM)
@@ -209,31 +209,24 @@ showSymbolicQsprayXYZ <- function(
 setDefaultShowSymbolicQsprayOption <- function(qspray) {
   trivariate <- numberOfVariables(qspray) <= 3L
   if(trivariate){
-    showQsprayOption(qspray, "showMonomial") <-
+    showSymbolicQsprayOption(qspray, "showMonomial") <-
       showMonomialXYZ(c("X", "Y", "Z"))
+    showSymbolicQsprayOption(qspray, "inheritable") <- FALSE
   } else {
-    showQsprayOption(qspray, "X") <- "X"
+    showSymbolicQsprayOption(qspray, "inheritable") <- TRUE
+    showSymbolicQsprayOption(qspray, "X") <- "X"
   }
-  showQsprayOption(qspray, "inheritable") <- TRUE
   invisible(qspray)
 }
 
 getShowSymbolicQspray <- function(Qspray) {
   showOpts <- attr(Qspray, "showOpts")
-  attr(showOpts, "showSymbolicQspray") %||%
-    showSymbolicQspray(
-      showRatioOfQsprays =
-        attr(showOpts, "showRatioOfQsprays") %||%
-        showRatioOfQspraysX1X2X3(
-          attr(showOpts, "a") %||% "a",
-          quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-        ),
-      showMonomial =
-        attr(showOpts, "showMonomial") %||%
-        showMonomialX1X2X3(
-          attr(showOpts, "X") %||% "X"
-        )
-    )
+  sSQ <- attr(showOpts, "showSymbolicQspray")
+  if(is.null(sSQ)) {
+    Qspray <- setDefaultShowSymbolicQsprayOption(Qspray)
+    sSQ <- attr(attr(Qspray, "showOpts"), "showSymbolicQspray")
+  }
+  sSQ
 }
 
 getShowSymbolicQsprayCoefficient <- function(Qspray) {

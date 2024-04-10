@@ -10,15 +10,16 @@ showSymbolicQspray(showRatioOfQsprays, showMonomial)
 \item{showRatioOfQsprays}{a function which prints a \code{ratioOfQsprays}
 object}
 
-\item{X}{a string, usually a letter, to denote the unindexed variables}
+\item{X}{a string, usually a letter, to denote the non-indexed variables}
 }
 \value{
-A functions which prints a \code{symbolicQspray} object.
+A function which prints a \code{symbolicQspray} object.
 }
 \description{
 Print a \code{symbolicQspray} object given a function to print
   a \code{ratioOfQsprays} object.
 }
 \seealso{
-\code{\link{showSymbolicQsprayCanonical}}
+\code{\link{showSymbolicQsprayX1X2X3}},
+  \code{\link{showSymbolicQsprayXYZ}}.
 }
