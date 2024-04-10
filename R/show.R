@@ -4,15 +4,16 @@
 #'
 #' @param showRatioOfQsprays a function which prints a \code{ratioOfQsprays}
 #'   object
-#' @param X a string, usually a letter, to denote the unindexed variables
+#' @param X a string, usually a letter, to denote the non-indexed variables
 #'
-#' @return A functions which prints a \code{symbolicQspray} object.
+#' @return A function which prints a \code{symbolicQspray} object.
 #' @export
 #'
-#' @seealso \code{\link{showSymbolicQsprayCanonical}}
+#' @seealso \code{\link{showSymbolicQsprayX1X2X3}},
+#'   \code{\link{showSymbolicQsprayXYZ}}.
 showSymbolicQspray <- function(showRatioOfQsprays, showMonomial) {
   f <- function(qspray) {
-    if(length(qspray@coeffs) == 0L) {
+    if(isQzero(qspray)) {
       return("0")
     }
     qspray <- orderedQspray(qspray)
@@ -22,7 +23,7 @@ showSymbolicQspray <- function(showRatioOfQsprays, showMonomial) {
       vapply(qspray@coeffs, showRatioOfQsprays, character(1L)),
       " }"
     )
-    nterms <- length(coeffs)
+    nterms <- numberOfTerms(qspray)
     if(monomials[nterms] == "") {
       toPaste <- c(
         sprintf("%s * %s", coeffs[-nterms], monomials[-nterms]),
@@ -41,95 +42,84 @@ showSymbolicQspray <- function(showRatioOfQsprays, showMonomial) {
 #' @title Print a 'symbolicQspray' object
 #' @description Print a \code{symbolicQspray} object.
 #'
-#' @param a a string, usually a letter, to denote the unindexed variables
+#' @param a a string, usually a letter, to denote the non-indexed variables
 #'   of the \code{ratioOfQsprays} coefficients
-#' @param X a string, usually a letter, to denote the unindexed variables
+#' @param X a string, usually a letter, to denote the non-indexed variables
 #' @param quotientBar a string for the quotient bar between the numerator and
 #'   the denominator of a \code{ratioOfQsprays} object, including surrounding
 #'   spaces, e.g. \code{"/"}
-#' @param ... arguments other than \code{var} passed to
-#'   \code{showSymbolicQspray} (currently there is no such argument)
+#' @param ... arguments other than \code{showRatioOfQsprays} and
+#'   \code{showMonomial} passed to \code{\link{showSymbolicQspray}}
+#'   (currently there is no such argument)
 #'
 #' @return A function which prints \code{symbolicQspray} objects.
 #' @export
-#' @importFrom ratioOfQsprays showRatioOfQspraysCanonical showRatioOfQspraysUnivariate
-#' @importFrom qspray showMonomialCanonical
-#'
-#' @note The \code{show} method for \code{symbolicQspray} objects uses
-#'   \code{showSymbolicQsprayCanonical("a", "X", " \%//\% ")} by default.
-#'   But this can be controlled as follows. If a
-#'   \code{symbolicQspray} object has an attribute \code{"a"}, then the value
-#'   of this attribute will replace \code{"a"} in the \code{show} output.
-#'   If it has a \code{"X"} attribute, then the value of this attribute will
-#'   replace \code{"X"}.
-#'   It is also possible to control the \code{quotientBar} argument by
-#'   assigning a \code{"quotientBar"} attribute to the \code{symbolicQspray}
-#'   object to be printed.
+#' @importFrom ratioOfQsprays showRatioOfQspraysX1X2X3
+#' @importFrom qspray showMonomialX1X2X3
 #'
 #' @examples
 #' set.seed(421)
 #' Qspray <- rSymbolicQspray()
-#' showSymbolicQsprayCanonical(quotientBar = " / ")(Qspray)
-showSymbolicQsprayCanonical <- function(
+#' showSymbolicQsprayX1X2X3(quotientBar = " / ")(Qspray)
+showSymbolicQsprayX1X2X3 <- function(
     a = "a", X = "X", quotientBar = " %//% ", ...
 ) {
   f <- showSymbolicQspray(
-    showRatioOfQspraysCanonical(var = a, quotientBar = quotientBar),
-    showMonomialCanonical(X), ...
+    showRatioOfQspraysX1X2X3(var = a, quotientBar = quotientBar),
+    showMonomialX1X2X3(X), ...
   )
   attr(f, "showRatioOfQsprays") <-
-    showRatioOfQspraysCanonical(var = a, quotientBar = quotientBar)
-  attr(f, "showMonomial")       <- showMonomialCanonical(X)
-  # attr(f, "canonical") <- TRUE
-  # attr(attr(f, "canonical"), "a") <- a
-  # attr(attr(f, "canonical"), "X") <- X
-  # attr(attr(f, "canonical"), "quotientBar") <- quotientBar
+    showRatioOfQspraysX1X2X3(var = a, quotientBar = quotientBar)
+  attr(f, "showMonomial")       <- showMonomialX1X2X3(X)
+  # attr(f, "X1X2X3") <- TRUE
+  # attr(attr(f, "X1X2X3"), "a") <- a
+  # attr(attr(f, "X1X2X3"), "X") <- X
+  # attr(attr(f, "X1X2X3"), "quotientBar") <- quotientBar
   f
 }
 
-showSymbolicQsprayUnivariate <- function(
-    a = "a", X = "X", quotientBar = " %//% ", ...
+#' @title Print a 'symbolicQspray' object
+#' @description Print a \code{symbolicQspray} object.
+#'
+#' @param a a string, usually a letter, to denote the non-indexed variables
+#'   of the \code{ratioOfQsprays} coefficients
+#' @param letters a vector of strings, usually some letters, to denote the
+#'   variables of the polynomial
+#' @param quotientBar a string for the quotient bar between the numerator and
+#'   the denominator of a \code{ratioOfQsprays} object, including surrounding
+#'   spaces, e.g. \code{" / "}
+#' @param ... arguments other than \code{showRatioOfQsprays} and
+#'   \code{showMonomial} passed to \code{\link{showSymbolicQspray}}
+#'   (currently there is no such argument)
+#'
+#' @return A function which prints \code{symbolicQspray} objects.
+#' @export
+#' @importFrom ratioOfQsprays showRatioOfQspraysX1X2X3
+#' @importFrom qspray showMonomialXYZ
+#'
+#' @examples
+#' set.seed(421)
+#' Qspray <- rSymbolicQspray()
+#' showSymbolicQsprayX1X2X3(quotientBar = " / ")(Qspray)
+showSymbolicQsprayXYZ <- function(
+    a = "a", letters = c("X", "Y", "Z"), quotientBar = " %//% ", ...
 ) {
   showSymbolicQspray(
-    showRatioOfQspraysUnivariate(var = a, quotientBar = quotientBar),
-    showMonomialCanonical(X), ...
+    showRatioOfQspraysX1X2X3(a = a, quotientBar = quotientBar),
+    showMonomialXYZ(letters), ...
   )
 }
 
-#' @title Set show options to a 'symbolicQspray' object
-#' @description Set some attributes to a \code{symbolicQspray} object
-#'   to control the way it is displayed. See the note in the
-#'   documentation of \code{\link{showSymbolicQsprayCanonical}} for details.
-#'
-#' @param Qspray a \code{symbolicQspray} object
-#' @param a value for the \code{"a"} attribute
-#' @param X value for the \code{"X"} attribute
-#' @param quotientBar value for the \code{"quotientBar"} attribute
-#'
-#' @return The input \code{symbolicQspray} object with new attributes.
-#' @export
-#'
-#' @examples
-#' ( Qspray <- rSymbolicQspray() )
-#' withAttributes(Qspray, a = "x", X = "A", quotientBar = " / ")
-withAttributes <- function(
-    Qspray, a = "a", X = "X", quotientBar = " %//% "
-) {
-  attr(Qspray, "a") <- a
-  attr(Qspray, "X") <- X
-  attr(Qspray, "quotientBar") <- quotientBar
-  Qspray
-}
-
 #' @title Set show option to a 'qspray' object
-#' @description Set show option to a \code{qspray} object
+#' @description Set show option to a \code{symbolicQspray} object
 #'
-#' @param x a \code{qspray} object
-#' @param which which option to set; this can be \code{"x"},
-#'   \code{"showMonomial"}, or \code{"showQspray"}
-#' @param value the value of the option
+#' @param x a \code{symbolicQspray} object
+#' @param which which option to set; this can be \code{"a"}, \code{"X"}
+#'   \code{"showMonomial"}, \code{"showRatioOfQsprays"} or
+#'   \code{"showSymbolicQspray}
+#' @param value the value for the option
 #'
-#' @return This returns the updated \code{qspray}.
+#' @return This returns the updated \code{symbolicQspray}.
 #' @export
 #'
 #' @examples
@@ -144,91 +134,88 @@ withAttributes <- function(
       which,
       c(
         "a", "X", "quotientBar", "showMonomial",
-        "showRatioOfQsprays", "showSymbolicQspray"
+        "showRatioOfQsprays", "showSymbolicQspray", "inheritable"
       )
     )
   showOpts <- attr(x, "showOpts") %||% TRUE
   attr(showOpts, which) <- value
-  univariate <- max(vapply(x@coeffs, ratioOfQsprays:::numberOfVariables2, integer(1L))) == 1L
-  sSQ <- if(univariate) {
-    showSymbolicQsprayUnivariate
-  } else {
-    showSymbolicQsprayCanonical
+  if(which == "inheritable") {
+    attr(x, "showOpts") <- showOpts
+    return(x)
   }
-  sROQ <- if(univariate) {
-    showRatioOfQspraysUnivariate
+  inheritable <- attr(showOpts, "inheritable") %||% FALSE
+  univariate <- isUnivariate(x)
+  if(univariate) {
+    sM0 <- showMonomialXYZ(attr(showOpts, "X") %||% "X")
+    inheritable <- FALSE
   } else {
-    showRatioOfQspraysCanonical
+    trivariate <- numberOfVariables(x) <= 3L
+    if(trivariate && is.null(attr(showOpts, "X"))) {
+      sM0 <- showMonomialXYZ(c("X", "Y", "Z"))
+      inheritable <- FALSE
+    } else {
+      sM0 <- showMonomialX1X2X3(attr(showOpts, "X") %||% "X")
+    }
   }
-  f <- sSQ(
-    attr(showOpts, "a") %||% "a",
-    attr(showOpts, "X") %||% "X",
-    quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-  )
-  if(which == "showSymbolicQspray") {
+  univariate <- all(vapply(x@coeffs, isUnivariate, logical(1L)))
+  if(univariate) {
+    sROQ0 <- showRatioOfQspraysXYZ(
+      letters = attr(showOpts, "a") %||% "a",
+      quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+    )
+    inheritable <- FALSE
+  } else {
+    sROQ0 <- showRatioOfQspraysX1X2X3(
+      attr(showOpts, "a") %||% "a",
+      quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+    )
+  }
+  if(which == "a" %||% which == "quotientBar") {
+    sM <- attr(showOpts, "showMonomial") %||% sM0
+    sROQ <- sROQ0
+    f <- showSymbolicQspray(sROQ, sM)
+  } else if(which == "X") {
+    sROQ <- attr(showOpts, "showRatioOfQsprays") %||% sROQ0
+    sM <- sM0
+    f <- showSymbolicQspray(sROQ, sM)
+  } else if(which == "showSymbolicQspray") {
     f <- value
-    attr(showOpts, "showRatioOfQsprays") <-
-      attr(showOpts, "showRatioOfQsprays") %||%
-      attr(f, "showRatioOfQsprays") %||%
-      sROQ(
-        attr(showOpts, "a") %||% "a",
-        quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-      )
-    attr(showOpts, "showMonomial") <-
-      attr(showOpts, "showMonomial") %||%
-      attr(f, "showMonomial") %||%
-      showMonomialCanonical(
-        attr(showOpts, "X") %||% "X"
-      )
+    sM <- attr(showOpts, "showMonomial") %||% attr(f, "showMonomial")
+    sROQ <- attr(showOpts, "showRatioOfQsprays") %||%
+      attr(f, "showRatioOfQsprays")
   } else if(which == "showRatioOfQsprays") {
+    sM <- attr(showOpts, "showMonomial") %||% sM0
+    sROQ <- value
     f <- showSymbolicQspray(
-      showRatioOfQsprays = value,
-      showMonomial = showMonomialCanonical(
-        attr(showOpts, "X") %||% attr(value, "X") %||% "X"
-      )
+      showRatioOfQsprays = sROQ,
+      showMonomial = sM
     )
-    attr(showOpts, "showMonomial") <-
-      attr(showOpts, "showMonomial") %||%
-      showMonomialCanonical(
-        attr(showOpts, "X") %||% "X"
-      )
   } else if(which == "showMonomial") {
+    sM <- value
+    sROQ <- attr(showOpts, "showRatioOfQsprays") %||% sROQ0
     f <- showSymbolicQspray(
-      showRatioOfQsprays = attr(showOpts, "showRatioOfQsprays") %||%
-        sROQ(
-          attr(showOpts, "a") %||% "a",
-          quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-        )
+      showRatioOfQsprays = sROQ,
+      showMonomial = sM
     )
   }
-  # # attr(showOpts, "a") <- attr(showOpts, "a") %||% "a"
-  # attr(showOpts, which) <- value
-  # if(which %in% c("a", "X", "quotientBar")) {
-  #   f <- showSymbolicQsprayCanonical(
-  #     a = attr(showOpts, "a") %||% "a",
-  #     X = attr(showOpts, "X") %||% "X",
-  #     quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-  #   )
-  #   attr(showOpts, "showRatioOfQsprays") <-
-  #     showRatioOfQspraysCanonical(
-  #       attr(showOpts, "a") %||% "a",
-  #       quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-  #     )
-  #   # attr(whichOpts, "showQspray") <-
-  #   #   showQsprayCanonical(attr(showOpts, "X") %||% "X")
-  # } else if(which == "showRatioOfQsprays") {
-  #   f <- showSymbolicQspray(
-  #     showRatioOfQsprays = value,
-  #     X = attr(showOpts, "X") %||% "X"
-  #   )
-  #   # attr(whichOpts, "showQspray") <-
-  #   #   showQsprayCanonical(attr(showOpts, "X") %||% "X")
-  # } else {
-  #   f <- value
-  # }
+  sM   -> attr(showOpts, "showMonomial")
+  sROQ -> attr(showOpts, "showRatioOfQsprays")
   attr(showOpts, "showSymbolicQspray") <- f
+  attr(showOpts, "inheritable") <- inheritable
   attr(x, "showOpts") <- showOpts
   x
+}
+
+setDefaultShowSymbolicQsprayOption <- function(qspray) {
+  trivariate <- numberOfVariables(qspray) <= 3L
+  if(trivariate){
+    showQsprayOption(qspray, "showMonomial") <-
+      showMonomialXYZ(c("X", "Y", "Z"))
+  } else {
+    showQsprayOption(qspray, "X") <- "X"
+  }
+  showQsprayOption(qspray, "inheritable") <- TRUE
+  invisible(qspray)
 }
 
 getShowSymbolicQspray <- function(Qspray) {
@@ -237,13 +224,13 @@ getShowSymbolicQspray <- function(Qspray) {
     showSymbolicQspray(
       showRatioOfQsprays =
         attr(showOpts, "showRatioOfQsprays") %||%
-        showRatioOfQspraysCanonical(
+        showRatioOfQspraysX1X2X3(
           attr(showOpts, "a") %||% "a",
           quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
         ),
       showMonomial =
         attr(showOpts, "showMonomial") %||%
-        showMonomialCanonical(
+        showMonomialX1X2X3(
           attr(showOpts, "X") %||% "X"
         )
     )
@@ -252,7 +239,7 @@ getShowSymbolicQspray <- function(Qspray) {
 getShowSymbolicQsprayCoefficient <- function(Qspray) {
   showOpts <- attr(Qspray, "showOpts")
   attr(showOpts, "showRatioOfQsprays") %||%
-    showRatioOfQspraysCanonical(
+    showRatioOfQspraysX1X2X3(
       attr(showOpts, "a") %||% "a",
       quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
     )
