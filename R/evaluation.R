@@ -1,17 +1,18 @@
 #' @title Evaluation of a 'symbolicQspray' object
 #' @description Evaluates a \code{symbolicQspray} object by substituting some
-#'   values to the inner variables or the main variables or both.
+#'   values to the exterior variables or the main variables or both.
 #'
 #' @param Qspray a \code{symbolicQspray} object
-#' @param a values to be substituted to the inner variables
-#' @param X values to be substituted to the main variables
+#' @param a vector of values to be substituted to the exterior variables:
+#'   these values must be coercable to \code{bigq} numbers
+#' @param X list of values to be substituted to the main variables: these
+#'   values must be coercable to \code{ratioOfQsprays} objects
 #'
 #' @return If both \code{a} and \code{X} are \code{NULL}, this returns the
 #'   input \code{symbolicQspray} object; otherwise, if \code{a} is not
-#'   \code{NULL}, this returns a \code{qspray} object, and if \code{X} is not
-#'   \code{NULL}, this returns a \code{ratioOfQsprays} object.
+#'   \code{NULL}, this returns a \code{symbolicQspray} object, and if
+#'   \code{X} is not \code{NULL}, this returns a \code{ratioOfQsprays} object.
 #' @export
-#' @importFrom qspray evalQspray
 #' @importFrom ratioOfQsprays evalRatioOfQsprays
 #' @importFrom gmp c_bigq
 #'
@@ -47,7 +48,6 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
       attr(Q, "showOpts") <- attr(Qspray, "showOpts")
       Q
     } else {
-      # evalQspray(qspray, values_re = X)
       monomials <- lapply(Q@powers, function(exponents) {
         if(length(exponents) != 0L) {
           powers <- lapply(which(exponents != 0L), function(i) {

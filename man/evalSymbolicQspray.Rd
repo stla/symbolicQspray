@@ -9,19 +9,21 @@ evalSymbolicQspray(Qspray, a = NULL, X = NULL)
 \arguments{
 \item{Qspray}{a \code{symbolicQspray} object}
 
-\item{a}{values to be substituted to the inner variables}
+\item{a}{vector of values to be substituted to the exterior variables:
+these values must be coercable to \code{bigq} numbers}
 
-\item{X}{values to be substituted to the main variables}
+\item{X}{list of values to be substituted to the main variables: these
+values must be coercable to \code{ratioOfQsprays} objects}
 }
 \value{
 If both \code{a} and \code{X} are \code{NULL}, this returns the
   input \code{symbolicQspray} object; otherwise, if \code{a} is not
-  \code{NULL}, this returns a \code{qspray} object, and if \code{X} is not
-  \code{NULL}, this returns a \code{ratioOfQsprays} object.
+  \code{NULL}, this returns a \code{symbolicQspray} object, and if
+  \code{X} is not \code{NULL}, this returns a \code{ratioOfQsprays} object.
 }
 \description{
 Evaluates a \code{symbolicQspray} object by substituting some
-  values to the inner variables or the main variables or both.
+  values to the exterior variables or the main variables or both.
 }
 \examples{
 library(symbolicQspray)
