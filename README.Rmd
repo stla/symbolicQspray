@@ -123,3 +123,16 @@ When this is possible, the result of an arithmetic operation between two
 Qspray + Q
 ```
 
+Well, not perfect yet... That should work in this case. 
+Let's try something else:
+
+```{r, collapse=TRUE}
+Qspray <- Qspray + qlone(3)
+showSymbolicQsprayOption(Qspray, "a") <- "x"
+showSymbolicQsprayOption(Qspray, "showMonomial") <- 
+  showMonomialXYZ(c("A", "B", "C"), collapse = ".")
+showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
+Qspray
+Qspray + Q
+```
+

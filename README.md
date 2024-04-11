@@ -44,8 +44,6 @@ Arithmetic on `symbolicQspray` objects is available:
 Qspray^2
 ## { [ a1^2 ] %//% [ a2^4 + 2*a2^2 + 1 ] } * X^4Y^2  +  { [ 2*a1.a2 + 2*a1 ] %//% [ a2^2 + 1 ] } * X^2YZ  +  { [ 2*a1^2 ] %//% [ a2^3 + a2 ] } * X^2Y  +  { [ a2^2 + 2*a2 + 1 ] } * Z^2  +  { [ 2*a1.a2 + 2*a1 ] %//% [ a2 ] } * Z  +  { [ a1^2 ] %//% [ a2^2 ] }
 Qspray - Qspray
-## Warning in max(vapply(target@coeffs, numberOfVariables, integer(1L))): aucun
-## argument pour max ; -Inf est renvoyé
 ## 0
 (Qspray - 1)^2
 ## { [ a1^2 ] %//% [ a2^4 + 2*a2^2 + 1 ] } * X^4Y^2  +  { [ 2*a1.a2 + 2*a1 ] %//% [ a2^2 + 1 ] } * X^2YZ  +  { [ 2*a1^2 - 2*a1.a2 ] %//% [ a2^3 + a2 ] } * X^2Y  +  { [ a2^2 + 2*a2 + 1 ] } * Z^2  +  { [ 2*a1.a2 + 2*a1 - 2*a2^2 - 2*a2 ] %//% [ a2 ] } * Z  +  { [ a1^2 - 2*a1.a2 + a2^2 ] %//% [ a2^2 ] }
@@ -140,7 +138,22 @@ When this is possible, the result of an arithmetic operation between two
 
 ``` r
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ 4*a1^2.a2^2.a3 + 3*a1^2.a3^3 + 1 ] %//% [ 2*a1^4 - 5*a1^2.a2^2.a3^3 - a2.a3^2 ] } * X^4Z^3  +  { [ -5*a1 ] %//% [ -a1^3.a2.a3^3 - 3*a2^4 + 3 ] } * X
+## { [ 4*a1^4.a3^4 + 5*a1^2.a2^3 - 3*a2^4.a3^4 ] %//% [ 3*a1^3.a2^2.a3 - 7*a1^3 - 5*a2^2 ] } * XZ^4  +  { [ 2*a1.a2 + 2*a3 ] %//% [ 4*a1^4 + a1.a2^4.a3^2 ] } * YZ^3
 Qspray + Q
-## { [ 4*a1^2.a2^2.a3 + 3*a1^2.a3^3 + 1 ] %//% [ 2*a1^4 - 5*a1^2.a2^2.a3^3 - a2.a3^2 ] } * X^4Z^3  +  { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ -5*a1 ] %//% [ -a1^3.a2.a3^3 - 3*a2^4 + 3 ] } * X  +  { [ a2 + 1 ] } * Z  +  { [ a1 ] %//% [ a2 ] }
+## { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ 4*a1^4.a3^4 + 5*a1^2.a2^3 - 3*a2^4.a3^4 ] %//% [ 3*a1^3.a2^2.a3 - 7*a1^3 - 5*a2^2 ] } * XZ^4  +  { [ 2*a1.a2 + 2*a3 ] %//% [ 4*a1^4 + a1.a2^4.a3^2 ] } * YZ^3  +  { [ a2 + 1 ] } * Z  +  { [ a1 ] %//% [ a2 ] }
+```
+
+Well, not perfect yet… That should work in this case. Let’s try
+something else:
+
+``` r
+Qspray <- Qspray + qlone(3)
+showSymbolicQsprayOption(Qspray, "a") <- "x"
+showSymbolicQsprayOption(Qspray, "showMonomial") <- 
+  showMonomialXYZ(c("A", "B", "C"), collapse = ".")
+showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
+Qspray
+## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
+Qspray + Q
+## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ 4*x1^4.x3^4 + 5*x1^2.x2^3 - 3*x2^4.x3^4 ] / [ 3*x1^3.x2^2.x3 - 7*x1^3 - 5*x2^2 ] } * A.C^4  +  { [ 2*x1.x2 + 2*x3 ] / [ 4*x1^4 + x1.x2^4.x3^2 ] } * B.C^3  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
 ```

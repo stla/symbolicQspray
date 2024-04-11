@@ -1,6 +1,6 @@
 test_that("evaluation", {
   f <- function(a1, a2, X1, X2, X3) {
-    ((a1/(a2^2+1)) * X1^2*X2)^2  +  (a2+1) * X3  #+  5L
+    ((a1/(a2^2+1)) * X1^2*X2)^2  +  (a2+1) * X3  +  5L
   }
   a1 <- qlone(1)
   a2 <- qlone(2)

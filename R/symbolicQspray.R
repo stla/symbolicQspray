@@ -244,8 +244,7 @@ symbolicQspray_arith_symbolicQspray <- function(e1, e2) {
       "Binary operator %s not defined for symbolicQspray objects.", dQuote(.Generic)
     ))
   )
-  passShowAttributes(e2, Qspray)
-  Qspray
+  passShowAttributes(e1, Qspray)
 }
 setMethod(
   "Arith",
