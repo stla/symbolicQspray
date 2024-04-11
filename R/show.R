@@ -162,7 +162,6 @@ showSymbolicQsprayXYZ <- function(
     attr(x, "showOpts") <- showOpts
     return(x)
   }
-  # inheritable <- attr(showOpts, "inheritable") %||% FALSE
   if(which != "showSymbolicQspray") {
     sMU0 <- attr(showOpts, "showMonomial") %||%
       showMonomialXYZ(attr(showOpts, "X") %||% "X")
@@ -233,7 +232,7 @@ showSymbolicQsprayXYZ <- function(
       attr(f, "showRatioOfQsprays")
   }
   # sM   -> attr(showOpts, "showMonomial")
-  attr(showOpts, "showRatioOfQsprays") <- sROQ
+  # attr(showOpts, "showRatioOfQsprays") <- sROQ NE PAS FAIRE çA !!!
   attr(showOpts, "showSymbolicQspray") <- f
   attr(showOpts, "inheritable") <- inheritable
   attr(x, "showOpts") <- showOpts
