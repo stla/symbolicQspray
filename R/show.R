@@ -54,6 +54,8 @@ showSymbolicQspray <- function(
   }
   attr(f, "showRatioOfQsprays") <- showRatioOfQsprays
   attr(f, "showMonomial")       <- showMonomial
+  attr(f, "inheritable") <- isTRUE(attr(showRatioOfQsprays, "inheritable")) &&
+    isTRUE(attr(showMonomial, "inheritable"))
   f
 }
 
@@ -88,10 +90,7 @@ showSymbolicQsprayX1X2X3 <- function(
   attr(f, "showRatioOfQsprays") <-
     showRatioOfQspraysX1X2X3(a, quotientBar = quotientBar)
   attr(f, "showMonomial")       <- showMonomialX1X2X3(X)
-  # attr(f, "X1X2X3") <- TRUE
-  # attr(attr(f, "X1X2X3"), "a") <- a
-  # attr(attr(f, "X1X2X3"), "X") <- X
-  # attr(attr(f, "X1X2X3"), "quotientBar") <- quotientBar
+  attr(f, "inheritable") <- TRUE
   f
 }
 
@@ -163,80 +162,87 @@ showSymbolicQsprayXYZ <- function(
     attr(x, "showOpts") <- showOpts
     return(x)
   }
-  inheritable <- attr(showOpts, "inheritable") %||% FALSE
-  univariate <- isUnivariate(x)
-  if(univariate) {
-    sM0 <- showMonomialXYZ(attr(showOpts, "X") %||% "X")
-    inheritable <- FALSE
-  } else {
-    trivariate <- numberOfVariables(x) <= 3L
-    if(trivariate && is.null(attr(showOpts, "X"))) {
-      sM0 <- showMonomialXYZ(c("X", "Y", "Z"))
-      inheritable <- FALSE
-    } else {
-      sM0 <- showMonomialX1X2X3(attr(showOpts, "X") %||% "X")
+  # inheritable <- attr(showOpts, "inheritable") %||% FALSE
+  if(which != "showSymbolicQspray") {
+    sMU0 <- attr(showOpts, "showMonomial") %||%
+      showMonomialXYZ(attr(showOpts, "X") %||% "X")
+    sMT0 <- attr(showOpts, "showMonomial")
+    if(is.null(sMT0)) {
+      if(is.null(attr(showOpts, "X"))) {
+        sMT0 <- showMonomialXYZ(c("X", "Y", "Z"))
+      } else {
+        sMT0 <- showMonomialX1X2X3(attr(showOpts, "X"))
+      }
     }
-  }
-  univariate <- all(vapply(x@coeffs, isUnivariate, logical(1L)))
-  if(univariate) {
-    sROQ0 <- showRatioOfQspraysXYZ(
-      letters = attr(showOpts, "a") %||% "a",
-      quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-    )
-    inheritable <- FALSE
-  } else {
-    sROQ0 <- showRatioOfQspraysX1X2X3(
-      attr(showOpts, "a") %||% "a",
-      quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
-    )
-  }
-  if(which == "a" || which == "quotientBar") {
-    sM <- attr(showOpts, "showMonomial") %||% sM0
+    sM0 <- attr(showOpts, "showMonomial") %||%
+      showMonomialX1X2X3(attr(showOpts, "X") %||% "X")
+    inheritableM <- isTRUE(attr(sM0, "inheritable"))
+    sROQU0 <- attr(showOpts, "showRatioOfQsprays")
+    if(is.null(sROQU0)) {
+      sROQU0 <- showRatioOfQspraysXYZ(
+        attr(showOpts, "a") %||% "a",
+        quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+      )
+    }
+    # sROQT0 <- attr(showOpts, "showRatioOfMonomials")
+    # if(is.null(sROQT0)) {
+    #   if(is.null())
+    #   sROQT0 <- showRatioOfQspraysXYZ(
+    #     attr(showOpts, "a") %||% "a",
+    #     quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+    #   )
+    # }
+    sROQ0 <- attr(showOpts, "showRatioOfQsprays")
+    if(is.null(sROQ0)) {
+      sROQ0 <- showRatioOfQspraysX1X2X3(
+        attr(showOpts, "a") %||% "a",
+        quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+      )
+    }
+    inheritableROQ <- isTRUE(attr(sROQ0, "inheritable"))
+    f <- function(Qspray) {
+      univariate <- isUnivariate(Qspray)
+      trivariate <- numberOfVariables(Qspray) <= 3L
+      if(univariate) {
+        sM <- sMU0
+      } else if(trivariate) {
+        sM <- sMT0
+      } else {
+        sM <- sM0
+      }
+      univariate <- all(vapply(Qspray@coeffs, isUnivariate, logical(1L)))
+      # trivariate <- all(vapply(Qspray@coeffs, function(roq) {
+      #   numberOfVariables(roq) <= 3L
+      # }, logical(1L)))
+      if(univariate) {
+        sROQ <- sROQU0
+      # } else if(trivariate) {
+      #   sROQ <- sROQT0
+      } else {
+        sROQ <- sROQ0
+      }
+      showSymbolicQspray(sROQ, sM)(Qspray)
+    }
+    inheritable <- inheritableROQ && inheritableM
     sROQ <- sROQ0
-    f <- showSymbolicQspray(sROQ, sM)
-  } else if(which == "X") {
-    sROQ <- attr(showOpts, "showRatioOfQsprays") %||% sROQ0
-    sM <- sM0
-    f <- showSymbolicQspray(sROQ, sM)
-  } else if(which == "showSymbolicQspray") {
+  } else {
     f <- value
-    sM <- attr(showOpts, "showMonomial") %||% attr(f, "showMonomial")
+    inheritable <- attr(f, "inheritable")
+    # sM <- attr(showOpts, "showMonomial") %||% attr(f, "showMonomial")
     sROQ <- attr(showOpts, "showRatioOfQsprays") %||%
       attr(f, "showRatioOfQsprays")
-  } else if(which == "showRatioOfQsprays") {
-    sM <- attr(showOpts, "showMonomial") %||% sM0
-    sROQ <- value
-    f <- showSymbolicQspray(
-      showRatioOfQsprays = sROQ,
-      showMonomial = sM
-    )
-  } else if(which == "showMonomial") {
-    sM <- value
-    sROQ <- attr(showOpts, "showRatioOfQsprays") %||% sROQ0
-    f <- showSymbolicQspray(
-      showRatioOfQsprays = sROQ,
-      showMonomial = sM
-    )
   }
-  sM   -> attr(showOpts, "showMonomial")
-  sROQ -> attr(showOpts, "showRatioOfQsprays")
+  # sM   -> attr(showOpts, "showMonomial")
+  attr(showOpts, "showRatioOfQsprays") <- sROQ
   attr(showOpts, "showSymbolicQspray") <- f
   attr(showOpts, "inheritable") <- inheritable
   attr(x, "showOpts") <- showOpts
   x
 }
 
-setDefaultShowSymbolicQsprayOption <- function(qspray) {
-  trivariate <- numberOfVariables(qspray) <= 3L
-  if(trivariate){
-    showSymbolicQsprayOption(qspray, "showMonomial") <-
-      showMonomialXYZ(c("X", "Y", "Z"))
-    showSymbolicQsprayOption(qspray, "inheritable") <- FALSE
-  } else {
-    showSymbolicQsprayOption(qspray, "inheritable") <- TRUE
-    showSymbolicQsprayOption(qspray, "X") <- "X"
-  }
-  invisible(qspray)
+setDefaultShowSymbolicQsprayOption <- function(Qspray) {
+  showSymbolicQsprayOption(Qspray, "quotientBar") <- " %//% "
+  invisible(Qspray)
 }
 
 getShowSymbolicQspray <- function(Qspray) {
@@ -245,6 +251,7 @@ getShowSymbolicQspray <- function(Qspray) {
   if(is.null(sSQ)) {
     Qspray <- setDefaultShowSymbolicQsprayOption(Qspray)
     sSQ <- attr(attr(Qspray, "showOpts"), "showSymbolicQspray")
+    attr(sSQ, "inheritable") <- TRUE
   }
   sSQ
 }
