@@ -109,8 +109,17 @@ You can change the way a `symbolicQspray` is printed by using
 
 ```{r, collapse=TRUE}
 showSymbolicQsprayOption(Qspray, "a") <- "x"
-showSymbolicQsprayOption(Qspray, "X") <- "A"
+showSymbolicQsprayOption(Qspray, "showMonomial") <- 
+  showMonomialXYZ(c("A", "B", "C"), collapse = ".")
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
+```
+
+When this is possible, the result of an arithmetic operation between two 
+`symbolicQspray` objects inherits the show options of the first operand:
+
+```{r, collapse=TRUE}
+( Q <- rSymbolicQspray() ) # a random symbolicQspray
+Qspray + Q
 ```
 

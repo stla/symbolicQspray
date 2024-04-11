@@ -13,8 +13,12 @@ passShowAttributes <- function(source, target) {
   if(!inheritable) {
     test <- numberOfVariables(source) >= numberOfVariables(target)
     if(test) {
-      n1 <- max(vapply(source@coeffs, numberOfVariables, integer(1L)))
-      n2 <- max(vapply(target@coeffs, numberOfVariables, integer(1L)))
+      n1 <- suppressWarnings(
+        max(vapply(source@coeffs, numberOfVariables, integer(1L)))
+      )
+      n2 <- suppressWarnings(
+        max(vapply(target@coeffs, numberOfVariables, integer(1L)))
+      )
       test <- n1 >= n2
     }
   }
@@ -73,4 +77,22 @@ isPositiveInteger <- function(x) {
 
 isNonnegativeInteger <- function(x) {
   is.numeric(x) && length(x) == 1L && !is.na(x) && floor(x) == x && x != 0
+}
+
+isExponents <- function(x) {
+  is.numeric(x) && !anyNA(x) && all(floor(x) == x)
+}
+
+#' @importFrom utils head
+#' @noRd
+removeTrailingZeros <- function(x) {
+  n <- length(x)
+  while(x[n] == 0 && n > 0L) {
+    n <- n - 1L
+  }
+  head(x, n)
+}
+
+grow <- function(powers, n) {
+  c(powers, integer(n - length(powers)))
 }

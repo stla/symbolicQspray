@@ -93,6 +93,7 @@ setMethod(
         coeff <- qspray@coeffs[[i]]
       }
     }
+    coeff
   }
 )
 
