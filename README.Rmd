@@ -19,9 +19,9 @@ coefficients are fractions of polynomials. For example:
 ```{r, message=FALSE, collapse=TRUE}
 library(symbolicQspray)
 f <- function(a1, a2, X1, X2, X3) {
-  (a1/(a2^2+1)) * X1^2*X2  +  (a2+1) * X3
+  (a1/(a2^2+1)) * X1^2*X2  +  (a2+1) * X3  +  a1/a2
 }
-# "exterior" variables:
+# "exterior" variables, occuring in the coefficients:
 a1 <- qlone(1)
 a2 <- qlone(2)
 # "main" variables:
@@ -32,15 +32,26 @@ X3 <- Qlone(3)
 ( Qspray <- f(a1, a2, X1, X2, X3) )
 ```
 
+The fractions of polynomials such as the first coefficient `a1/(a2^2+1)` 
+in the above example are 
+[**ratioOfSprays**](https://github.com/stla/ratioOfQsprays) objects, 
+and the numerator and the denominator of a `ratioOfQsprays` are 
+[**qspray**](https://github.com/stla/qspray) objects.
+
 Arithmetic on `symbolicQspray` objects is available:
 
 ```{r, message=FALSE, collapse=TRUE}
 Qspray^2
 Qspray - Qspray
+(Qspray - 1)^2
+Qspray^2 - 2*Qspray + 1
 ```
 
+
+## Evaluating a `symbolicQspray`
+
 Substituting the "exterior" variables (the variables occurring in the ratios of 
-polynomials) yields a `symbolicQspray` object:
+polynomials) yields another `symbolicQspray`:
 
 ```{r, message=FALSE, collapse=TRUE}
 a <- c(2, "3/2")
@@ -60,6 +71,7 @@ Checking the consistency:
 evalSymbolicQspray(Qspray, a = a, X = X)
 evalSymbolicQspray(Q, X = X)
 evalRatioOfQsprays(ratioOfQsprays, a)
+f(gmp::as.bigq(a[1]), gmp::as.bigq(a[2]), X[1], X[2], X[3])
 ```
 
 Actually we can more generally use some `ratioOfQsprays` objects for the 
@@ -72,5 +84,33 @@ X <- list(
 )
 evalSymbolicQspray(Qspray, a = a, X = X)
 evalSymbolicQspray(Q, X = X)
+```
+
+
+## Querying a `symbolicQspray` 
+
+The package provides some functions to perform elementary queries on a 
+`symbolicQspray`:
+
+```{r, collapse=TRUE}
+numberOfVariables(Qspray)
+numberOfTerms(Qspray)
+getCoefficient(Qspray, c(2, 1))
+getConstantTerm(Qspray)
+isUnivariate(Qspray)
+isConstant(Qspray)
+```
+
+
+## Showing a `symbolicQspray` 
+
+You can change the way a `symbolicQspray` is printed by using 
+`showSymbolicQsprayOption`:
+
+```{r, collapse=TRUE}
+showSymbolicQsprayOption(Qspray, "a") <- "x"
+showSymbolicQsprayOption(Qspray, "X") <- "A"
+showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
+Qspray
 ```
 
