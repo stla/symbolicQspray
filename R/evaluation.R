@@ -23,35 +23,50 @@
 #' X2 <- Qlone(2)
 #' X3 <- Qlone(3)
 #' ( Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3 )
-#' ( qspray <- evalSymbolicQspray(Qspray, a = c(2, 3)) )
-#' ( roq <- evalSymbolicQspray(Qspray, X = c(4, 3, 2)) )
-#' evalSymbolicQspray(Qspray, a = c(2, 3), X = c(4, 3, 2))
-#' evalQspray(qspray, c(4, 3, 2))
-#' evalRatioOfQsprays(roq, c(2, 3))
+#' a <- c(2, 3)
+#' X <- c(4, 3, 2)
+#' ( qspray <- evalSymbolicQspray(Qspray, a = a) )
+#' ( roq <- evalSymbolicQspray(Qspray, X = X) )
+#' evalSymbolicQspray(Qspray, a = a, X = X)
+#' evalQspray(qspray, X)
+#' evalRatioOfQsprays(roq, a)
+#' # More generally, X is a list of `ratioOfQsprays` objects
+#' X <- list(qlone(1)/(1+qlone(1)), qlone(2)/(qlone(1)^2), qlone(3)/qlone(1))
+#' evalSymbolicQspray(Qspray, a = a, X = X)   # ratioOfQsprays
+#' ( Q <- evalSymbolicQspray(Qspray, a = a) ) # symbolicQspray
+#' evalSymbolicQspray(Q, X = X)               # ratioOfQsprays
 evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
   if(!is.null(a)) {
     coeffs <- c_bigq(lapply(Qspray@coeffs, evalRatioOfQsprays, values_re = a))
-    qspray <- new(
-      "qspray",
+    Q <- new(
+      "symbolicQspray",
       powers = Qspray@powers,
-      coeffs = as.character(coeffs)
+      coeffs = lapply(coeffs, as.ratioOfQsprays)
     )
     if(is.null(X)) {
-      attr(qspray, "showOpts") <- attr(Qspray, "showOpts")
-      qspray
+      attr(Q, "showOpts") <- attr(Qspray, "showOpts")
+      Q
     } else {
-      evalQspray(qspray, values_re = X)
+      # evalQspray(qspray, values_re = X)
+      monomials <- lapply(Q@powers, function(exponents) {
+        if(length(exponents) != 0L) {
+          powers <- lapply(which(exponents != 0L), function(i) {
+            X[[i]]^exponents[i]
+          })
+          Reduce(`*`, powers)
+        } else {
+          as.ratioOfQsprays(1L)
+        }
+      })
+      coeffs <- Q@coeffs
+      roq <- as.ratioOfQsprays(0L)
+      for(i in seq_along(coeffs)) {
+        roq <- coeffs[[i]] * monomials[[i]] + roq
+      }
+      #attr(roq, "showOpts") <- attr(coeffs[[1]], "showOpts")
+      roq
     }
   } else if(!is.null(X)){
-    # monomials <- lapply(Qspray@powers, function(exponents) {
-    #   new("qspray", powers = list(exponents), coeffs = "1")
-    # })
-    # scalars <- lapply(monomials, evalQspray, values_re = X)
-    # coeffs <- Qspray@coeffs
-    # roq <- as.ratioOfQsprays(0L)
-    # for(i in seq_along(scalars)) {
-    #   roq <- roq + scalars[[i]] * coeffs[[i]]
-    # }
     monomials <- lapply(Qspray@powers, function(exponents) {
       if(length(exponents) != 0L) {
         powers <- lapply(which(exponents != 0L), function(i) {
@@ -65,7 +80,7 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
     coeffs <- Qspray@coeffs
     roq <- as.ratioOfQsprays(0L)
     for(i in seq_along(coeffs)) {
-      roq <- roq + coeffs[[i]] * monomials[[i]]
+      roq <- coeffs[[i]] * monomials[[i]] + roq
     }
     #attr(roq, "showOpts") <- attr(coeffs[[1]], "showOpts")
     roq

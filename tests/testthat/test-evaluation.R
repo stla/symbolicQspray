@@ -1,6 +1,6 @@
 test_that("evaluation", {
   f <- function(a1, a2, X1, X2, X3) {
-    ((a1/(a2^2+1)) * X1^2*X2)^2  +  (a2+1) * X3 + 5L
+    ((a1/(a2^2+1)) * X1^2*X2)^2  +  (a2+1) * X3  #+  5L
   }
   a1 <- qlone(1)
   a2 <- qlone(2)
@@ -18,4 +18,9 @@ test_that("evaluation", {
   result <- evalSymbolicQspray(Qspray, a = a, X = X)
   expect_true(result == evalQspray(qspray, X))
   expect_true(result == evalRatioOfQsprays(ratioOfQsprays, a))
+  #
+  X <- list(qlone(1)/(1+qlone(1)), qlone(2)/(qlone(1)^2), qlone(3)/qlone(1))
+  result <- evalSymbolicQspray(Qspray, a = a, X = X)
+  Q <- evalSymbolicQspray(Qspray, a = a)
+  expect_true(evalSymbolicQspray(Q, X = X) == result)
 })
