@@ -21,7 +21,7 @@ library(symbolicQspray)
 f <- function(a1, a2, X1, X2, X3) {
   (a1/(a2^2+1)) * X1^2*X2  +  (a2+1) * X3
 }
-# "inner" variables:
+# "exterior" variables:
 a1 <- qlone(1)
 a2 <- qlone(2)
 # "main" variables:
@@ -39,18 +39,18 @@ Qspray^2
 Qspray - Qspray
 ```
 
-Substituting the "inner" variables (the variables occurring in the ratios of 
-polynomials) yields a `qspray` object:
+Substituting the "exterior" variables (the variables occurring in the ratios of 
+polynomials) yields a `symbolicQspray` object:
 
 ```{r, message=FALSE, collapse=TRUE}
 a <- c(2, "3/2")
-( qspray <- evalSymbolicQspray(Qspray, a = a) )
+( Q <- evalSymbolicQspray(Qspray, a = a) )
 ```
 
 Substituting the "main" variables yields a `ratioOfQsprays` object:
 
 ```{r, message=FALSE, collapse=TRUE}
-X <-  c(4, 3, "2/5")
+X <- gmp::as.bigq(c(4, 3, "2/5"))
 ( ratioOfQsprays <- evalSymbolicQspray(Qspray, X = X) )
 ```
 
@@ -58,7 +58,19 @@ Checking the consistency:
 
 ```{r, message=FALSE, collapse=TRUE}
 evalSymbolicQspray(Qspray, a = a, X = X)
-evalQspray(qspray, X)
+evalSymbolicQspray(Q, X = X)
 evalRatioOfQsprays(ratioOfQsprays, a)
+```
+
+Actually we can more generally use some `ratioOfQsprays` objects for the 
+values of `X`, since a `symbolicQspray` object is a polynomial with 
+`ratioOfQsprays` coefficients:
+
+```{r, message=FALSE, collapse=TRUE}
+X <- list(
+  qlone(1)/(1+qlone(1)), qlone(2)/qlone(1)^2, (qlone(2) + qlone(3))/qlone(1)
+)
+evalSymbolicQspray(Qspray, a = a, X = X)
+evalSymbolicQspray(Q, X = X)
 ```
 
