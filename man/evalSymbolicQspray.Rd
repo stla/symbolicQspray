@@ -31,9 +31,16 @@ X1 <- Qlone(1)
 X2 <- Qlone(2)
 X3 <- Qlone(3)
 ( Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3 )
-( qspray <- evalSymbolicQspray(Qspray, a = c(2, 3)) )
-( roq <- evalSymbolicQspray(Qspray, X = c(4, 3, 2)) )
-evalSymbolicQspray(Qspray, a = c(2, 3), X = c(4, 3, 2))
-evalQspray(qspray, c(4, 3, 2))
-evalRatioOfQsprays(roq, c(2, 3))
+a <- c(2, 3)
+X <- c(4, 3, 2)
+( qspray <- evalSymbolicQspray(Qspray, a = a) )
+( roq <- evalSymbolicQspray(Qspray, X = X) )
+evalSymbolicQspray(Qspray, a = a, X = X)
+evalQspray(qspray, X)
+evalRatioOfQsprays(roq, a)
+# More generally, X is a list of `ratioOfQsprays` objects
+X <- list(qlone(1)/(1+qlone(1)), qlone(2)/(qlone(1)^2), qlone(3)/qlone(1))
+evalSymbolicQspray(Qspray, a = a, X = X)   # ratioOfQsprays
+( Q <- evalSymbolicQspray(Qspray, a = a) ) # symbolicQspray
+evalSymbolicQspray(Q, X = X)               # ratioOfQsprays
 }
