@@ -10,16 +10,12 @@ passShowAttributes <- function(source, target) {
   }
   sSQ <- getShowSymbolicQspray(source)
   showOpts <- attr(source, "showOpts")
-  inheritable <- !is.null(attr(showOpts, "inheritable")) &&
-    isTRUE(all(attr(showOpts, "inheritable")))
-  if(inheritable) {
+  inheritable <- attr(showOpts, "inheritable")
+  inheritableSROQ <- isTRUE(attr(inheritable, "sROQ"))
+  inheritableSM   <- isTRUE(attr(inheritable, "sM"))
+  if(inheritableSROQ && inheritableSM) {
     attr(target, "showOpts") <- showOpts
-    return(target)
-  }
-  if(!inheritable) {
-    inheritableSROQ <- isTRUE(attr(showOpts, "inheritable")[["SROQ"]])
-    inheritableSM   <- isTRUE(attr(showOpts, "inheritable")[["SM"]]) ||
-      numberOfVariables(source) >= numberOfVariables(target)
+  } else {
     if(!inheritableSROQ) {
       n1 <- suppressWarnings(
         max(vapply(source@coeffs, numberOfVariables, integer(1L)))
@@ -33,12 +29,14 @@ passShowAttributes <- function(source, target) {
       showSymbolicQsprayOption(target, "showRatioOfQsprays") <-
         attr(sSQ, "showRatioOfQsprays")
     }
+    inheritableSM <- inheritableSM ||
+      numberOfVariables(source) >= numberOfVariables(target)
     if(inheritableSM) {
       showSymbolicQsprayOption(target, "showMonomial") <-
         attr(sSQ, "showMonomial")
     }
-    return(target)
   }
+  target
 }
 
 arity <- function(qspray) {

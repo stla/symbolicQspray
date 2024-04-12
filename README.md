@@ -138,9 +138,9 @@ When this is possible, the result of an arithmetic operation between two
 
 ``` r
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ -4*a1^3.a2^3.a3^4 - a1^3.a3^2 ] %//% [ 3*a2^4 + a2^2 + 4*a3^2 ] } * X^2Y^4
+## { [ 2 ] %//% [ 5*a1^3.a3 + 2*a1^3 + 3*a2^3.a3^3 ] } * XZ^3  +  { [ -5*a1^3.a2^3 + a2 + 4 ] %//% [ 5*a1^3.a2^2.a3 ] } * X  +  { [ 4*a1^2.a3^4 ] %//% [ 3*a1^3.a3^3 + 2*a1^3 + 2*a3^3 ] }
 Qspray + Q
-## { [ -4*x1^3.x2^3.x3^4 - x1^3.x3^2 ] / [ 3*x2^4 + x2^2 + 4*x3^2 ] } * A^2.B^4  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
+## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ 2 ] / [ 5*x1^3.x3 + 2*x1^3 + 3*x2^3.x3^3 ] } * A.C^3  +  { [ -5*x1^3.x2^3 + x2 + 4 ] / [ 5*x1^3.x2^2.x3 ] } * A  +  { [ x2 + 1 ] } * C  +  { [ 3*x1^4.x3^3 + 2*x1^4 + 4*x1^2.x2.x3^4 + 2*x1.x3^3 ] / [ 3*x1^3.x2.x3^3 + 2*x1^3.x2 + 2*x2.x3^3 ] }
 ```
 
 Well, not perfect yet… That should work in this case. Let’s try
@@ -155,5 +155,5 @@ showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
 ## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
 Qspray + Q
-## { [ -4*x1^3.x2^3.x3^4 - x1^3.x3^2 ] / [ 3*x2^4 + x2^2 + 4*x3^2 ] } * A^2.B^4  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
+## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ 2 ] / [ 5*x1^3.x3 + 2*x1^3 + 3*x2^3.x3^3 ] } * A.C^3  +  { [ -5*x1^3.x2^3 + x2 + 4 ] / [ 5*x1^3.x2^2.x3 ] } * A  +  { [ x2 + 1 ] } * C  +  { [ 3*x1^4.x3^3 + 2*x1^4 + 3*x1^3.x2.x3^4 + 2*x1^3.x2.x3 + 4*x1^2.x2.x3^4 + 2*x1.x3^3 + 2*x2.x3^4 ] / [ 3*x1^3.x2.x3^3 + 2*x1^3.x2 + 2*x2.x3^3 ] }
 ```
