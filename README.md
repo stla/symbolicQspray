@@ -130,7 +130,7 @@ showSymbolicQsprayOption(Qspray, "showMonomial") <-
   showMonomialXYZ(c("A", "B", "C"), collapse = ".")
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
-## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
+## { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a2 + 1 ] } * Z  +  { [ a1 ] %//% [ a2 ] }
 ```
 
 When this is possible, the result of an arithmetic operation between two
@@ -138,9 +138,9 @@ When this is possible, the result of an arithmetic operation between two
 
 ``` r
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ 4*a1^4.a3^4 + 5*a1^2.a2^3 - 3*a2^4.a3^4 ] %//% [ 3*a1^3.a2^2.a3 - 7*a1^3 - 5*a2^2 ] } * XZ^4  +  { [ 2*a1.a2 + 2*a3 ] %//% [ 4*a1^4 + a1.a2^4.a3^2 ] } * YZ^3
+## { [ a1^2.a3 + 4*a2^3.a3^2 + 4 ] %//% [ -2*a1^4.a2^4.a3^3 ] } * X^4  +  { [ -3*a1^3 + 5*a1^2.a2^3.a3^2 - a2^2 ] %//% [ -a1^3.a3 - 4*a2^3.a3^3 ] } * X^3Y^4  +  { [ a1^2.a3^2 ] %//% [ -a2^4 ] } * Y^4Z^4
 Qspray + Q
-## { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ 4*a1^4.a3^4 + 5*a1^2.a2^3 - 3*a2^4.a3^4 ] %//% [ 3*a1^3.a2^2.a3 - 7*a1^3 - 5*a2^2 ] } * XZ^4  +  { [ 2*a1.a2 + 2*a3 ] %//% [ 4*a1^4 + a1.a2^4.a3^2 ] } * YZ^3  +  { [ a2 + 1 ] } * Z  +  { [ a1 ] %//% [ a2 ] }
+## { [ a1^2.a3 + 4*a2^3.a3^2 + 4 ] %//% [ -2*a1^4.a2^4.a3^3 ] } * X^4  +  { [ -3*a1^3 + 5*a1^2.a2^3.a3^2 - a2^2 ] %//% [ -a1^3.a3 - 4*a2^3.a3^3 ] } * X^3Y^4  +  { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a1^2.a3^2 ] %//% [ -a2^4 ] } * Y^4Z^4  +  { [ a2 + 1 ] } * Z  +  { [ a1 ] %//% [ a2 ] }
 ```
 
 Well, not perfect yet… That should work in this case. Let’s try
@@ -153,7 +153,7 @@ showSymbolicQsprayOption(Qspray, "showMonomial") <-
   showMonomialXYZ(c("A", "B", "C"), collapse = ".")
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
-## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
+## { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a2 + 1 ] } * Z  +  { [ a1 + a2.a3 ] %//% [ a2 ] }
 Qspray + Q
-## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ 4*x1^4.x3^4 + 5*x1^2.x2^3 - 3*x2^4.x3^4 ] / [ 3*x1^3.x2^2.x3 - 7*x1^3 - 5*x2^2 ] } * A.C^4  +  { [ 2*x1.x2 + 2*x3 ] / [ 4*x1^4 + x1.x2^4.x3^2 ] } * B.C^3  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
+## { [ a1^2.a3 + 4*a2^3.a3^2 + 4 ] %//% [ -2*a1^4.a2^4.a3^3 ] } * X^4  +  { [ -3*a1^3 + 5*a1^2.a2^3.a3^2 - a2^2 ] %//% [ -a1^3.a3 - 4*a2^3.a3^3 ] } * X^3Y^4  +  { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a1^2.a3^2 ] %//% [ -a2^4 ] } * Y^4Z^4  +  { [ a2 + 1 ] } * Z  +  { [ a1 + a2.a3 ] %//% [ a2 ] }
 ```
