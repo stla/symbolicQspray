@@ -1,7 +1,7 @@
 The ‘symbolicQspray’ package
 ================
 Stéphane Laurent
-2024-04-11
+2024-04-12
 
 *Symbolic multivariate polynomials.*
 
@@ -130,7 +130,7 @@ showSymbolicQsprayOption(Qspray, "showMonomial") <-
   showMonomialXYZ(c("A", "B", "C"), collapse = ".")
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
-## { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a2 + 1 ] } * Z  +  { [ a1 ] %//% [ a2 ] }
+## { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ x1 ] / [ x2 ] }
 ```
 
 When this is possible, the result of an arithmetic operation between two
@@ -138,9 +138,9 @@ When this is possible, the result of an arithmetic operation between two
 
 ``` r
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ a1^2.a3 + 4*a2^3.a3^2 + 4 ] %//% [ -2*a1^4.a2^4.a3^3 ] } * X^4  +  { [ -3*a1^3 + 5*a1^2.a2^3.a3^2 - a2^2 ] %//% [ -a1^3.a3 - 4*a2^3.a3^3 ] } * X^3Y^4  +  { [ a1^2.a3^2 ] %//% [ -a2^4 ] } * Y^4Z^4
+## { [ -2*a2^3.a3^3 - 4*a3 ] %//% [ a1^3.a3 - 4*a2^4 + 5*a2 ] } * X^3Y^4  +  { [ 4*a2^2 + 8 ] %//% [ -3*a1^4.a2^3.a3^4 + 2*a1.a2^3 ] } * X^3Z^2  +  { [ -4*a1^4.a2^3 - 2*a1^4.a3^3 - 2*a2 ] %//% [ 2*a2.a3^4 ] }
 Qspray + Q
-## { [ a1^2.a3 + 4*a2^3.a3^2 + 4 ] %//% [ -2*a1^4.a2^4.a3^3 ] } * X^4  +  { [ -3*a1^3 + 5*a1^2.a2^3.a3^2 - a2^2 ] %//% [ -a1^3.a3 - 4*a2^3.a3^3 ] } * X^3Y^4  +  { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a1^2.a3^2 ] %//% [ -a2^4 ] } * Y^4Z^4  +  { [ a2 + 1 ] } * Z  +  { [ a1 ] %//% [ a2 ] }
+## { [ -2*x2^3.x3^3 - 4*x3 ] / [ x1^3.x3 - 4*x2^4 + 5*x2 ] } * X^3Y^4  +  { [ 4*x2^2 + 8 ] / [ -3*x1^4.x2^3.x3^4 + 2*x1.x2^3 ] } * X^3Z^2  +  { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ -4*x1^4.x2^3 - 2*x1^4.x3^3 + 2*x1.x3^4 - 2*x2 ] / [ 2*x2.x3^4 ] }
 ```
 
 Well, not perfect yet… That should work in this case. Let’s try
@@ -153,7 +153,7 @@ showSymbolicQsprayOption(Qspray, "showMonomial") <-
   showMonomialXYZ(c("A", "B", "C"), collapse = ".")
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
-## { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a2 + 1 ] } * Z  +  { [ a1 + a2.a3 ] %//% [ a2 ] }
+## { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ x1 + x2.x3 ] / [ x2 ] }
 Qspray + Q
-## { [ a1^2.a3 + 4*a2^3.a3^2 + 4 ] %//% [ -2*a1^4.a2^4.a3^3 ] } * X^4  +  { [ -3*a1^3 + 5*a1^2.a2^3.a3^2 - a2^2 ] %//% [ -a1^3.a3 - 4*a2^3.a3^3 ] } * X^3Y^4  +  { [ a1 ] %//% [ a2^2 + 1 ] } * X^2Y  +  { [ a1^2.a3^2 ] %//% [ -a2^4 ] } * Y^4Z^4  +  { [ a2 + 1 ] } * Z  +  { [ a1 + a2.a3 ] %//% [ a2 ] }
+## { [ -2*x2^3.x3^3 - 4*x3 ] / [ x1^3.x3 - 4*x2^4 + 5*x2 ] } * X^3Y^4  +  { [ 4*x2^2 + 8 ] / [ -3*x1^4.x2^3.x3^4 + 2*x1.x2^3 ] } * X^3Z^2  +  { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ -4*x1^4.x2^3 - 2*x1^4.x3^3 + 2*x1.x3^4 + 2*x2.x3^5 - 2*x2 ] / [ 2*x2.x3^4 ] }
 ```

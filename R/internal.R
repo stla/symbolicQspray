@@ -1,14 +1,15 @@
 passShowAttributes <- function(source, target) {
-  showOpts <- attr(source, "showOpts")
   if( # if source has been created with as.symbolicQspray
     inherits(source, "ratioOfQsprays")
   ) {
-    sROQ <- attr(showOpts, "showRatioOfQsprays")
+    sROQ <- attr(attr(source, "showOpts"), "showRatioOfQsprays")
     if(!is.null(sROQ)) {
       showSymbolicQsprayOption(target, "showRatioOfQsprays") <- sROQ
     }
     return(target)
   }
+  sSQ <- getShowSymbolicQspray(source)
+  showOpts <- attr(source, "showOpts")
   inheritable <- !is.null(attr(showOpts, "inheritable")) &&
     isTRUE(all(attr(showOpts, "inheritable")))
   if(inheritable) {
@@ -30,11 +31,11 @@ passShowAttributes <- function(source, target) {
     }
     if(inheritableSROQ) {
       showSymbolicQsprayOption(target, "showRatioOfQsprays") <-
-        attr(attr(showOpts, "showSymbolicQsprayOption"), "showRatioOfQsprays")
+        attr(sSQ, "showRatioOfQsprays")
     }
     if(inheritableSM) {
       showSymbolicQsprayOption(target, "showMonomial") <-
-        attr(attr(showOpts, "showSymbolicQsprayOption"), "showMonomial")
+        attr(sSQ, "showMonomial")
     }
     return(target)
   }
