@@ -166,8 +166,10 @@ showSymbolicQsprayXYZ <- function(
     }
   }
   sSQ  <- attr(showOpts, "showSymbolicQspray")
-  sM   <- attr(sSQ, "showMonomial") %||%
-    showMonomialX1X2X3(attr(showOpts, "X") %||% "X")
+  sMdefault <- showMonomialX1X2X3(attr(showOpts, "X") %||% "X")
+  attr(sMdefault, "showUnivariate") <-
+    attr(sMdefault, "showTrivariate") <- showMonomialXYZ(c("X", "Y", "Z"))
+  sM   <- attr(sSQ, "showMonomial") %||% sMdefault
   sROQ <- attr(sSQ, "showRatioOfQsprays") %||%
     showRatioOfQspraysX1X2X3(
       attr(showOpts, "a") %||% "a",
@@ -182,6 +184,7 @@ showSymbolicQsprayXYZ <- function(
     sROQ <- value
   } else if(which == "X") {
     sM <- showMonomialX1X2X3(value)
+    attr(sM, "showUnivariate") <- showMonomialXYZ(value)
   } else if(which == "showMonomial") {
     sM <- value
   }
@@ -243,11 +246,11 @@ showSymbolicQsprayXYZ <- function(
 }
 
 setDefaultShowSymbolicQsprayOption <- function(Qspray) {
-  sM <- showMonomialX1X2X3("X")
-  attr(sM, "showUnivariate") <-
-    attr(sM, "showTrivariate") <- showMonomialXYZ(c("X", "Y", "Z"))
-  showSymbolicQsprayOption(Qspray, "showMonomial") <- sM
-  # showSymbolicQsprayOption(Qspray, "quotientBar") <- " %//% "
+  # sM <- showMonomialX1X2X3("X")
+  # attr(sM, "showUnivariate") <-
+  #   attr(sM, "showTrivariate") <- showMonomialXYZ(c("X", "Y", "Z"))
+  # showSymbolicQsprayOption(Qspray, "showMonomial") <- sM
+  showSymbolicQsprayOption(Qspray, "quotientBar") <- " %//% "
   invisible(Qspray)
 }
 

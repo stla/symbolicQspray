@@ -130,7 +130,7 @@ showSymbolicQsprayOption(Qspray, "showMonomial") <-
   showMonomialXYZ(c("A", "B", "C"), collapse = ".")
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
-## { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ x1 ] / [ x2 ] }
+## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
 ```
 
 When this is possible, the result of an arithmetic operation between two
@@ -138,9 +138,9 @@ When this is possible, the result of an arithmetic operation between two
 
 ``` r
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ -2*a2^3.a3^3 - 4*a3 ] %//% [ a1^3.a3 - 4*a2^4 + 5*a2 ] } * X^3Y^4  +  { [ 4*a2^2 + 8 ] %//% [ -3*a1^4.a2^3.a3^4 + 2*a1.a2^3 ] } * X^3Z^2  +  { [ -4*a1^4.a2^3 - 2*a1^4.a3^3 - 2*a2 ] %//% [ 2*a2.a3^4 ] }
+## { [ -4*a1^3.a2^3.a3^4 - a1^3.a3^2 ] %//% [ 3*a2^4 + a2^2 + 4*a3^2 ] } * X^2Y^4
 Qspray + Q
-## { [ -2*x2^3.x3^3 - 4*x3 ] / [ x1^3.x3 - 4*x2^4 + 5*x2 ] } * X^3Y^4  +  { [ 4*x2^2 + 8 ] / [ -3*x1^4.x2^3.x3^4 + 2*x1.x2^3 ] } * X^3Z^2  +  { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ -4*x1^4.x2^3 - 2*x1^4.x3^3 + 2*x1.x3^4 - 2*x2 ] / [ 2*x2.x3^4 ] }
+## { [ -4*x1^3.x2^3.x3^4 - x1^3.x3^2 ] / [ 3*x2^4 + x2^2 + 4*x3^2 ] } * A^2.B^4  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
 ```
 
 Well, not perfect yet… That should work in this case. Let’s try
@@ -153,7 +153,7 @@ showSymbolicQsprayOption(Qspray, "showMonomial") <-
   showMonomialXYZ(c("A", "B", "C"), collapse = ".")
 showSymbolicQsprayOption(Qspray, "quotientBar") <- " / "
 Qspray
-## { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ x1 + x2.x3 ] / [ x2 ] }
+## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
 Qspray + Q
-## { [ -2*x2^3.x3^3 - 4*x3 ] / [ x1^3.x3 - 4*x2^4 + 5*x2 ] } * X^3Y^4  +  { [ 4*x2^2 + 8 ] / [ -3*x1^4.x2^3.x3^4 + 2*x1.x2^3 ] } * X^3Z^2  +  { [ x1 ] / [ x2^2 + 1 ] } * X^2Y  +  { [ x2 + 1 ] } * Z  +  { [ -4*x1^4.x2^3 - 2*x1^4.x3^3 + 2*x1.x3^4 + 2*x2.x3^5 - 2*x2 ] / [ 2*x2.x3^4 ] }
+## { [ -4*x1^3.x2^3.x3^4 - x1^3.x3^2 ] / [ 3*x2^4 + x2^2 + 4*x3^2 ] } * A^2.B^4  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 + x2.x3 ] / [ x2 ] }
 ```
