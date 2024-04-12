@@ -4,7 +4,7 @@ NULL
 setGeneric("compactSymmetricQspray")
 
 #' @name compactSymmetricQspray
-#' @aliases compactSymmetricQspray,symbolicQspray,logical-method
+#' @aliases compactSymmetricQspray,symbolicQspray,logical-method compactSymmetricQspray,symbolicQspray,missing-method
 #' @docType methods
 #' @title Compact symmetric qspray
 #' @description Prints a symmetric \code{symbolicQspray} polynomial as a linear
@@ -29,17 +29,25 @@ setGeneric("compactSymmetricQspray")
 #' }
 setMethod(
   "compactSymmetricQspray", c("symbolicQspray", "logical"),
-  function(qspray, check = FALSE) {
+  function(qspray, check) {
     combo <- MSPcombination(qspray, check = check)
     powers <- lapply(combo, `[[`, "lambda")
     coeffs <- lapply(combo, `[[`, "coeff")
     msp <- new("symbolicQspray", powers = powers, coeffs = coeffs)
-    passShowAttributes(qspray, msp)
+    msp <- passShowAttributes(qspray, msp)
     showMonomial <- function(exponents) {
       sprintf("M[%s]", toString(exponents))
     }
     showSymbolicQsprayOption(msp, "showMonomial") <- showMonomial
     f <- getShowSymbolicQspray(msp)
     f(msp)
+  }
+)
+
+#' @rdname compactSymmetricQspray
+setMethod(
+  "compactSymmetricQspray", c("symbolicQspray", "missing"),
+  function(qspray, check) {
+    compactSymmetricQspray(qspray, FALSE)
   }
 )

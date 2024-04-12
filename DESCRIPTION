@@ -44,3 +44,4 @@ Collate:
     'symbolicQspray.R'
     'queries.R'
     'show.R'
+    'symmetricPolynomials.R'
