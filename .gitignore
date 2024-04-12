@@ -45,4 +45,3 @@ src/*.o
 src/*.so
 
 # misc
-inst/trash

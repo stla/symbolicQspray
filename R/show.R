@@ -258,13 +258,3 @@ getShowSymbolicQspray <- function(Qspray) {
   }
   sSQ
 }
-
-getShowSymbolicQsprayCoefficient <- function(Qspray) {
-  showOpts <- attr(Qspray, "showOpts")
-  sSQ      <- attr(showOpts, "showSymbolicQspray")
-  if(is.null(sSQ)) {
-    Qspray <- setDefaultShowSymbolicQsprayOption(Qspray)
-    sSQ <- attr(attr(Qspray, "showOpts"), "showSymbolicQspray")
-  }
-  attr(sSQ, "showRatioOfQsprays")
-}
