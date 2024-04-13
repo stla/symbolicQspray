@@ -98,7 +98,7 @@ isExponents <- function(x) {
 #' @noRd
 removeTrailingZeros <- function(x) {
   n <- length(x)
-  while(x[n] == 0 && n > 0L) {
+  while(x[n] == 0L && n > 0L) {
     n <- n - 1L
   }
   head(x, n)
@@ -106,4 +106,21 @@ removeTrailingZeros <- function(x) {
 
 grow <- function(powers, n) {
   c(powers, integer(n - length(powers)))
+}
+
+arity <- function(qspray) {
+  suppressWarnings(max(lengths(qspray@powers)))
+}
+
+powersMatrix <- function(qspray) {
+  n <- arity(qspray)
+  if(n == -Inf) {
+    matrix(NA_integer_, 0L, 0L)
+  } else {
+    do.call(rbind, lapply(qspray@powers, grow, n = n))
+  }
+}
+
+isPermutation <- function(x) {
+  setequal(x, seq_along(x))
 }
