@@ -13,7 +13,7 @@
 #'   \code{NULL}, this returns a \code{symbolicQspray} object, and if
 #'   \code{X} is not \code{NULL}, this returns a \code{ratioOfQsprays} object.
 #' @export
-#' @importFrom ratioOfQsprays evalRatioOfQsprays
+#' @importFrom ratioOfQsprays evalRatioOfQsprays showRatioOfQspraysOption<-
 #' @importFrom gmp c_bigq
 #'
 #' @examples
@@ -45,9 +45,8 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
       coeffs = lapply(coeffs, as.ratioOfQsprays)
     )
     if(is.null(X)) {
-      attr(Q, "showOpts") <- attr(Qspray, "showOpts")
-      Q
-    } else {
+      passShowAttributes(Qspray, Q)
+    } else { # both 'a' and 'X' are not NULL
       monomials <- lapply(Q@powers, function(exponents) {
         if(length(exponents) != 0L) {
           powers <- lapply(which(exponents != 0L), function(i) {
@@ -63,10 +62,11 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
       for(i in seq_along(coeffs)) {
         roq <- coeffs[[i]] * monomials[[i]] + roq
       }
-      #attr(roq, "showOpts") <- attr(coeffs[[1]], "showOpts")
-      roq
+      sSQ <- getShowSymbolicQspray(Qspray)
+      showRatioOfQspraysOption(roq, "showRatioOfQsprays") <-
+        attr(sSQ, "showRatioOfQsprays")
     }
-  } else if(!is.null(X)){
+  } else if(!is.null(X)){ # 'a' is NULL
     monomials <- lapply(Qspray@powers, function(exponents) {
       if(length(exponents) != 0L) {
         powers <- lapply(which(exponents != 0L), function(i) {
@@ -82,9 +82,11 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
     for(i in seq_along(coeffs)) {
       roq <- coeffs[[i]] * monomials[[i]] + roq
     }
-    #attr(roq, "showOpts") <- attr(coeffs[[1]], "showOpts")
+    sSQ <- getShowSymbolicQspray(Qspray)
+    showRatioOfQspraysOption(roq, "showRatioOfQsprays") <-
+      attr(sSQ, "showRatioOfQsprays")
     roq
-  } else {
+  } else { # both 'a' and 'X' are NULL
     Qspray
   }
 }

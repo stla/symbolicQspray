@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: github_document
 ---
 
-*Symbolic multivariate polynomials.* 
+***Symbolic multivariate polynomials.*** 
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/stla/symbolicQspray/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stla/symbolicQspray/actions/workflows/R-CMD-check.yaml)
@@ -59,6 +59,11 @@ a <- c(2, "3/2")
 ( Q <- evalSymbolicQspray(Qspray, a = a) )
 ```
 
+This is discutable actually: this polynomial has rational coefficients, so 
+one could consider it is a `qspray`. But on the other hand, one can consider 
+that the polynomial variables `X`, `Y` and `Z` have not changed and still 
+represent some indeterminate `ratioOfQsprays` fractions. Comments ?..
+
 Substituting the "main" variables yields a `ratioOfQsprays` object:
 
 ```{r, message=FALSE, collapse=TRUE}
@@ -66,7 +71,10 @@ X <- gmp::as.bigq(c(4, 3, "2/5"))
 ( ratioOfQsprays <- evalSymbolicQspray(Qspray, X = X) )
 ```
 
-Checking the consistency:
+Actually we can more generally use some `ratioOfQsprays` objects for the 
+values of `X`, since a `symbolicQspray` object is a polynomial with 
+`ratioOfQsprays` coefficients. We will do that, just after checking the 
+consistency:
 
 ```{r, message=FALSE, collapse=TRUE}
 evalSymbolicQspray(Qspray, a = a, X = X)
@@ -75,9 +83,7 @@ evalRatioOfQsprays(ratioOfQsprays, a)
 f(gmp::as.bigq(a[1]), gmp::as.bigq(a[2]), X[1], X[2], X[3])
 ```
 
-Actually we can more generally use some `ratioOfQsprays` objects for the 
-values of `X`, since a `symbolicQspray` object is a polynomial with 
-`ratioOfQsprays` coefficients:
+Now let's use some `ratioOfQsprays` objects for the values of `X`:
 
 ```{r, message=FALSE, collapse=TRUE}
 X <- list(
@@ -86,6 +92,22 @@ X <- list(
 evalSymbolicQspray(Qspray, a = a, X = X)
 evalSymbolicQspray(Q, X = X)
 ```
+
+This is consistent, but again, there's a discutable point here: are we allowed 
+to use `qlone(3)` (that is, `a3`) in the values of `X`, since the coefficients 
+of `Qspray` involve `a1` and `a2` only? Here we cannot know: only the context 
+can tell us in which space the coefficients of `Qspray` are living.
+
+Also note that evaluating the `ratioOfQsprays` object 
+`evalSymbolicQspray(Qspray, X = X)` at `a` makes no sense...
+
+Actually my motivation to do this package was inspired by the 
+**Jack polynomials**. In the context of Jack polynomials, the variables 
+`X`, `Y` and `Z` represent indeterminate *numbers*, and the coefficients 
+are *numbers depending on a parameter* (the Jack parameter), and it turns out 
+that they are fractions of polynomials of this parameter. So in this context, 
+the answers to the above questions are clear: we don't have to replace the 
+variables `X`, `Y` and `Z` with `rationalQsprays` objects.
 
 
 ## Querying a `symbolicQspray` 
