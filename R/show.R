@@ -18,6 +18,13 @@
 #' @seealso \code{\link{showSymbolicQsprayX1X2X3}},
 #'   \code{\link{showSymbolicQsprayXYZ}}.
 #'
+#' @note The function returned by this function is appropriate for usage in
+#'   \code{\link{showSymbolicQsprayOption<-}} as the option
+#'   \code{"showSymbolicQspray"} but in general we would rather
+#'   use \code{\link{showSymbolicQsprayX1X2X3}} or
+#'   \code{\link{showSymbolicQsprayXYZ}}, or rather set the options \code{"a"},
+#'   \code{"X"} and \code{"quotientBar"}.
+#'
 #' @examples
 #' set.seed(421)
 #' ( Qspray <- rSymbolicQspray() )
@@ -26,6 +33,11 @@
 #' showMonomial <- showMonomialX1X2X3("X")
 #' f <- showSymbolicQspray(showRatioOfQsprays, showMonomial, "{{{", "}}}")
 #' f(Qspray)
+#' # setting a show option:
+#' showSymbolicQsprayOption(Qspray, "showSymbolicQspray") <- f
+#' Qspray
+#' # the show options are preserved by certain operations, e.g. the power:
+#' Qspray^2
 showSymbolicQspray <- function(
   showRatioOfQsprays, showMonomial, lbrace = "{ ", rbrace = " }",
   addition = "  +  ", multiplication = " * "
@@ -78,6 +90,10 @@ showSymbolicQspray <- function(
 #' @importFrom ratioOfQsprays showRatioOfQspraysX1X2X3
 #' @importFrom qspray showMonomialX1X2X3
 #'
+#' @note This function is built by applying \code{\link{showSymbolicQspray}} to
+#'   \code{\link[ratioOfQsprays]{showRatioOfQspraysX1X2X3}(a)} and
+#'   \code{\link[qspray]{showMonomialX1X2X3}(X)}.
+#'
 #' @examples
 #' set.seed(421)
 #' Qspray <- rSymbolicQspray()
@@ -97,7 +113,7 @@ showSymbolicQsprayX1X2X3 <- function(
 }
 
 #' @title Print a 'symbolicQspray' object
-#' @description Print a \code{symbolicQspray} object.
+#' @description Prints a \code{symbolicQspray} object.
 #'
 #' @param a a string, usually a letter, to denote the non-indexed variables
 #'   of the \code{ratioOfQsprays} coefficients
@@ -113,6 +129,10 @@ showSymbolicQsprayX1X2X3 <- function(
 #' @export
 #' @importFrom ratioOfQsprays showRatioOfQspraysX1X2X3
 #' @importFrom qspray showMonomialXYZ
+#'
+#' @note This function is built by applying \code{\link{showSymbolicQspray}} to
+#'   \code{\link[ratioOfQsprays]{showRatioOfQspraysX1X2X3}(a)} and
+#'   \code{\link[qspray]{showMonomialXYZ}(letters)}.
 #'
 #' @examples
 #' set.seed(421)
