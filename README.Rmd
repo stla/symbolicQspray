@@ -73,8 +73,8 @@ X <- gmp::as.bigq(c(4, 3, "2/5"))
 
 Actually we can more generally use some `ratioOfQsprays` objects for the 
 values of `X`, since a `symbolicQspray` object is a polynomial with 
-`ratioOfQsprays` coefficients. We will do that, just after checking the 
-consistency:
+`ratioOfQsprays` coefficients. We will do and discuss that, just after checking 
+the consistency:
 
 ```{r, message=FALSE, collapse=TRUE}
 evalSymbolicQspray(Qspray, a = a, X = X)
@@ -107,7 +107,8 @@ Actually my motivation to do this package was inspired by the
 are *numbers depending on a parameter* (the Jack parameter), and it turns out 
 that they are fractions of polynomials of this parameter. So in this context, 
 the answers to the above questions are clear: we don't have to replace the 
-variables `X`, `Y` and `Z` with `rationalQsprays` objects.
+variables `X`, `Y` and `Z` with `rationalQsprays` objects! 
+Maybe I will restrict this function to such a context in the future...
 
 
 ## Querying a `symbolicQspray` 
@@ -145,6 +146,10 @@ When this is possible, the result of an arithmetic operation between two
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
 Qspray + Q
 ```
+
+This behavior is the same as the ones implemented in **qspray** and in 
+**ratioOfQsprays**. You should be familiar with these two packages in order 
+to use **symbolicQspray**. 
 
 
 ## Application to Jack polynomials

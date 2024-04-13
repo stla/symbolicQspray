@@ -79,11 +79,12 @@ X <- gmp::as.bigq(c(4, 3, "2/5"))
 
 Actually we can more generally use some `ratioOfQsprays` objects for the
 values of `X`, since a `symbolicQspray` object is a polynomial with
-`ratioOfQsprays` coefficients. We will do that, just after checking the
-consistency:
+`ratioOfQsprays` coefficients. We will do and discuss that, just after
+checking the consistency:
 
 ``` r
 evalSymbolicQspray(Qspray, a = a, X = X)
+## [ 1243/39 ]
 evalSymbolicQspray(Q, X = X)
 ## [ 1243/39 ]
 evalRatioOfQsprays(ratioOfQsprays, a)
@@ -101,6 +102,7 @@ X <- list(
   qlone(1)/(1+qlone(1)), qlone(2)/qlone(1)^2, (qlone(2) + qlone(3))/qlone(1)
 )
 evalSymbolicQspray(Qspray, a = a, X = X)
+## [ 4/3*a1^3 + 5/2*a1^2.a2 + 5/2*a1^2.a3 + 8/3*a1^2 + 73/13*a1.a2 + 5*a1.a3 + 4/3*a1 + 5/2*a2 + 5/2*a3 ] %//% [ a1^3 + 2*a1^2 + a1 ]
 evalSymbolicQspray(Q, X = X)
 ## [ 4/3*a1^3 + 5/2*a1^2.a2 + 5/2*a1^2.a3 + 8/3*a1^2 + 73/13*a1.a2 + 5*a1.a3 + 4/3*a1 + 5/2*a2 + 5/2*a3 ] %//% [ a1^3 + 2*a1^2 + a1 ]
 ```
@@ -120,7 +122,8 @@ polynomials**. In the context of Jack polynomials, the variables `X`,
 *numbers depending on a parameter* (the Jack parameter), and it turns
 out that they are fractions of polynomials of this parameter. So in this
 context, the answers to the above questions are clear: we don’t have to
-replace the `X`, `Y` and `Z` with `rationalQsprays` objects.
+replace the variables `X`, `Y` and `Z` with `rationalQsprays` objects!
+Maybe I will restrict this function to such a context in the future…
 
 ## Querying a `symbolicQspray`
 
@@ -161,10 +164,14 @@ When this is possible, the result of an arithmetic operation between two
 
 ``` r
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ -a1 + a2 + 5*a3^2 ] %//% [ -3*a1^2 ] } * X.Y.Z
+## { [ -a2 - 5 ] %//% [ 2*a1^4.a3 - 2*a1 + 2*a3^3 ] } * X^3
 Qspray + Q
-## { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ -x1 + x2 + 5*x3^2 ] / [ -3*x1^2 ] } * A.B.C  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
+## { [ -x2 - 5 ] / [ 2*x1^4.x3 - 2*x1 + 2*x3^3 ] } * A^3  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
 ```
+
+This behavior is the same as the ones implemented in **qspray** and in
+**ratioOfQsprays**. You should be familiar with these two packages in
+order to use **symbolicQspray**.
 
 ## Application to Jack polynomials
 

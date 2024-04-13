@@ -65,6 +65,7 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
       sSQ <- getShowSymbolicQspray(Qspray)
       showRatioOfQspraysOption(roq, "showRatioOfQsprays") <-
         attr(sSQ, "showRatioOfQsprays")
+      roq
     }
   } else if(!is.null(X)){ # 'a' is NULL
     monomials <- lapply(Qspray@powers, function(exponents) {
