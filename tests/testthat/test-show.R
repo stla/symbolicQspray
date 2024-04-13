@@ -24,6 +24,16 @@ test_that("show options", {
     Print(Q),
     "{ [ 2*x1^2.x3^3 + 5*x1^2 + 5*x3 ] %//% [ -2*x1^4.x3^3 + 3*x2^4 ] } * A1^3.A2  +  { [ 5*x1^4.x3^4 - x1^2.x2.x3^3 ] %//% [ 3*x1^2 - 3*x2^2.x3^3 ] } * A2^3 "
   )
+  showSymbolicQsprayOption(Q, "showMonomial") <-
+    showMonomialXYZ(c("U","V","W"), collapse = "%")
+  expect_identical(
+    Print(Q),
+    "{ [ 2*x1^2.x3^3 + 5*x1^2 + 5*x3 ] %//% [ -2*x1^4.x3^3 + 3*x2^4 ] } * U^3%V  +  { [ 5*x1^4.x3^4 - x1^2.x2.x3^3 ] %//% [ 3*x1^2 - 3*x2^2.x3^3 ] } * V^3 "
+  )
+  expect_identical(
+    Print(Q * Qlone(4)),
+    "{ [ 2*x1^2.x3^3 + 5*x1^2 + 5*x3 ] %//% [ -2*x1^4.x3^3 + 3*x2^4 ] } * U1^3%U2%U4  +  { [ 5*x1^4.x3^4 - x1^2.x2.x3^3 ] %//% [ 3*x1^2 - 3*x2^2.x3^3 ] } * U2^3%U4 "
+  )
 })
 
 test_that("show - univariate", {
