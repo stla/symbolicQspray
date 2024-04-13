@@ -42,12 +42,16 @@ showSymbolicQspray <- function(
   showRatioOfQsprays, showMonomial, lbrace = "{ ", rbrace = " }",
   addition = "  +  ", multiplication = " * "
 ) {
+  showMonomials <- attr(showMonomial, "showMonomials") %||%
+    function(powers) {
+      vapply(powers, showMonomial, character(1L))
+    }
   f <- function(qspray) {
     if(isQzero(qspray)) {
       return("0")
     }
     qspray <- orderedQspray(qspray)
-    monomials <- vapply(qspray@powers, showMonomial, FUN.VALUE = character(1L))
+    monomials <- showMonomials(qspray@powers)
     coeffs <- paste0(
       lbrace,
       vapply(qspray@coeffs, showRatioOfQsprays, character(1L)),
@@ -158,7 +162,7 @@ showSymbolicQsprayXYZ <- function(
 #'
 #' @return This returns the updated \code{symbolicQspray}.
 #' @export
-#' @importFrom ratioOfQsprays isUnivariate
+#' @importFrom ratioOfQsprays isUnivariate showRatioOfQspraysXYZ
 #'
 #' @examples
 #' set.seed(421)

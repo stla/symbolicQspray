@@ -52,7 +52,7 @@ setMethod(
 setGeneric("swapVariables")
 
 #' @name swapVariables
-#' @aliases swapVariables,symbolicQspray,numeric-method
+#' @aliases swapVariables,symbolicQspray,numeric,numeric-method
 #' @docType methods
 #' @title Swap variables
 #' @description Swap two variables of a \code{symbolicQspray}.
@@ -77,7 +77,7 @@ setGeneric("swapVariables")
 #' Qspray <- f(a1, a2, X, Y, Z)
 #' swapVariables2(Qspray, 2, 3) == f(a1, a2, X, Z, Y) # should be TRUE
 setMethod(
-  "swapVariables", c("symbolicQspray", "numeric"),
+  "swapVariables", c("symbolicQspray", "numeric", "numeric"),
   function(x, i, j) {
     stopifnot(isNonnegativeInteger(i), isNonnegativeInteger(j))
     m <- arity(x)

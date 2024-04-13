@@ -3,10 +3,10 @@
 \docType{methods}
 \name{swapVariables}
 \alias{swapVariables}
-\alias{swapVariables,symbolicQspray,numeric-method}
+\alias{swapVariables,symbolicQspray,numeric,numeric-method}
 \title{Swap variables}
 \usage{
-\S4method{swapVariables}{symbolicQspray,numeric,ANY}(x, i, j)
+\S4method{swapVariables}{symbolicQspray,numeric,numeric}(x, i, j)
 }
 \arguments{
 \item{x}{a \code{symbolicQspray} object}

@@ -24,14 +24,6 @@ A character string.
 Prints a symmetric \code{symbolicQspray} polynomial as a linear
   combination of the monomial symmetric polynomials.
 }
-\examples{
-if(require("jack")) {
-
-J <- JackSymPol(3, c(3, 1, 1))
-compactSymmetricQspray(J)
-
-}
-}
 \seealso{
 \code{\link[qspray]{MSPcombination}}
 }

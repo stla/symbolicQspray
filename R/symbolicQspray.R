@@ -27,7 +27,7 @@ setAs( # ???
     new(
       "symbolicQspray",
       powers = list(integer(0L)),
-      coeffs = list(as.ratioOfQsprays(x))
+      coeffs = list(as.ratioOfQsprays(from))
     )
   }
 )

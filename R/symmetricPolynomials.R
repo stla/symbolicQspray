@@ -19,14 +19,6 @@ setGeneric("compactSymmetricQspray")
 #' @importFrom qspray compactSymmetricQspray MSPcombination
 #'
 #' @seealso \code{\link[qspray]{MSPcombination}}
-#'
-#' @examples
-#' if(require("jack")) {
-#'
-#' J <- JackSymPol(3, c(3, 1, 1))
-#' compactSymmetricQspray(J)
-#'
-#' }
 setMethod(
   "compactSymmetricQspray", c("symbolicQspray", "logical"),
   function(qspray, check) {
