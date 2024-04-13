@@ -158,6 +158,7 @@ showSymbolicQsprayXYZ <- function(
 #'
 #' @return This returns the updated \code{symbolicQspray}.
 #' @export
+#' @importFrom ratioOfQsprays isUnivariate
 #'
 #' @examples
 #' set.seed(421)
@@ -189,7 +190,7 @@ showSymbolicQsprayXYZ <- function(
   #
   sSQ  <- attr(showOpts, "showSymbolicQspray")
   #
-  sMdefault <- showMonomialX1X2X3("X")
+  sMdefault <- showMonomialXYZ(c("X", "Y", "Z")) # showMonomialX1X2X3("X")
   attr(sMdefault, "showUnivariate") <-
     attr(sMdefault, "showTrivariate") <- showMonomialXYZ(c("X", "Y", "Z"))
   sM <- attr(sSQ, "showMonomial") %||% sMdefault

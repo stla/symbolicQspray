@@ -3,7 +3,7 @@ test_that("show - default", {
   Q <- rSymbolicQspray()
   expect_identical(
     Print(Q),
-    "{ [ 2*a1^2.a3^3 + 5*a1^2 + 5*a3 ] %//% [ -2*a1^4.a3^3 + 3*a2^4 ] } * X^3Y  +  { [ 5*a1^4.a3^4 - a1^2.a2.a3^3 ] %//% [ 3*a1^2 - 3*a2^2.a3^3 ] } * Y^3 "
+    "{ [ 2*a1^2.a3^3 + 5*a1^2 + 5*a3 ] %//% [ -2*a1^4.a3^3 + 3*a2^4 ] } * X^3.Y  +  { [ 5*a1^4.a3^4 - a1^2.a2.a3^3 ] %//% [ 3*a1^2 - 3*a2^2.a3^3 ] } * Y^3 "
   )
   expect_identical(
     Print(Q + Qlone(4)),
@@ -17,7 +17,7 @@ test_that("show options", {
   showSymbolicQsprayOption(Q, "a") <- "x"
   expect_identical(
     Print(Q),
-    "{ [ 2*x1^2.x3^3 + 5*x1^2 + 5*x3 ] %//% [ -2*x1^4.x3^3 + 3*x2^4 ] } * X^3Y  +  { [ 5*x1^4.x3^4 - x1^2.x2.x3^3 ] %//% [ 3*x1^2 - 3*x2^2.x3^3 ] } * Y^3 "
+    "{ [ 2*x1^2.x3^3 + 5*x1^2 + 5*x3 ] %//% [ -2*x1^4.x3^3 + 3*x2^4 ] } * X^3.Y  +  { [ 5*x1^4.x3^4 - x1^2.x2.x3^3 ] %//% [ 3*x1^2 - 3*x2^2.x3^3 ] } * Y^3 "
   )
   showSymbolicQsprayOption(Q, "X") <- "A"
   expect_identical(
@@ -41,5 +41,21 @@ test_that("show - univariate", {
   expect_identical(
     Print(Q),
     "{ [ w ] %//% [ w + 1 ] } * A "
+  )
+  Q <- (qlone(1) / (qlone(1)+qlone(2))) * Qlone(1)
+  expect_identical(
+    Print(Q),
+    "{ [ a1 ] %//% [ a1 + a2 ] } * X "
+  )
+  R <- ((qlone(1)+qlone(2))) * Qlone(1)
+  expect_identical(
+    Print(Q*R),
+    "{ [ a ] } * X^2 "
+  )
+  showSymbolicQsprayOption(Q, "showRatioOfQsprays") <-
+    showRatioOfQspraysX1X2X3("a")
+  expect_identical(
+    Print(Q*R),
+    "{ [ a1 ] } * X^2 "
   )
 })
