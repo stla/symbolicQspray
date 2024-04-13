@@ -30,5 +30,5 @@ X <- Qlone(1)
 Y <- Qlone(2)
 Z <- Qlone(3)
 Qspray <- f(a1, a2, X, Y, Z)
-swapVariables2(Qspray, 2, 3) == f(a1, a2, X, Z, Y) # should be TRUE
+swapVariables(Qspray, 2, 3) == f(a1, a2, X, Z, Y) # should be TRUE
 }
