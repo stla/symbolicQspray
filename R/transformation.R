@@ -27,7 +27,7 @@ setGeneric("permuteVariables")
 #' Z <- Qlone(3)
 #' Qspray <- f(a1, a2, X, Y, Z)
 #' perm <- c(3, 1, 2)
-#' permuteVariables2(Qspray, perm) == f(a1, a2, Z, X, Y) # should be TRUE
+#' permuteVariables(Qspray, perm) == f(a1, a2, Z, X, Y) # should be TRUE
 setMethod(
   "permuteVariables", c("symbolicQspray", "numeric"),
   function(x, permutation) {

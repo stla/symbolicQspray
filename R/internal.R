@@ -47,7 +47,7 @@ arity <- function(qspray) {
 #' @description This function is for internal usage. It is exported because
 #'   it is also used for internal usage in others packages.
 #'
-#' @param qspray_as_list list returned by the Rcpp function
+#' @param x list returned by the Rcpp function
 #'   \code{returnSymbolicQspray}
 #'
 #' @return A \code{symbolicQspray} object.
