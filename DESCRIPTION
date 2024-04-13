@@ -45,3 +45,4 @@ Collate:
     'queries.R'
     'show.R'
     'symmetricPolynomials.R'
+    'transformation.R'

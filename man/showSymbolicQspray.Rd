@@ -35,6 +35,14 @@ A function which prints a \code{symbolicQspray} object.
 Print a \code{symbolicQspray} object given a function to print
   a \code{ratioOfQsprays} object.
 }
+\note{
+The function returned by this function is appropriate for usage in
+  \code{\link{showSymbolicQsprayOption<-}} as the option
+  \code{"showSymbolicQspray"} but in general we would rather
+  use \code{\link{showSymbolicQsprayX1X2X3}} or
+  \code{\link{showSymbolicQsprayXYZ}}, or rather set the options \code{"a"},
+  \code{"X"} and \code{"quotientBar"}.
+}
 \examples{
 set.seed(421)
 ( Qspray <- rSymbolicQspray() )
@@ -43,6 +51,11 @@ showRatioOfQsprays <-
 showMonomial <- showMonomialX1X2X3("X")
 f <- showSymbolicQspray(showRatioOfQsprays, showMonomial, "{{{", "}}}")
 f(Qspray)
+# setting a show option:
+showSymbolicQsprayOption(Qspray, "showSymbolicQspray") <- f
+Qspray
+# the show options are preserved by certain operations, e.g. the power:
+Qspray^2
 }
 \seealso{
 \code{\link{showSymbolicQsprayX1X2X3}},

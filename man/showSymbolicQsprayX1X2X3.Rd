@@ -25,6 +25,11 @@ A function which prints \code{symbolicQspray} objects.
 \description{
 Print a \code{symbolicQspray} object.
 }
+\note{
+This function is built by applying \code{\link{showSymbolicQspray}} to
+  \code{\link[ratioOfQsprays]{showRatioOfQspraysX1X2X3}(a)} and
+  \code{\link[qspray]{showMonomialX1X2X3}(X)}.
+}
 \examples{
 set.seed(421)
 Qspray <- rSymbolicQspray()

@@ -29,7 +29,12 @@ spaces, e.g. \code{" / "}}
 A function which prints \code{symbolicQspray} objects.
 }
 \description{
-Print a \code{symbolicQspray} object.
+Prints a \code{symbolicQspray} object.
+}
+\note{
+This function is built by applying \code{\link{showSymbolicQspray}} to
+  \code{\link[ratioOfQsprays]{showRatioOfQspraysX1X2X3}(a)} and
+  \code{\link[qspray]{showMonomialXYZ}(letters)}.
 }
 \examples{
 set.seed(421)
