@@ -34,6 +34,30 @@ test_that("show options", {
     Print(Q * Qlone(4)),
     "{ [ 2*x1^2.x3^3 + 5*x1^2 + 5*x3 ] %//% [ -2*x1^4.x3^3 + 3*x2^4 ] } * U1^3%U2%U4  +  { [ 5*x1^4.x3^4 - x1^2.x2.x3^3 ] %//% [ 3*x1^2 - 3*x2^2.x3^3 ] } * U2^3%U4 "
   )
+  showSymbolicQsprayOption(Q, "showRatioOfQsprays") <-
+    showRatioOfQspraysXYZ(c("a","b","c"), lbracket = "@ ", rbracket = " @")
+  expect_identical(
+    Print(Q),
+    "{ @ 2*a^2.c^3 + 5*a^2 + 5*c @  %//%  @ -2*a^4.c^3 + 3*b^4 @ } * U^3%V  +  { @ 5*a^4.c^4 - a^2.b.c^3 @  %//%  @ 3*a^2 - 3*b^2.c^3 @ } * V^3 "
+  )
+  expect_identical(
+    Print(Q * qlone(4)),
+    "{ @ 2*a1^2.a3^3.a4 + 5*a1^2.a4 + 5*a3.a4 @  %//%  @ -2*a1^4.a3^3 + 3*a2^4 @ } * U^3%V  +  { @ 5*a1^4.a3^4.a4 - a1^2.a2.a3^3.a4 @  %//%  @ 3*a1^2 - 3*a2^2.a3^3 @ } * V^3 "
+  )
+  expect_identical(
+    Print(qlone(4) * Q),
+    "{ @ 2*a1^2.a3^3.a4 + 5*a1^2.a4 + 5*a3.a4 @  %//%  @ -2*a1^4.a3^3 + 3*a2^4 @ } * U^3%V  +  { @ 5*a1^4.a3^4.a4 - a1^2.a2.a3^3.a4 @  %//%  @ 3*a1^2 - 3*a2^2.a3^3 @ } * V^3 "
+  )
+  showSymbolicQsprayOption(Q, "showRatioOfQsprays") <-
+    showRatioOfQspraysXYZ(c("p","q","r"))
+  expect_identical(
+    Print(Q),
+    "{ [ 2*p^2.r^3 + 5*p^2 + 5*r ]  %//%  [ -2*p^4.r^3 + 3*q^4 ] } * U^3%V  +  { [ 5*p^4.r^4 - p^2.q.r^3 ]  %//%  [ 3*p^2 - 3*q^2.r^3 ] } * V^3 "
+  )
+  expect_identical(
+    Print(qlone(4) * Q),
+    "{ [ 2*p1^2.p3^3.p4 + 5*p1^2.p4 + 5*p3.p4 ]  %//%  [ -2*p1^4.p3^3 + 3*p2^4 ] } * U^3%V  +  { [ 5*p1^4.p3^4.p4 - p1^2.p2.p3^3.p4 ]  %//%  [ 3*p1^2 - 3*p2^2.p3^3 ] } * V^3 "
+  )
 })
 
 test_that("show - univariate", {
@@ -53,6 +77,11 @@ test_that("show - univariate", {
     "{ [ w ] %//% [ w + 1 ] } * A "
   )
   Q <- (qlone(1) / (qlone(1)+qlone(2))) * Qlone(1)
+  expect_identical(
+    Print(Q),
+    "{ [ a1 ] %//% [ a1 + a2 ] } * X "
+  )
+  Q <- Qlone(1) * (qlone(1) / (qlone(1)+qlone(2)))
   expect_identical(
     Print(Q),
     "{ [ a1 ] %//% [ a1 + a2 ] } * X "
