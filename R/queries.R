@@ -63,6 +63,7 @@ setMethod(
 #' @return The coefficient as a \code{ratioOfQsprays} object.
 #' @export
 #' @importFrom gmp as.bigq
+#' @importFrom ratioOfQsprays showRatioOfQspraysOption<-
 #'
 #' @examples
 #' library(qspray)
@@ -93,6 +94,9 @@ setMethod(
         coeff <- qspray@coeffs[[i]]
       }
     }
+    sSQ <- getShowSymbolicQspray(qspray)
+    showRatioOfQspraysOption(coeff, "showRatioOfQsprays") <-
+      attr(sSQ, "showRatioOfQsprays")
     coeff
   }
 )

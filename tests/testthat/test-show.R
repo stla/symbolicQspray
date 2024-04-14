@@ -58,6 +58,10 @@ test_that("show options", {
     Print(qlone(4) * Q),
     "{ [ 2*p1^2.p3^3.p4 + 5*p1^2.p4 + 5*p3.p4 ]  %//%  [ -2*p1^4.p3^3 + 3*p2^4 ] } * U^3%V  +  { [ 5*p1^4.p3^4.p4 - p1^2.p2.p3^3.p4 ]  %//%  [ 3*p1^2 - 3*p2^2.p3^3 ] } * V^3 "
   )
+  expect_identical(
+    Print(getCoefficient(Q, c(3, 1))),
+    "[ 2*p^2.r^3 + 5*p^2 + 5*r ]  %//%  [ -2*p^4.r^3 + 3*q^4 ] "
+  )
 })
 
 test_that("show - univariate", {
