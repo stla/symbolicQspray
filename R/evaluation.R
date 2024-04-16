@@ -42,7 +42,7 @@ evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
     )
     if(is.null(X)) { # 'X' is NULL and 'a' is not NULL
       sSQ <- getShowSymbolicQspray(Qspray)
-      showQsprayOption(qspray, "showQspray") <- attr(sSQ, "showQspray")
+      showQsprayOption(qspray, "showMonomial") <- attr(sSQ, "showMonomial")
       qspray
     } else { # both 'a' and 'X' are not NULL
       evalQspray(qspray, values_re = X)
