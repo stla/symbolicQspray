@@ -26,7 +26,7 @@ setGeneric("isQone")
 setMethod(
   "numberOfVariables", "symbolicQspray",
   function(x) {
-    max(0L, arity(x))
+    as.integer(max(0L, arity(x)))
   }
 )
 
