@@ -1,9 +1,9 @@
 The ‘symbolicQspray’ package
 ================
 Stéphane Laurent
-2024-04-13
+2024-04-16
 
-***Symbolic multivariate polynomials.***
+***Multivariate polynomials with symbolic coefficients.***
 
 <!-- badges: start -->
 
@@ -21,7 +21,7 @@ library(symbolicQspray)
 f <- function(a1, a2, X1, X2, X3) {
   (a1/(a2^2+1)) * X1^2*X2  +  (a2+1) * X3  +  a1/a2
 }
-# "exterior" variables, the ones occuring in the coefficients:
+# "exterior" variables, the ones occurring in the coefficients:
 a1 <- qlone(1)
 a2 <- qlone(2)
 # "main" variables:
@@ -55,75 +55,64 @@ Qspray^2 - 2*Qspray + 1
 ## Evaluating a `symbolicQspray`
 
 Substituting the “exterior” variables (the variables occurring in the
-ratios of polynomials) yields another `symbolicQspray`:
+ratios of polynomials) yields a `qspray`:
 
 ``` r
 a <- c(2, "3/2")
-( Q <- evalSymbolicQspray(Qspray, a = a) )
-## { [ 8/13 ] } * X^2.Y  +  { [ 5/2 ] } * Z  +  { [ 4/3 ] }
+( qspray <- evalSymbolicQspray(Qspray, a = a) )
+## 8/13*X^2.Y + 5/2*Z + 4/3
 ```
-
-This is discutable actually: this polynomial has rational coefficients,
-so one could consider it is a `qspray`. But on the other hand, one can
-consider that the polynomial variables `X`, `Y` and `Z` have not changed
-and still represent some indeterminate `ratioOfQsprays` fractions.
-Comments ?..
 
 Substituting the “main” variables yields a `ratioOfQsprays` object:
 
 ``` r
-X <- gmp::as.bigq(c(4, 3, "2/5"))
+X <- c(4, 3, "2/5")
 ( ratioOfQsprays <- evalSymbolicQspray(Qspray, X = X) )
 ## [ a1.a2^2 + 48*a1.a2 + a1 + 2/5*a2^4 + 2/5*a2^3 + 2/5*a2^2 + 2/5*a2 ] %//% [ a2^3 + a2 ]
 ```
 
-Actually we can more generally use some `ratioOfQsprays` objects for the
-values of `X`, since a `symbolicQspray` object is a polynomial with
-`ratioOfQsprays` coefficients. We will do and discuss that, just after
-checking the consistency:
+There is a discutable point here. A `symbolicQspray` object represents a
+polynomial with `ratioOfQsprays` coefficients. So one can consider that
+the polynomial variables `X`, `Y` and `Z` represent some indeterminate
+`ratioOfQsprays` fractions, and that it should be possible to replace
+them with `ratioOfQsprays` objects. However this is not allowed. We will
+discuss that, just after checking the consistency:
 
 ``` r
 evalSymbolicQspray(Qspray, a = a, X = X)
-## [ 1243/39 ]
-evalSymbolicQspray(Q, X = X)
-## [ 1243/39 ]
+## Big Rational ('bigq') :
+## [1] 1243/39
+evalQspray(qspray, X)
+## Big Rational ('bigq') :
+## [1] 1243/39
 evalRatioOfQsprays(ratioOfQsprays, a)
 ## Big Rational ('bigq') :
 ## [1] 1243/39
-f(gmp::as.bigq(a[1]), gmp::as.bigq(a[2]), X[1], X[2], X[3])
+a <- gmp::as.bigq(a); X <- gmp::as.bigq(X)
+f(a[1], a[2], X[1], X[2], X[3])
 ## Big Rational ('bigq') :
 ## [1] 1243/39
 ```
 
-Now let’s use some `ratioOfQsprays` objects for the values of `X`:
-
-``` r
-X <- list(
-  qlone(1)/(1+qlone(1)), qlone(2)/qlone(1)^2, (qlone(2) + qlone(3))/qlone(1)
-)
-evalSymbolicQspray(Qspray, a = a, X = X)
-## [ 4/3*a1^3 + 5/2*a1^2.a2 + 5/2*a1^2.a3 + 8/3*a1^2 + 73/13*a1.a2 + 5*a1.a3 + 4/3*a1 + 5/2*a2 + 5/2*a3 ] %//% [ a1^3 + 2*a1^2 + a1 ]
-evalSymbolicQspray(Q, X = X)
-## [ 4/3*a1^3 + 5/2*a1^2.a2 + 5/2*a1^2.a3 + 8/3*a1^2 + 73/13*a1.a2 + 5*a1.a3 + 4/3*a1 + 5/2*a2 + 5/2*a3 ] %//% [ a1^3 + 2*a1^2 + a1 ]
-```
-
-This is consistent, but again, there’s a discutable point here: are we
-allowed to use `qlone(3)` (that is, `a3`) in the values of `X`, since
-the coefficients of `Qspray` involve `a1` and `a2` only? Here we cannot
-know: only the context can tell us in which space the coefficients of
-`Qspray` are living.
-
-Also note that evaluating the `ratioOfQsprays` object
-`evalSymbolicQspray(Qspray, X = X)` at `a` makes no sense…
+Now let’s turn to our promised discussion. Why is replacing the values
+of the polynomial variables with some `ratioOfQsprays` objects not
+allowed?
 
 Actually my motivation to do this package was inspired by the **Jack
 polynomials**. In the context of Jack polynomials, the variables `X`,
 `Y` and `Z` represent indeterminate *numbers*, and the coefficients are
 *numbers depending on a parameter* (the Jack parameter), and it turns
-out that they are fractions of polynomials of this parameter. So in this
-context, the answers to the above questions are clear: we don’t have to
-replace the variables `X`, `Y` and `Z` with `rationalQsprays` objects!
-Maybe I will restrict this function to such a context in the future…
+out that they are fractions of polynomials of this parameter. So I
+consider that a `symbolicQspray` is *not* a polynomial on the field of
+fractions of polynomials: I consider it is a polynomial with *rational
+coefficients depending on some parameters*.
+
+By the way, I’m wondering whether I should rename `symbolicQspray` to
+`parametricQspray`. Comments?..
+
+Also note that evaluating the `ratioOfQsprays` object
+`evalSymbolicQspray(Qspray, X = X)` at `a` would make no sense if we
+took some `ratioOfQsprays` objects for the values of `X`.
 
 ## Querying a `symbolicQspray`
 
@@ -136,9 +125,9 @@ numberOfVariables(Qspray)
 numberOfTerms(Qspray)
 ## [1] 3
 getCoefficient(Qspray, c(2, 1))
-## [ x ]  %//%  [ y^2 + 1 ]
+## [ a1 ] %//% [ a2^2 + 1 ]
 getConstantTerm(Qspray)
-## [ x ]  %//%  [ y ]
+## [ a1 ] %//% [ a2 ]
 isUnivariate(Qspray)
 ## [1] FALSE
 isConstant(Qspray)
@@ -164,9 +153,9 @@ When this is possible, the result of an arithmetic operation between two
 
 ``` r
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ -a2 - 5 ] %//% [ 2*a1^4.a3 - 2*a1 + 2*a3^3 ] } * X^3
+## { [ 4*a2^3 ] %//% [ 3*a1^2.a2 + 4*a2^2.a3^2 + a3^4 ] } * X^3.Z^3  +  { [ a2^4 ] %//% [ -3*a1^2.a2 - 2*a1 ] } * X^2.Y^4.Z^3
 Qspray + Q
-## { [ -x2 - 5 ] / [ 2*x1^4.x3 - 2*x1 + 2*x3^3 ] } * A^3  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
+## { [ 4*x2^3 ] / [ 3*x1^2.x2 + 4*x2^2.x3^2 + x3^4 ] } * A^3.C^3  +  { [ x2^4 ] / [ -3*x1^2.x2 - 2*x1 ] } * A^2.B^4.C^3  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
 ```
 
 This behavior is the same as the ones implemented in **qspray** and in
