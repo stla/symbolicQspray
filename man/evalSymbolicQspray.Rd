@@ -12,13 +12,13 @@ evalSymbolicQspray(Qspray, a = NULL, X = NULL)
 \item{a}{vector of values to be substituted to the exterior variables:
 these values must be coercable to \code{bigq} numbers}
 
-\item{X}{list of values to be substituted to the main variables: these
-values must be coercable to \code{ratioOfQsprays} objects}
+\item{X}{vector of values to be substituted to the main variables: these
+values must be coercable to \code{bigq} numbers}
 }
 \value{
 If both \code{a} and \code{X} are \code{NULL}, this returns the
   input \code{symbolicQspray} object; otherwise, if \code{a} is not
-  \code{NULL}, this returns a \code{symbolicQspray} object, and if
+  \code{NULL}, this returns a \code{qspray} object, and if
   \code{X} is not \code{NULL}, this returns a \code{ratioOfQsprays} object.
 }
 \description{
@@ -35,14 +35,9 @@ X3 <- Qlone(3)
 ( Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3 )
 a <- c(2, 3)
 X <- c(4, 3, 2)
-( Q <- evalSymbolicQspray(Qspray, a = a) )
+( qspray <- evalSymbolicQspray(Qspray, a = a) )
 ( roq <- evalSymbolicQspray(Qspray, X = X) )
 evalSymbolicQspray(Qspray, a = a, X = X)
-evalSymbolicQspray(Q, X = X)
+evalQspray(qspray, X)
 evalRatioOfQsprays(roq, a)
-# More generally, X is a list of `ratioOfQsprays` objects
-X <- list(qlone(1)/(1+qlone(1)), qlone(2)/(qlone(1)^2), qlone(3)/qlone(1))
-evalSymbolicQspray(Qspray, a = a, X = X)   # ratioOfQsprays
-( Q <- evalSymbolicQspray(Qspray, a = a) ) # symbolicQspray
-evalSymbolicQspray(Q, X = X)               # ratioOfQsprays
 }

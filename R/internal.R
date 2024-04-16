@@ -1,3 +1,5 @@
+#' @importFrom ratioOfQsprays numberOfVariables
+#' @noRd
 passShowAttributes <- function(source, target) {
   if( # if source has been created with as.symbolicQspray
     inherits(source, "ratioOfQsprays")
