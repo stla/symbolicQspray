@@ -22,12 +22,12 @@ setMethod(
 )
 
 
-setAs( # ???
+setAs( # for usage in qspray::MSPcombination
   "qspray", "symbolicQspray", function(from) {
     new(
       "symbolicQspray",
-      powers = list(integer(0L)),
-      coeffs = list(as.ratioOfQsprays(from))
+      powers = from@powers,
+      coeffs = lapply(from@coeffs, as.ratioOfQsprays)
     )
   }
 )
