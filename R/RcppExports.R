@@ -21,3 +21,7 @@ SymbolicQspray_equality <- function(Powers1, Coeffs1, Powers2, Coeffs2) {
     .Call(`_symbolicQspray_SymbolicQspray_equality`, Powers1, Coeffs1, Powers2, Coeffs2)
 }
 
+SymbolicQspray_deriv <- function(Powers, Coeffs, n) {
+    .Call(`_symbolicQspray_SymbolicQspray_deriv`, Powers, Coeffs, n)
+}
+

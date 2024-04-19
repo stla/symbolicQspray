@@ -95,3 +95,56 @@ setMethod(
     passShowAttributes(x, out)
   }
 )
+
+#' @title Partial derivative
+#' @description Partial derivative of a \code{symbolicQspray} polynomial.
+#'
+#' @param Qspray object of class \code{symbolicQspray}
+#' @param i integer, the dimension to differentiate with respect to
+#' @param derivative positive integer, how many times to differentiate
+#'
+#' @return A \code{symbolicQspray} object.
+#' @export
+derivSymbolicQspray <- function(Qspray, i, derivative = 1) {
+  stopifnot(inherits(Qspray, "symbolicQspray"))
+  stopifnot(isNonnegativeInteger(i))
+  stopifnot(isPositiveInteger(derivative))
+  if(i > arity(Qspray)) {
+    dQspray <- Qzero()
+  } else {
+    n    <- integer(length = i)
+    n[i] <- as.integer(derivative)
+    drv  <- SymbolicQspray_deriv(
+      Qspray@powers, lapply(Qspray@coeffs, ratioOfQsprays_as_list), n
+    )
+    dQspray <- symbolicQspray_from_list(drv)
+  }
+  passShowAttributes(Qspray, dQspray)
+}
+
+#' @title Partial differentiation
+#' @description Partial differentiation of a \code{symbolicQspray}
+#'   polynomial.
+#'
+#' @param Qspray object of class \code{symbolicQspray}
+#' @param orders integer vector, the orders of the differentiation
+#'
+#' @return A \code{symbolicQspray} object.
+#' @export
+dSymbolicQspray <- function(Qspray, orders) {
+  stopifnot(inherits(Qspray, "symbolicQspray"))
+  for(i in seq_along(orders)) {
+    stopifnot(isPositiveInteger(orders[i]))
+  }
+  orders <- removeTrailingZeros(orders)
+  if(length(orders) > arity(Qspray)) {
+    dQspray <- Qzero()
+  } else {
+    n    <- as.integer(orders)
+    drv  <- SymbolicQspray_deriv(
+      Qspray@powers, lapply(Qspray@coeffs, ratioOfQsprays_as_list), n
+    )
+    dQspray <- symbolicQspray_from_list(drv)
+  }
+  passShowAttributes(Qspray, dQspray)
+}

@@ -54,3 +54,15 @@ bool SymbolicQspray_equality(
   SymbolicQspray sqspray2 = makeSymbolicQspray(Powers2, Coeffs2);
   return sqspray1 == sqspray2;
 }
+
+// -------------------------------------------------------------------------- //
+// [[Rcpp::export]]
+Rcpp::List SymbolicQspray_deriv(
+    const Rcpp::List& Powers, const Rcpp::List& Coeffs, 
+    const Rcpp::IntegerVector& n
+) {
+  SymbolicQspray sqspray = makeSymbolicQspray(Powers, Coeffs);
+  std::vector<unsigned int> orders(n.begin(), n.end());
+  SymbolicQspray sqsprayPrime = sqspray.deriv(orders);
+  return returnSymbolicQspray(sqsprayPrime);
+}
