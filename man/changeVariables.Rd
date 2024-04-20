@@ -40,3 +40,7 @@ U <- X + a
 V <- Y + a
 changeVariables(Qspray, list(U, V)) == f(a, U, V) # should be TRUE
 }
+\seealso{
+If you want to change the parameters of a symbolic qspray, use
+  \code{\link{changeParameters}}.
+}
