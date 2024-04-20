@@ -195,3 +195,19 @@ setMethod(
     isConstant(qspray) && getConstantTerm(qspray) == 1L
   }
 )
+
+#' @title Number of parameters
+#' @description Number of parameters of a \code{symbolicQspray} polynomial,
+#'   i.e. the number of variables occurring in its coefficients.
+#'
+#' @param Qspray a \code{symbolicQspray} object
+#'
+#' @return An integer, the number of parameters involved in \code{Qspray}.
+#' @export
+#'
+#' @examples
+#' JP <- JacobiPolynomial(4) # Jacobi polynomials have two parameters
+#' numberOfParameters(JP)
+numberOfParameters <- function(Qspray) {
+  max(vapply(Qspray@coeffs, numberOfVariables, integer(1L)))
+}

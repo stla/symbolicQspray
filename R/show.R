@@ -162,7 +162,8 @@ showSymbolicQsprayXYZ <- function(
 #'
 #' @return This returns the updated \code{symbolicQspray}.
 #' @export
-#' @importFrom ratioOfQsprays isUnivariate showRatioOfQspraysXYZ
+#' @importFrom ratioOfQsprays showRatioOfQspraysXYZ
+#' @importFrom qspray showMonomialXYZ showMonomialX1X2X3
 #'
 #' @examples
 #' set.seed(421)
@@ -243,7 +244,7 @@ showSymbolicQsprayXYZ <- function(
       } else {
         sM <- sM0
       }
-      univariate <- all(vapply(Qspray@coeffs, isUnivariate, logical(1L)))
+      univariate <- numberOfParameters(Qspray) == 1L #all(vapply(Qspray@coeffs, isUnivariate, logical(1L)))
       if(univariate) {
         sROQ <- sROQU0
       } else {

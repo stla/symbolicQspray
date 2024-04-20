@@ -172,6 +172,9 @@ setGeneric("changeVariables")
 #'   polynomials given in the \code{listOfQsprays} argument.
 #' @export
 #'
+#' @seealso If you want to change the parameters of a symbolic qspray, use
+#'   \code{\link{changeParameters}}.
+#'
 #' @examples
 #' library(symbolicQspray)
 #' f <- function(a, X, Y) {
@@ -215,3 +218,31 @@ setMethod(
     result
   }
 )
+
+#' @title Change of parameters in a 'symbolicQspray' polynomial
+#' @description Replaces the parameters of a \code{symbolicQspray} polynomial
+#'   (which are \code{qspray} objects) with some \code{qspray} polynomials.
+#'   E.g. you have a polynomial with two parameters \eqn{P_{a,b}(x)} and you
+#'   want the polynomial \eqn{P_{a+1,b+1}(x)} (see example).
+#'
+#' @param Qspray a \code{symbolicQspray} polynomial
+#' @param newParameters a list containing at least \code{n} \code{qspray}
+#'   objects, or objects coercable to \code{qspray} objects, where \code{n} is
+#'   the number of parameters in the symbolic polynomial given in the
+#'   \code{Qspray} argument
+#'
+#' @return The \code{symbolicQspray} polynomial obtained by replacing the
+#'   parameters of the symbolic polynomial given in the \code{Qspray} argument
+#'   with the polynomials given in the \code{newParameters} argument.
+#' @export
+#'
+#' @seealso If you want to change the variables of a symbolic qspray, use
+#'   \code{\link{changeVariables}}.
+#'
+#' @examples
+#' library(symbolicQspray)
+#' ( JP <- JacobiPolynomial(2) ) # a univariate polynomial with two parameters
+#' a1 <- qlone(1)
+#' a2 <- qlone(2)
+#' changeParameters(JP, list(a1, a2)) == JP # should be TRUE
+#' changeParameters(JP, list(a1+1, a2+1))
