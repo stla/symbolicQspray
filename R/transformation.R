@@ -148,3 +148,70 @@ dSymbolicQspray <- function(Qspray, orders) {
   }
   passShowAttributes(Qspray, dQspray)
 }
+
+setGeneric("changeVariables")
+
+#' @name changeVariables
+#' @aliases changeVariables,symbolicQspray,list-method
+#' @docType methods
+#' @importFrom qspray changeVariables
+#' @title Change of variables in a 'symbolicQspray' polynomial
+#' @description Replaces the variables of a \code{symbolicQspray} polynomial
+#'   with some \code{symbolicQspray} polynomials. E.g. you have a polynomial
+#'   \eqn{P_a(x, y)} and you want the polynomial \eqn{P_a(x+a, y+a)} (see
+#'   example).
+#'
+#' @param x a \code{symbolicQspray} polynomial
+#' @param listOfQsprays a list containing at least \code{n}
+#'   \code{symbolicQspray} objects, or objects coercable to
+#'   \code{symbolicQspray} objects, where \code{n} is the number of
+#'   variables in the polynomial given in the \code{x} argument
+#'
+#' @return The \code{symbolicQspray} polynomial obtained by replacing the
+#'   variables of the polynomial given in the \code{x} argument with the
+#'   polynomials given in the \code{listOfQsprays} argument.
+#' @export
+#'
+#' @examples
+#' library(symbolicQspray)
+#' f <- function(a, X, Y) {
+#'   a^2 / (a + 1) * X^2*Y  +  (3*a - 2) / a * Y^2
+#' }
+#' a <- qlone(1)
+#' X <- Qlone(1)
+#' Y <- Qlone(2)
+#' Qspray <- f(a, X, Y)
+#' U <- X + a
+#' V <- Y + a
+#' changeVariables(Qspray, list(U, V)) == f(a, U, V) # should be TRUE
+setMethod(
+  "changeVariables", c("symbolicQspray", "list"),
+  function(x, listOfQsprays) {
+    n <- numberOfVariables(x)
+    if(length(listOfQsprays) < n) {
+      stop(
+        sprintf(
+          paste0(
+            "The `listOfQsprays` argument must be a list containing ",
+            "at least %d symbolic qspray polynomials."
+          ), n
+        )
+      )
+    }
+    coeffs <- x@coeffs
+    powers <- x@powers
+    result <- Qzero()
+    for(i in seq_along(powers)) {
+      term <- Qone()
+      pwr <- powers[[i]]
+      for(j in seq_along(pwr)) {
+        p <- pwr[j]
+        if(p != 0L) {
+          term <- term * as.symbolicQspray(listOfQsprays[[j]])^p
+        }
+      }
+      result <- result + coeffs[[i]] * term
+    }
+    result
+  }
+)
