@@ -20,7 +20,7 @@
 JacobiPolynomial <- function(n) {
   stopifnot(isPositiveInteger(n))
   if(n == 0L) {
-    as.symbolicQspray(1L)
+    Qone()
   } else if(n == 1L) {
     X     <- Qlone(1)
     alpha <- qlone(1)

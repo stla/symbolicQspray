@@ -210,5 +210,5 @@ setMethod(
 #' JP <- JacobiPolynomial(4) # Jacobi polynomials have two parameters
 #' numberOfParameters(JP)
 numberOfParameters <- function(Qspray) {
-  max(vapply(Qspray@coeffs, numberOfVariables, integer(1L)))
+  max(c(0L, vapply(Qspray@coeffs, numberOfVariables, integer(1L))))
 }
