@@ -11,6 +11,13 @@ test_that("changeParameters", {
 })
 
 test_that("changeParameters in Jacobi polynomial", {
-
+  n <- 5
+  JPn   <- JacobiPolynomial(n)
+  JPnm1 <- JacobiPolynomial(n-1)
+  a <- qlone(1)
+  b <- qlone(2)
+  lhs <- derivSymbolicQspray(JPn, 1)
+  rhs <- (1 + a + b + n)/2 * changeParameters(JPnm1, list(a+1, b+1))
+  expect_true(lhs == rhs)
 })
 
