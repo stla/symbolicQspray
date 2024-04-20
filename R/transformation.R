@@ -246,3 +246,13 @@ setMethod(
 #' a2 <- qlone(2)
 #' changeParameters(JP, list(a1, a2)) == JP # should be TRUE
 #' changeParameters(JP, list(a1+1, a2+1))
+changeParameters <- function(Qspray, newParameters) {
+  if(length(newParameters) < numberOfParameters(Qspray)) {
+    stop("Not enough new parameters provided.")
+  }
+  coeffs <- Qspray@coeffs
+  newCoeffs <- lapply(coeffs, function(rOQ) {
+    changeVariables(rOQ, newParameters)
+  })
+  new("symbolicQspray", powers = Qspray@powers, coeffs = newCoeffs)
+}

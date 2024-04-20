@@ -204,6 +204,7 @@ setMethod(
 #'
 #' @return An integer, the number of parameters involved in \code{Qspray}.
 #' @export
+#' @importFrom ratioOfQsprays numberOfVariables
 #'
 #' @examples
 #' JP <- JacobiPolynomial(4) # Jacobi polynomials have two parameters
