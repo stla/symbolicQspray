@@ -57,8 +57,6 @@ Arithmetic on `symbolicQspray` objects is available:
 Qspray^2
 ## { [ a1^2 ] %//% [ a2^4 + 2*a2^2 + 1 ] } * X^4.Y^2  +  { [ 2*a1.a2 + 2*a1 ] %//% [ a2^2 + 1 ] } * X^2.Y.Z  +  { [ 2*a1^2 ] %//% [ a2^3 + a2 ] } * X^2.Y  +  { [ a2^2 + 2*a2 + 1 ] } * Z^2  +  { [ 2*a1.a2 + 2*a1 ] %//% [ a2 ] } * Z  +  { [ a1^2 ] %//% [ a2^2 ] }
 Qspray - Qspray
-## Warning in max(vapply(Qspray@coeffs, numberOfVariables, integer(1L))): aucun
-## argument pour max ; -Inf est renvoyé
 ## 0
 (Qspray - 1)^2
 ## { [ a1^2 ] %//% [ a2^4 + 2*a2^2 + 1 ] } * X^4.Y^2  +  { [ 2*a1.a2 + 2*a1 ] %//% [ a2^2 + 1 ] } * X^2.Y.Z  +  { [ 2*a1^2 - 2*a1.a2 ] %//% [ a2^3 + a2 ] } * X^2.Y  +  { [ a2^2 + 2*a2 + 1 ] } * Z^2  +  { [ 2*a1.a2 + 2*a1 - 2*a2^2 - 2*a2 ] %//% [ a2 ] } * Z  +  { [ a1^2 - 2*a1.a2 + a2^2 ] %//% [ a2^2 ] }
@@ -258,6 +256,19 @@ JacobiPolynomial <- function(n) {
     (lambda1 * JacobiPolynomial(n - 1) - lambda2 * JacobiPolynomial(n - 2))
   }
 }
+```
+
+It is clearly visible from the recurrence relation that the coefficients
+of the Jacobi polynomials are indeed fractions of polynomials in `alpha`
+and `beta`. But they actually are *polynomials* in `alpha` and `beta`.
+Actually I don’t know, this is a conjecture I made because I observed
+this fact for some small values of `n`. We can check it with the
+function `hasPolynomialCoefficients`:
+
+``` r
+JP <- JacobiPolynomial(7)
+hasPolynomialCoefficients(JP)
+## [1] TRUE
 ```
 
 Up to a factor, the [Gegenbauer
