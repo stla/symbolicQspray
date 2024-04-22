@@ -2,17 +2,17 @@
 % Please edit documentation in R/evaluation.R
 \name{evalSymbolicQspray}
 \alias{evalSymbolicQspray}
-\title{Evaluation of a 'symbolicQspray' object}
+\title{Evaluation of a 'symbolicQspray' polynomial}
 \usage{
 evalSymbolicQspray(Qspray, a = NULL, X = NULL)
 }
 \arguments{
 \item{Qspray}{a \code{symbolicQspray} object}
 
-\item{a}{vector of values to be substituted to the exterior variables:
+\item{a}{vector of values to be substituted to the parameters;
 these values must be coercable to \code{bigq} numbers}
 
-\item{X}{vector of values to be substituted to the main variables: these
+\item{X}{vector of values to be substituted to the variables; these
 values must be coercable to \code{bigq} numbers}
 }
 \value{
@@ -22,22 +22,20 @@ If both \code{a} and \code{X} are \code{NULL}, this returns the
   \code{X} is not \code{NULL}, this returns a \code{ratioOfQsprays} object.
 }
 \description{
-Evaluates a \code{symbolicQspray} object by substituting some
-  values to the exterior variables or the main variables or both.
+Evaluates a \code{symbolicQspray} polynomial by substituting
+  some values to the parameters (same as \code{\link{substituteParameters}})
+  or to the variables (same as \code{\link{substituteVariables}}) or both.
 }
 \examples{
 library(symbolicQspray)
-a1 <- qlone(1)
-a2 <- qlone(2)
-X1 <- Qlone(1)
-X2 <- Qlone(2)
-X3 <- Qlone(3)
+a1 <- qlone(1); a2 <- qlone(2)
+X1 <- Qlone(1); X2 <- Qlone(2); X3 <- Qlone(3)
 ( Qspray <- (a1 + 2)*X1^2*X2 + (a2/(a1^2+a2))*X1*X2*X3 )
 a <- c(2, 3)
 X <- c(4, 3, 2)
 ( qspray <- evalSymbolicQspray(Qspray, a = a) )
-( roq <- evalSymbolicQspray(Qspray, X = X) )
+( rOQ <- evalSymbolicQspray(Qspray, X = X) )
 evalSymbolicQspray(Qspray, a = a, X = X)
 evalQspray(qspray, X)
-evalRatioOfQsprays(roq, a)
+evalRatioOfQsprays(rOQ, a)
 }

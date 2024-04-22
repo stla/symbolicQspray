@@ -35,5 +35,6 @@ changeParameters(JP, list(a1+1, a2+1))
 }
 \seealso{
 If you want to change the variables of a symbolic qspray, use
-  \code{\link{changeVariables}}.
+  \code{\link{changeVariables}}. If you want to assign some values to
+  its parameters, use \code{\link{substituteParameters}}.
 }

@@ -42,5 +42,6 @@ changeVariables(Qspray, list(U, V)) == f(a, U, V) # should be TRUE
 }
 \seealso{
 If you want to change the parameters of a symbolic qspray, use
-  \code{\link{changeParameters}}.
+  \code{\link{changeParameters}}. If you want to assign some values to
+  its variables, see \code{\link{substituteVariables}}.
 }

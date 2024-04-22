@@ -173,7 +173,8 @@ setGeneric("changeVariables")
 #' @export
 #'
 #' @seealso If you want to change the parameters of a symbolic qspray, use
-#'   \code{\link{changeParameters}}.
+#'   \code{\link{changeParameters}}. If you want to assign some values to
+#'   its variables, see \code{\link{substituteVariables}}.
 #'
 #' @examples
 #' library(symbolicQspray)
@@ -237,7 +238,8 @@ setMethod(
 #' @export
 #'
 #' @seealso If you want to change the variables of a symbolic qspray, use
-#'   \code{\link{changeVariables}}.
+#'   \code{\link{changeVariables}}. If you want to assign some values to
+#'   its parameters, use \code{\link{substituteParameters}}.
 #'
 #' @examples
 #' library(symbolicQspray)
