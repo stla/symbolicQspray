@@ -46,18 +46,23 @@ showSymbolicQspray <- function(
     function(powers) {
       vapply(powers, showMonomial, character(1L))
     }
-  f <- function(qspray) {
-    if(isQzero(qspray)) {
+  showMultipleRatiosOfQsprays <-
+    attr(showRatioOfQsprays, "showMultipleRatiosOfQsprays") %||%
+    function(rOQs) {
+      vapply(rOQs, showRatioOfQsprays, character(1L))
+    }
+  f <- function(Qspray) {
+    if(isQzero(Qspray)) {
       return("0")
     }
-    qspray <- orderedQspray(qspray)
-    monomials <- showMonomials(qspray@powers)
+    qspray <- orderedQspray(Qspray)
+    monomials <- showMonomials(Qspray@powers)
     coeffs <- paste0(
       lbrace,
-      vapply(qspray@coeffs, showRatioOfQsprays, character(1L)),
+      showMultipleRatiosOfQsprays(Qspray@coeffs),
       rbrace
     )
-    nterms <- numberOfTerms(qspray)
+    nterms <- numberOfTerms(Qspray)
     if(monomials[nterms] == "") {
       toPaste <- c(
         sprintf("%s%s%s", coeffs[-nterms], multiplication, monomials[-nterms]),
@@ -151,7 +156,42 @@ showSymbolicQsprayXYZ <- function(
   )
 }
 
-#' @title Set show option to a 'qspray' object
+#' @title Print a 'symbolicQspray' object
+#' @description Prints a \code{symbolicQspray} object.
+#'
+#' @param params vector of strings, usually some letters, to denote the
+#'   parameters of the polynomial
+#' @param vars a vector of strings, usually some letters, to denote the
+#'   variables of the polynomial
+#' @param quotientBar a string for the quotient bar between the numerator and
+#'   the denominator of a \code{ratioOfQsprays} object, including surrounding
+#'   spaces, e.g. \code{" / "}
+#' @param ... arguments other than \code{showRatioOfQsprays} and
+#'   \code{showMonomial} passed to \code{\link{showSymbolicQspray}}
+#'
+#' @return A function which prints \code{symbolicQspray} objects.
+#' @export
+#' @importFrom ratioOfQsprays showRatioOfQspraysXYZ
+#' @importFrom qspray showMonomialXYZ
+#'
+#' @note This function is built by applying \code{\link{showSymbolicQspray}} to
+#'   \code{\link[ratioOfQsprays]{showRatioOfQspraysXYZ}(params)} and
+#'   \code{\link[qspray]{showMonomialXYZ}(vars)}.
+#'
+#' @examples
+#' set.seed(421)
+#' ( Qspray <- rSymbolicQspray() )
+#' showSymbolicQsprayABCXYZ(c("a", "b", "c"), c("U", "V"))(Qspray)
+showSymbolicQsprayABCXYZ <- function(
+    params, vars = c("X", "Y", "Z"), quotientBar = " %//% ", ...
+) {
+  showSymbolicQspray(
+    showRatioOfQspraysXYZ(letters = params, quotientBar = quotientBar),
+    showMonomialXYZ(vars), ...
+  )
+}
+
+#' @title Set a show option to a 'symbolicQspray' object
 #' @description Set show option to a \code{symbolicQspray} object
 #'
 #' @param x a \code{symbolicQspray} object

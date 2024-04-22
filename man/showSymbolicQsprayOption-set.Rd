@@ -2,7 +2,7 @@
 % Please edit documentation in R/show.R
 \name{showSymbolicQsprayOption<-}
 \alias{showSymbolicQsprayOption<-}
-\title{Set show option to a 'qspray' object}
+\title{Set a show option to a 'symbolicQspray' object}
 \usage{
 showSymbolicQsprayOption(x, which) <- value
 }

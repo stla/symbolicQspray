@@ -102,3 +102,23 @@ test_that("show - univariate", {
     "{ [ a1 ] } * X^2 "
   )
 })
+
+test_that("showRatioOfQspraysXYZ is OK", {
+  a <- qlone(1)
+  b <- qlone(2)
+  X <- Qlone(1)
+  Q <- a*X + (a+b)*X^2
+  showSymbolicQsprayOption(Q, "showRatioOfQsprays") <-
+    showRatioOfQspraysXYZ("a")
+  expect_identical(
+    Print(Q),
+    "{ [ a1 + a2 ] } * X^2  +  { [ a1 ] } * X "
+  )
+  showSymbolicQsprayOption(Q, "showSymbolicQspray") <-
+    showSymbolicQsprayABCXYZ("b", "Z")
+  expect_identical(
+    Print(Q),
+    "{ [ b1 + b2 ] } * Z^2  +  { [ b1 ] } * Z "
+  )
+
+})
