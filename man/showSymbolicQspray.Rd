@@ -54,8 +54,8 @@ f(Qspray)
 # setting a show option:
 showSymbolicQsprayOption(Qspray, "showSymbolicQspray") <- f
 Qspray
-# the show options are preserved by certain operations, e.g. the power:
-Qspray^2
+# the show options are preserved by certain operations, e.g.:
+2*Qspray
 }
 \seealso{
 \code{\link{showSymbolicQsprayX1X2X3}},
