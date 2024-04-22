@@ -10,7 +10,8 @@ numberOfParameters(Qspray)
 \item{Qspray}{a \code{symbolicQspray} object}
 }
 \value{
-An integer, the number of parameters involved in \code{Qspray}.
+An integer, the number of parameters involved in (the
+  coefficients of) \code{Qspray}.
 }
 \description{
 Number of parameters of a \code{symbolicQspray} polynomial,

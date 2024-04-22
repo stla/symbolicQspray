@@ -1,5 +1,5 @@
 Package: symbolicQspray
-Title: Multivariate Polynomials with Symbolic Coefficients
+Title: Multivariate Polynomials with Symbolic Parameters in their Coefficients
 Version: 0.0.0.9000
 Authors@R: 
     person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre"))
@@ -11,8 +11,8 @@ Description: Introduces the 'symbolicQspray' objects. Such an object
     their counterpart for 'symbolicQspray' polynomials. A 'symbolicQspray' 
     polynomial should not be seen as a polynomial on the field of fractions 
     of rational polynomials, but should rather be seen as a polynomial with 
-    rational coefficients depending on some parameters, with a dependence 
-    given by fractions of rational polynomials.
+    rational coefficients depending on some parameters, symbolically 
+    represented, with a dependence given by fractions of rational polynomials.
 License: GPL-3
 URL: https://github.com/stla/symbolicQspray
 BugReports: https://github.com/stla/symbolicQspray/issues

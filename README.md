@@ -1,9 +1,9 @@
 The ‘symbolicQspray’ package
 ================
 Stéphane Laurent
-2024-04-20
+2024-04-22
 
-***Multivariate polynomials with symbolic coefficients.***
+***Multivariate polynomials with symbolic parameters.***
 
 <!-- badges: start -->
 
@@ -21,7 +21,8 @@ A `symbolicQspray` object represents a multivariate polynomial whose
 coefficients are fractions of polynomials with rational coefficients.
 Actually (see our discussion in the next section), a `symbolicQspray`
 object represents a *multivariate polynomial with parameters*. The
-parameters are the variables of the fractions of polynomials.
+parameters are the variables of the fractions of polynomials, and so
+they are symbolically represented.
 
 To construct a `symbolicQspray` polynomial, use `qlone` (from the
 **qspray** package) to introduce the parameters and use `Qlone` to
@@ -295,17 +296,17 @@ fulfilled:
 n <- 5
 alpha <- qlone(1)
 X <- Qlone(1)
-(n+1)*GegenbauerPolynomial(n+1) == 
-  2*(n+alpha)*X*GegenbauerPolynomial(n) - 
-    (n+2*alpha-1)*GegenbauerPolynomial(n-1)
+(n + 1) * GegenbauerPolynomial(n+1) == 
+  2*(n + alpha) * X * GegenbauerPolynomial(n) - 
+    (n + 2*alpha - 1) * GegenbauerPolynomial(n-1)
 ## [1] TRUE
 ```
 
 ## Application to Jack polynomials
 
-The **symbolicQspray** package is used by the
-[**jack**](https://github.com/stla/jackR) package to compute the Jack
-polynomials. The Jack polynomials are exactly the polynomials
-represented by the `symbolicQspray` objects: their coefficients are
-fractions of polynomials by definition, of one variable: the Jack
-parameter.
+The **symbolicQspray** package is used by the [**jack**
+package](https://github.com/stla/jackR) to compute the Jack polynomials
+with a symbolic Jack parameter. The Jack polynomials exactly fit to the
+polynomials represented by the `symbolicQspray` objects: their
+coefficients are fractions of polynomials by definition, of one
+variable: the Jack parameter.

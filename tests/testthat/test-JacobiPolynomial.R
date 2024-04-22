@@ -9,6 +9,11 @@ test_that("Jacobi polynomial for n=2", {
   expect_true(obtained == expected)
 })
 
+test_that("Jacobi polynomial coefficients are polynomial", {
+  JP <- JacobiPolynomial(7)
+  expect_true(hasPolynomialCoefficients(JP))
+})
+
 test_that("Jacobi polynomial differential equation", {
   n <- 5L
   JP <- JacobiPolynomial(n)

@@ -142,7 +142,7 @@ setMethod(
 #' @aliases isUnivariate,symbolicQspray-method
 #' @docType methods
 #' @importFrom qspray isUnivariate
-#' @title Whether a 'symbolicQspray' is univariate
+#' @title Whether a 'symbolicQspray' polynomial is univariate
 #' @description Checks whether a \code{symbolicQspray} object defines a
 #'   univariate polynomial.
 #'
@@ -162,7 +162,7 @@ setMethod(
 #' @aliases isQzero,symbolicQspray-method
 #' @docType methods
 #' @importFrom qspray isQzero
-#' @title Whether a qspray polynomial is null
+#' @title Whether a 'symbolicQspray' polynomial is null
 #' @description Checks whether a \code{symbolicQspray} object defines the zero
 #'   polynomial.
 #'
@@ -181,7 +181,7 @@ setMethod(
 #' @aliases isQone,symbolicQspray-method
 #' @docType methods
 #' @importFrom qspray isQone
-#' @title Whether a qspray polynomial is the unit polynomial
+#' @title Whether a 'symbolicQspray' polynomial is the unit polynomial
 #' @description Checks whether a \code{symbolicQspray} object defines the unit
 #'   polynomial.
 #'
@@ -202,7 +202,8 @@ setMethod(
 #'
 #' @param Qspray a \code{symbolicQspray} object
 #'
-#' @return An integer, the number of parameters involved in \code{Qspray}.
+#' @return An integer, the number of parameters involved in (the
+#'   coefficients of) \code{Qspray}.
 #' @export
 #' @importFrom ratioOfQsprays numberOfVariables
 #'
@@ -211,4 +212,24 @@ setMethod(
 #' numberOfParameters(JP)
 numberOfParameters <- function(Qspray) {
   max(c(0L, vapply(Qspray@coeffs, numberOfVariables, integer(1L))))
+}
+
+#' @title Whether the coefficients of a 'symbolicQspray' polynomially depend
+#'   on its parameters
+#' @description Checks whether the dependence of the coefficients of a
+#'   \code{symbolicQspray} polynomial on their parameters is polynomial.
+#'
+#' @param Qspray a \code{symbolicQspray} object
+#'
+#' @return A Boolean value. The coefficients of a \code{symbolicQspray}
+#'   polynomial always are fractions of polynomials. This function checks
+#'   whether they are polynomials.
+#' @export
+#' @importFrom ratioOfQsprays isPolynomial
+#'
+#' @examples
+#' JP <- JacobiPolynomial(4)
+#' hasPolynomialCoefficients(JP)
+hasPolynomialCoefficients <- function(Qspray) {
+  all(vapply(Qspray@coeffs, isPolynomial, logical(1L)))
 }

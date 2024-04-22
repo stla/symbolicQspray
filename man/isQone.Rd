@@ -4,7 +4,7 @@
 \name{isQone}
 \alias{isQone}
 \alias{isQone,symbolicQspray-method}
-\title{Whether a qspray polynomial is the unit polynomial}
+\title{Whether a 'symbolicQspray' polynomial is the unit polynomial}
 \usage{
 \S4method{isQone}{symbolicQspray}(qspray)
 }

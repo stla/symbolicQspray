@@ -4,7 +4,7 @@
 \name{isUnivariate}
 \alias{isUnivariate}
 \alias{isUnivariate,symbolicQspray-method}
-\title{Whether a 'symbolicQspray' is univariate}
+\title{Whether a 'symbolicQspray' polynomial is univariate}
 \usage{
 \S4method{isUnivariate}{symbolicQspray}(x)
 }

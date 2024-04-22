@@ -4,7 +4,7 @@
 \name{isQzero}
 \alias{isQzero}
 \alias{isQzero,symbolicQspray-method}
-\title{Whether a qspray polynomial is null}
+\title{Whether a 'symbolicQspray' polynomial is null}
 \usage{
 \S4method{isQzero}{symbolicQspray}(qspray)
 }
