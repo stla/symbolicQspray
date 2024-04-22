@@ -55,7 +55,7 @@ showSymbolicQspray <- function(
     if(isQzero(Qspray)) {
       return("0")
     }
-    qspray <- orderedQspray(Qspray)
+    Qspray <- orderedQspray(Qspray)
     monomials <- showMonomials(Qspray@powers)
     coeffs <- paste0(
       lbrace,

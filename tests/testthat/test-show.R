@@ -109,10 +109,10 @@ test_that("showRatioOfQspraysXYZ is OK", {
   X <- Qlone(1)
   Q <- a*X + (a+b)*X^2
   showSymbolicQsprayOption(Q, "showRatioOfQsprays") <-
-    showRatioOfQspraysXYZ("a")
+    showRatioOfQspraysXYZ("u")
   expect_identical(
     Print(Q),
-    "{ [ a1 + a2 ] } * X^2  +  { [ a1 ] } * X "
+    "{ [ u1 + u2 ] } * X^2  +  { [ u1 ] } * X "
   )
   showSymbolicQsprayOption(Q, "showSymbolicQspray") <-
     showSymbolicQsprayABCXYZ("b", "Z")
@@ -120,5 +120,4 @@ test_that("showRatioOfQspraysXYZ is OK", {
     Print(Q),
     "{ [ b1 + b2 ] } * Z^2  +  { [ b1 ] } * Z "
   )
-
 })
