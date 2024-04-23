@@ -229,7 +229,7 @@ numberOfParameters <- function(Qspray) {
 #'
 #' @examples
 #' JP <- JacobiPolynomial(4)
-#' hasPolynomialCoefficients(JP)
-hasPolynomialCoefficients <- function(Qspray) {
+#' hasPolynomialCoefficientsOnly(JP)
+hasPolynomialCoefficientsOnly <- function(Qspray) {
   all(vapply(Qspray@coeffs, isPolynomial, logical(1L)))
 }

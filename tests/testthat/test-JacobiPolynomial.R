@@ -11,7 +11,7 @@ test_that("Jacobi polynomial for n=2", {
 
 test_that("Jacobi polynomial coefficients are polynomial", {
   JP <- JacobiPolynomial(7)
-  expect_true(hasPolynomialCoefficients(JP))
+  expect_true(hasPolynomialCoefficientsOnly(JP))
 })
 
 test_that("Jacobi polynomial differential equation", {

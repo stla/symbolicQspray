@@ -263,11 +263,11 @@ of the Jacobi polynomials are indeed fractions of polynomials in `alpha`
 and `beta`. But they actually are *polynomials* in `alpha` and `beta`.
 Actually I don’t know, this is a conjecture I made because I observed
 this fact for some small values of `n`. We can check it with the
-function `hasPolynomialCoefficients`:
+function `hasPolynomialCoefficientsOnly`:
 
 ``` r
 JP <- JacobiPolynomial(7)
-hasPolynomialCoefficients(JP)
+hasPolynomialCoefficientsOnly(JP)
 ## [1] TRUE
 ```
 
