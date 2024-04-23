@@ -127,7 +127,10 @@ derivSymbolicQspray <- function(Qspray, i, derivative = 1) {
 #'   polynomial.
 #'
 #' @param Qspray object of class \code{symbolicQspray}
-#' @param orders integer vector, the orders of the differentiation
+#' @param orders integer vector, the orders of the differentiation; e.g.
+#'   \code{c(2, 0, 1)} means that you differentiate two times with respect to
+#'   \eqn{x}, you do not differentiate with respect to \eqn{y}, and you
+#'   differentiate one time with respect to \eqn{z}
 #'
 #' @return A \code{symbolicQspray} object.
 #' @export

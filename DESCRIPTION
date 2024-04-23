@@ -34,7 +34,6 @@ LinkingTo:
     RcppArmadillo,
     RcppCGAL
 Remotes: 
-    stla/qspray,
     stla/ratioOfQsprays
 Config/testthat/edition: 3
 Encoding: UTF-8
