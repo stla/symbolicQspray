@@ -4,7 +4,7 @@
 #'
 #' @param Qspray a \code{symbolicQspray} object
 #' @param values vector of values to be substituted to the parameters; these
-#'   values must be coercable to \code{bigq} numbers
+#'   values must be coercible to \code{bigq} numbers
 #'
 #' @return A \code{qspray} object.
 #' @export
@@ -33,7 +33,7 @@ substituteParameters <- function(Qspray, values) {
 #'
 #' @param Qspray a \code{symbolicQspray} object
 #' @param values vector of values to be substituted to the parameters; these
-#'   values must be coercable to \code{bigq} numbers
+#'   values must be coercible to \code{bigq} numbers
 #'
 #' @return A \code{ratioOfQsprays} object.
 #' @export
@@ -64,9 +64,9 @@ substituteVariables <- function(Qspray, values) {
 #'
 #' @param Qspray a \code{symbolicQspray} object
 #' @param a vector of values to be substituted to the parameters;
-#'   these values must be coercable to \code{bigq} numbers
+#'   these values must be coercible to \code{bigq} numbers
 #' @param X vector of values to be substituted to the variables; these
-#'   values must be coercable to \code{bigq} numbers
+#'   values must be coercible to \code{bigq} numbers
 #'
 #' @return If both \code{a} and \code{X} are \code{NULL}, this returns the
 #'   input \code{symbolicQspray} object; otherwise, if \code{a} is not

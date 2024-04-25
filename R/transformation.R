@@ -173,7 +173,7 @@ setGeneric("changeVariables")
 #'
 #' @param x a \code{symbolicQspray} polynomial
 #' @param listOfQsprays a list containing at least \code{n}
-#'   \code{symbolicQspray} objects, or objects coercable to
+#'   \code{symbolicQspray} objects, or objects coercible to
 #'   \code{symbolicQspray} objects, where \code{n} is the number of
 #'   variables in the polynomial given in the \code{x} argument
 #'
@@ -241,7 +241,7 @@ setMethod(
 #'
 #' @param Qspray a \code{symbolicQspray} polynomial
 #' @param newParameters a list containing at least \code{n} \code{qspray}
-#'   objects, or objects coercable to \code{qspray} objects, where \code{n} is
+#'   objects, or objects coercible to \code{qspray} objects, where \code{n} is
 #'   the number of parameters in the symbolic polynomial given in the
 #'   \code{Qspray} argument
 #'
