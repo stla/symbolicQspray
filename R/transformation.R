@@ -32,7 +32,10 @@ setMethod(
   "permuteVariables", c("symbolicQspray", "numeric"),
   function(x, permutation) {
     stopifnot(isPermutation(permutation))
-    m <- arity(x)
+    if(isConstant(x)) {
+      return(x)
+    }
+    m <- numberOfVariables(x)
     n <- length(permutation)
     if(m > n) {
       stop("Invalid permutation.")
@@ -42,7 +45,7 @@ setMethod(
     for(. in seq_len(n - m)) {
       M <- cbind(M, 0L)
     }
-    M <- M[, permutation]
+    M <- M[, permutation, drop = FALSE]
     powers <- apply(M, 1L, removeTrailingZeros, simplify = FALSE)
     out <- new("symbolicQspray", powers = powers, coeffs = x@coeffs)
     passShowAttributes(x, out)
@@ -80,7 +83,10 @@ setMethod(
   "swapVariables", c("symbolicQspray", "numeric", "numeric"),
   function(x, i, j) {
     stopifnot(isNonnegativeInteger(i), isNonnegativeInteger(j))
-    m <- arity(x)
+    if(isConstant(x)) {
+      return(x)
+    }
+    m <- numberOfVariables(x)
     n <- max(m, i, j)
     permutation <- seq_len(n)
     permutation[i] <- j
@@ -89,7 +95,7 @@ setMethod(
     for(. in seq_len(n - m)) {
       M <- cbind(M, 0L)
     }
-    M <- M[, permutation]
+    M <- M[, permutation, drop = FALSE]
     powers <- apply(M, 1L, removeTrailingZeros, simplify = FALSE)
     out <- new("symbolicQspray", powers = powers, coeffs = x@coeffs)
     passShowAttributes(x, out)
@@ -100,7 +106,8 @@ setMethod(
 #' @description Partial derivative of a \code{symbolicQspray} polynomial.
 #'
 #' @param Qspray object of class \code{symbolicQspray}
-#' @param i integer, the dimension to differentiate with respect to
+#' @param i integer, the dimension to differentiate with respect to, e.g.
+#'   \code{2} to differentiate w.r.t. \eqn{y}
 #' @param derivative positive integer, how many times to differentiate
 #'
 #' @return A \code{symbolicQspray} object.
@@ -194,6 +201,9 @@ setGeneric("changeVariables")
 setMethod(
   "changeVariables", c("symbolicQspray", "list"),
   function(x, listOfQsprays) {
+    if(isConstant(x)) {
+      return(x)
+    }
     n <- numberOfVariables(x)
     if(length(listOfQsprays) < n) {
       stop(
