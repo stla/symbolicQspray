@@ -92,10 +92,11 @@ substituteVariables <- function(Qspray, values) {
 evalSymbolicQspray <- function(Qspray, a = NULL, X = NULL) {
   if(!is.null(a)) {
     coeffs <- c_bigq(lapply(Qspray@coeffs, evalRatioOfQsprays, values_re = a))
+    toKeep <- which(coeffs != 0L)
     qspray <- new(
       "qspray",
-      powers = Qspray@powers,
-      coeffs = as.character(coeffs)
+      powers = Qspray@powers[toKeep],
+      coeffs = as.character(coeffs)[toKeep]
     )
     if(is.null(X)) { # 'X' is NULL and 'a' is not NULL
       sSQ <- getShowSymbolicQspray(Qspray)
