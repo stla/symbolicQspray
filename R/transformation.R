@@ -269,7 +269,9 @@ changeParameters <- function(Qspray, newParameters) {
   newCoeffs <- lapply(coeffs, function(rOQ) {
     changeVariables(rOQ, newParameters)
   })
-  toKeep <- which(newCoeffs != 0L)
+  toKeep <- vapply(newCoeffs, function(rOQ) {
+    rOQ != 0L
+  }, logical(1L))
   new(
     "symbolicQspray",
     powers = Qspray@powers[toKeep],
