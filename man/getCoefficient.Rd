@@ -25,9 +25,9 @@ library(qspray)
 x <- qlone(1)
 y <- qlone(2)
 p <- 2*x^2 + 3*y - 5
-getCoefficient(p, 2)
+getCoefficient(p, 2)       # coefficient of x^2
 getCoefficient(p, c(2, 0)) # same as getCoefficient(p, 2)
-getCoefficient(p, c(0, 1))
-getCoefficient(p, 0) # the constant term
-getCoefficient(p, 3)
+getCoefficient(p, c(0, 1)) # coefficient of y (= x^0.y^1)
+getCoefficient(p, 0)       # the constant term
+getCoefficient(p, 3)       # coefficient of x^3
 }

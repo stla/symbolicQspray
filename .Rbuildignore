@@ -5,3 +5,4 @@
 ^README\.Rmd$
 ^inst/trash$
 ^inst/RDS$
+^cran-comments\.md$
