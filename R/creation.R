@@ -4,7 +4,7 @@
 #' @return A \code{symbolicQspray} object.
 #' @export
 Qzero <- function() {
-  as.symbolicQspray(0L)
+  new("symbolicQspray", powers = list(), coeffs = list())
 }
 
 #' @title The unit 'symbolicQspray' polynomial
@@ -13,7 +13,14 @@ Qzero <- function() {
 #' @return A \code{symbolicQspray} object.
 #' @export
 Qone <- function() {
-  as.symbolicQspray(1L)
+  unit_qspray <- new("qspray", powers = list(integer(0L)), coeffs = "1")
+  unit_ratioOfQsprays <-
+    new("ratioOfQsprays", numerator = unit_qspray, denominator = unit_qspray)
+  new(
+    "symbolicQspray",
+    powers = list(integer(0L)),
+    coeffs = list(unit_ratioOfQsprays)
+  )
 }
 
 #' @title Polynomial variable
