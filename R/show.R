@@ -1,5 +1,5 @@
 #' @title Print a 'symbolicQspray' object
-#' @description Print a \code{symbolicQspray} object given a function to print
+#' @description Prints a \code{symbolicQspray} object given a function to print
 #'   a \code{ratioOfQsprays} object.
 #'
 #' @param showRatioOfQsprays a function which prints a \code{ratioOfQsprays}
@@ -83,7 +83,7 @@ showSymbolicQspray <- function(
 }
 
 #' @title Print a 'symbolicQspray' object
-#' @description Print a \code{symbolicQspray} object.
+#' @description Prints a \code{symbolicQspray} object.
 #'
 #' @param a a string, usually a letter, to denote the non-indexed variables
 #'   of the \code{ratioOfQsprays} coefficients

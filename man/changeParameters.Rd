@@ -10,7 +10,7 @@ changeParameters(Qspray, newParameters)
 \item{Qspray}{a \code{symbolicQspray} polynomial}
 
 \item{newParameters}{a list containing at least \code{n} \code{qspray}
-objects, or objects coercable to \code{qspray} objects, where \code{n} is
+objects, or objects coercible to \code{qspray} objects, where \code{n} is
 the number of parameters in the symbolic polynomial given in the
 \code{Qspray} argument}
 }

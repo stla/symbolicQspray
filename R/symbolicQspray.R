@@ -2,9 +2,8 @@
 #' @importFrom Rcpp evalCpp
 #' @importFrom qspray orderedQspray
 #' @importFrom ratioOfQsprays as.ratioOfQsprays
-#' @importFrom methods setMethod setClass new show setAs
+#' @importFrom methods setMethod setClass new show setAs setGeneric
 #' @importFrom gmp as.bigq
-#' @importFrom utils capture.output
 #' @include symbolicQspray.R
 NULL
 
@@ -22,7 +21,7 @@ setMethod(
 )
 
 
-setAs( # for usage in qspray::MSPcombination
+setAs( # for usage in qspray::MSPcombination and unit tests of 'jack'
   "qspray", "symbolicQspray", function(from) {
     new(
       "symbolicQspray",

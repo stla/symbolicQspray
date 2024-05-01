@@ -23,7 +23,7 @@ spaces, e.g. \code{"/"}}
 A function which prints \code{symbolicQspray} objects.
 }
 \description{
-Print a \code{symbolicQspray} object.
+Prints a \code{symbolicQspray} object.
 }
 \note{
 This function is built by applying \code{\link{showSymbolicQspray}} to

@@ -1,7 +1,7 @@
 The ‘symbolicQspray’ package
 ================
 Stéphane Laurent
-2024-04-22
+2024-05-01
 
 ***Multivariate polynomials with symbolic parameters.***
 
@@ -14,8 +14,9 @@ Stéphane Laurent
 
 These notes about the **symbolicQspray** package assume that the reader
 is a bit familiar with the [**qspray**
-package](https://github.com/stla/qspray) and the [**ratioOfQsprays**
-package](https://github.com/stla/ratioOfQsprays).
+package](https://github.com/stla/qspray "the 'qspray' package on Github")
+and with the [**ratioOfQsprays**
+package](https://github.com/stla/ratioOfQsprays "the 'ratioOfQsprays' package on Github").
 
 A `symbolicQspray` object represents a multivariate polynomial whose
 coefficients are fractions of polynomials with rational coefficients.
@@ -47,9 +48,10 @@ X3 <- Qlone(3)
 
 The fractions of polynomials such as the first coefficient `a1/(a2^2+1)`
 in the above example are
-[**ratioOfQsprays**](https://github.com/stla/ratioOfQsprays) objects,
-and the numerator and the denominator of a `ratioOfQsprays` are
-[**qspray**](https://github.com/stla/qspray) objects.
+[**ratioOfQsprays**](https://github.com/stla/ratioOfQsprays "the 'ratioOfQsprays' package on Github")
+objects, and the numerator and the denominator of a `ratioOfQsprays` are
+[**qspray**](https://github.com/stla/qspray "the 'qspray' package on Github")
+objects.
 
 Arithmetic on `symbolicQspray` objects is available:
 
@@ -85,11 +87,11 @@ X <- c(4, 3, "2/5")
 ```
 
 There is a discutable point here. A `symbolicQspray` object represents a
-polynomial with `ratioOfQsprays` coefficients. So one can consider that
-the polynomial variables `X`, `Y` and `Z` represent some indeterminate
-`ratioOfQsprays` fractions, and that it should be possible to replace
-them with `ratioOfQsprays` objects. However this is not allowed. We will
-discuss that, just after checking the consistency:
+polynomial with `ratioOfQsprays` coefficients. So one could consider
+that the polynomial variables `X`, `Y` and `Z` represent some
+indeterminate `ratioOfQsprays` fractions, and that it should be possible
+to replace them with `ratioOfQsprays` objects. However this is not
+allowed. We will discuss that, just after checking the consistency:
 
 ``` r
 evalSymbolicQspray(Qspray, a = a, X = X)
@@ -111,17 +113,15 @@ Now let’s turn to our promised discussion. Why is replacing the values
 of the polynomial variables with some `ratioOfQsprays` objects not
 allowed?
 
-Actually my motivation to do this package was inspired by the **Jack
-polynomials**. In the context of Jack polynomials, the variables `X`,
-`Y` and `Z` represent indeterminate *numbers*, and the coefficients are
-*numbers depending on a parameter* (the Jack parameter), and it turns
-out that they are fractions of polynomials of this parameter. So I
-consider that a `symbolicQspray` is *not* a polynomial on the field of
-fractions of polynomials: I consider it is a polynomial with *rational
-coefficients depending on some parameters*.
-
-By the way, I’m wondering whether I should rename `symbolicQspray` to
-`parametricQspray`. Comments?..
+Actually my motivation to do this package was inspired by the [**Jack
+polynomials**](https://github.com/stla/jackR "the 'jack' package on Github").
+In the context of Jack polynomials, the variables `X`, `Y` and `Z`
+represent indeterminate *numbers*, and the coefficients are *numbers
+depending on a parameter* (the Jack parameter), and it turns out that
+they are fractions of polynomials of this parameter. So I consider that
+a `symbolicQspray` is *not* a polynomial on the field of fractions of
+polynomials: I consider it is a polynomial with *rational coefficients
+depending on some parameters*.
 
 Also note that evaluating the `ratioOfQsprays` object
 `evalSymbolicQspray(Qspray, X = X)` at `a` would make no sense if we
@@ -139,7 +139,7 @@ numberOfParameters(Qspray)
 ## [1] 2
 numberOfTerms(Qspray)
 ## [1] 3
-getCoefficient(Qspray, c(2, 1))
+getCoefficient(Qspray, c(2, 1)) # coefficient of X^2.Y
 ## [ a1 ] %//% [ a2^2 + 1 ]
 getConstantTerm(Qspray)
 ## [ a1 ] %//% [ a2 ]
@@ -151,7 +151,7 @@ isConstant(Qspray)
 
 ## Transforming a `symbolicQspray`
 
-You can derivate a `symbolicQspray` polynomial:
+You can differentiate a `symbolicQspray` polynomial:
 
 ``` r
 derivSymbolicQspray(Qspray, 2) # derivative w.r.t. Y
@@ -212,9 +212,9 @@ order to use **symbolicQspray**.
 ## Application: Jacobi polynomials
 
 The [Jacobi
-polynomials](https://en.wikipedia.org/wiki/Jacobi_polynomials) are
-univariate polynomials depending on two parameters that we will denote
-by `alpha` and `beta`. They are implemented in this package:
+polynomials](https://en.wikipedia.org/wiki/Jacobi_polynomials "Jacobi polynomials on Wikipedia")
+are univariate polynomials depending on two parameters that we will
+denote by `alpha` and `beta`. They are implemented in this package:
 
 ``` r
 JP <- JacobiPolynomial(2)
@@ -229,7 +229,7 @@ JP
 ```
 
 The implementation constructs these polynomials by using the [recurrence
-relation](https://en.wikipedia.org/wiki/Jacobi_polynomials#Recurrence_relations).
+relation](https://en.wikipedia.org/wiki/Jacobi_polynomials#Recurrence_relations "recurrence relation between Jacobi polynomials").
 This is a child game, one just has to copy the first two terms and this
 recurrence relation:
 
@@ -272,11 +272,11 @@ hasPolynomialCoefficientsOnly(JP)
 ```
 
 Up to a factor, the [Gegenbauer
-polynomials](https://en.wikipedia.org/wiki/Gegenbauer_polynomials) with
-parameter `alpha` coincide with the Jacobi polynomials with parameters
-`alpha - 1/2` and `alpha - 1/2`. Let’s derive them from the Jacobi
-polynomials, as an exercise. The factor can be implemented as follows
-(see Wikipedia for its formula):
+polynomials](https://en.wikipedia.org/wiki/Gegenbauer_polynomials "Gegenbauer polynomials on Wikipedia")
+with parameter `alpha` coincide with the Jacobi polynomials with
+parameters `alpha - 1/2` and `alpha - 1/2`. Let’s derive them from the
+Jacobi polynomials, as an exercise. The factor can be implemented as
+follows (see Wikipedia for its formula):
 
 ``` r
 risingFactorial <- function(theta, n) {
@@ -300,8 +300,8 @@ GegenbauerPolynomial <- function(n) {
 }
 ```
 
-Let’s check the recurrence relation given in the Wikipedia article is
-fulfilled:
+Let’s check that the recurrence relation given in the Wikipedia article
+is fulfilled:
 
 ``` r
 n <- 5
@@ -315,9 +315,11 @@ X <- Qlone(1)
 
 ## Application to Jack polynomials
 
-The **symbolicQspray** package is used by the [**jack**
-package](https://github.com/stla/jackR) to compute the Jack polynomials
-with a symbolic Jack parameter. The Jack polynomials exactly fit to the
-polynomials represented by the `symbolicQspray` objects: their
-coefficients are fractions of polynomials by definition, of one
-variable: the Jack parameter.
+The **symbolicQspray** package is used in the [**jack**
+package](https://github.com/stla/jackR "the 'jack' package on Github")
+to compute the Jack polynomials with a symbolic Jack parameter. The Jack
+polynomials exactly fit to the polynomials represented by the
+`symbolicQspray` objects: their coefficients are fractions of
+polynomials by definition, of one variable: the Jack parameter.
+
+<!-- -------------------- links -------------------- -->

@@ -12,7 +12,7 @@
 \item{x}{a \code{symbolicQspray} polynomial}
 
 \item{listOfQsprays}{a list containing at least \code{n}
-\code{symbolicQspray} objects, or objects coercable to
+\code{symbolicQspray} objects, or objects coercible to
 \code{symbolicQspray} objects, where \code{n} is the number of
 variables in the polynomial given in the \code{x} argument}
 }

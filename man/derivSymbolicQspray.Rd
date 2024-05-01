@@ -9,7 +9,8 @@ derivSymbolicQspray(Qspray, i, derivative = 1)
 \arguments{
 \item{Qspray}{object of class \code{symbolicQspray}}
 
-\item{i}{integer, the dimension to differentiate with respect to}
+\item{i}{integer, the dimension to differentiate with respect to, e.g.
+\code{2} to differentiate w.r.t. \eqn{y}}
 
 \item{derivative}{positive integer, how many times to differentiate}
 }

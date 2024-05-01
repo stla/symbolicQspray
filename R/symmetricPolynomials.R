@@ -37,6 +37,7 @@ setMethod(
 )
 
 #' @rdname compactSymmetricQspray
+#' @export
 setMethod(
   "compactSymmetricQspray", c("symbolicQspray", "missing"),
   function(qspray, check) {

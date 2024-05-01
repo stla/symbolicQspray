@@ -10,10 +10,10 @@ evalSymbolicQspray(Qspray, a = NULL, X = NULL)
 \item{Qspray}{a \code{symbolicQspray} object}
 
 \item{a}{vector of values to be substituted to the parameters;
-these values must be coercable to \code{bigq} numbers}
+these values must be coercible to \code{bigq} numbers}
 
 \item{X}{vector of values to be substituted to the variables; these
-values must be coercable to \code{bigq} numbers}
+values must be coercible to \code{bigq} numbers}
 }
 \value{
 If both \code{a} and \code{X} are \code{NULL}, this returns the

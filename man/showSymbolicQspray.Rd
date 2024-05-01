@@ -32,7 +32,7 @@ within a term}
 A function which prints a \code{symbolicQspray} object.
 }
 \description{
-Print a \code{symbolicQspray} object given a function to print
+Prints a \code{symbolicQspray} object given a function to print
   a \code{ratioOfQsprays} object.
 }
 \note{
