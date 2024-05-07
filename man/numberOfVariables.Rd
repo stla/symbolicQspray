@@ -4,7 +4,7 @@
 \name{numberOfVariables}
 \alias{numberOfVariables}
 \alias{numberOfVariables,symbolicQspray-method}
-\title{Number of variables in a 'symbolicQspray' polynomial}
+\title{Number of variables of a 'symbolicQspray' polynomial}
 \usage{
 \S4method{numberOfVariables}{symbolicQspray}(x)
 }
@@ -20,4 +20,7 @@ Number of variables involved in a \code{symbolicQspray} object.
 \note{
 The number of variables in the \code{symbolicQspray} object
   \code{Qlone(d)} is \code{d}, not \code{1}.
+}
+\seealso{
+\code{\link{involvedVariables}}.
 }

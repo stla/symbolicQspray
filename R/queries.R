@@ -2,6 +2,7 @@
 NULL
 
 setGeneric("numberOfVariables")
+setGeneric("involvedVariables")
 setGeneric("numberOfTerms")
 setGeneric("getCoefficient")
 setGeneric("getConstantTerm")
@@ -14,19 +15,53 @@ setGeneric("isQone")
 #' @aliases numberOfVariables,symbolicQspray-method
 #' @docType methods
 #' @importFrom qspray numberOfVariables
-#' @title Number of variables in a 'symbolicQspray' polynomial
+#' @title Number of variables of a 'symbolicQspray' polynomial
 #' @description Number of variables involved in a \code{symbolicQspray} object.
 #'
 #' @param x a \code{symbolicQspray} object
 #'
 #' @return An integer.
 #' @export
+#' @seealso \code{\link{involvedVariables}}.
 #' @note The number of variables in the \code{symbolicQspray} object
 #'   \code{Qlone(d)} is \code{d}, not \code{1}.
 setMethod(
   "numberOfVariables", "symbolicQspray",
   function(x) {
     as.integer(max(0L, arity(x)))
+  }
+)
+
+#' @name involvedVariables
+#' @aliases involvedVariables,symbolicQspray-method
+#' @docType methods
+#' @importFrom qspray involvedVariables
+#' @title Variables involved in a 'symbolicQspray' polynomial
+#' @description Variables involved in a \code{symbolicQspray} object.
+#'
+#' @param x a \code{symbolicQspray} object
+#'
+#' @return A vector of integers. Each integer represents the index of a
+#'   variable involved in \code{x}.
+#' @export
+#' @seealso \code{\link{numberOfVariables}}.
+#' @examples
+#' a1 <- qlone(1); a2 <- qlone(2)
+#' X <- Qlone(1); Z <- Qlone(3)
+#' Qspray <- (a1/a2)*X^2 + (a1/(a1+a2))*X*Z + a2^2/a1
+#' involvedVariables(Qspray) # should be c(1L, 3L)
+setMethod(
+  "involvedVariables", "symbolicQspray",
+  function(x) {
+    if(isConstant(x)) {
+      integer(0L)
+    } else {
+      M <- powersMatrix(x)
+      tests <- apply(M, 2L, function(col) {
+        any(col != 0L)
+      })
+      which(tests)
+    }
   }
 )
 
@@ -54,27 +89,25 @@ setMethod(
 #' @docType methods
 #' @importFrom qspray getCoefficient
 #' @title Get a coefficient in a 'symbolicQspray' polynomial
-#' @description Get the coefficient corresponding to the given sequence of
-#'   exponents.
+#' @description Get the coefficient of the term with the given monomial.
 #'
 #' @param qspray a \code{symbolicQspray} object
-#' @param exponents a vector of exponents
+#' @param exponents a vector of exponents, thereby defining a monomial;
+#'   trailing zeros are ignored
 #'
-#' @return The coefficient as a \code{ratioOfQsprays} object.
+#' @return The coefficient, \code{ratioOfQsprays} object.
 #' @export
-#' @importFrom gmp as.bigq
-#' @importFrom ratioOfQsprays showRatioOfQspraysOption<-
+#' @importFrom ratioOfQsprays showRatioOfQspraysOption<- as.ratioOfQsprays
 #'
 #' @examples
-#' library(qspray)
-#' x <- qlone(1)
-#' y <- qlone(2)
-#' p <- 2*x^2 + 3*y - 5
-#' getCoefficient(p, 2)       # coefficient of x^2
+#' a1 <- qlone(1); a2 <- qlone(2)
+#' X <- Qlone(1); Y <- Qlone(2)
+#' p <- 2*(a1/a2)*X^2 + (a1/(a1+a2))*Y + a2^2/a1
+#' getCoefficient(p, 2)       # coefficient of X^2
 #' getCoefficient(p, c(2, 0)) # same as getCoefficient(p, 2)
-#' getCoefficient(p, c(0, 1)) # coefficient of y (= x^0.y^1)
+#' getCoefficient(p, c(0, 1)) # coefficient of Y (because Y=X^0.Y^1)
 #' getCoefficient(p, 0)       # the constant term
-#' getCoefficient(p, 3)       # coefficient of x^3
+#' getCoefficient(p, 3)       # coefficient of X^3
 setMethod(
   "getCoefficient", c("symbolicQspray", "numeric"),
   function(qspray, exponents) {

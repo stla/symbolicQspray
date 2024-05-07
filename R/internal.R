@@ -115,8 +115,8 @@ arity <- function(qspray) {
 }
 
 powersMatrix <- function(qspray) {
-  n <- arity(qspray)
-  if(n == -Inf) {
+  n <- numberOfVariables(qspray)
+  if(n == 0L) {
     matrix(NA_integer_, 0L, 0L)
   } else {
     do.call(rbind, lapply(qspray@powers, grow, n = n))

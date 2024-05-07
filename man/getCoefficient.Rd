@@ -11,23 +11,22 @@
 \arguments{
 \item{qspray}{a \code{symbolicQspray} object}
 
-\item{exponents}{a vector of exponents}
+\item{exponents}{a vector of exponents, thereby defining a monomial;
+trailing zeros are ignored}
 }
 \value{
-The coefficient as a \code{ratioOfQsprays} object.
+The coefficient, \code{ratioOfQsprays} object.
 }
 \description{
-Get the coefficient corresponding to the given sequence of
-  exponents.
+Get the coefficient of the term with the given monomial.
 }
 \examples{
-library(qspray)
-x <- qlone(1)
-y <- qlone(2)
-p <- 2*x^2 + 3*y - 5
-getCoefficient(p, 2)       # coefficient of x^2
+a1 <- qlone(1); a2 <- qlone(2)
+X <- Qlone(1); Y <- Qlone(2)
+p <- 2*(a1/a2)*X^2 + (a1/(a1+a2))*Y + a2^2/a1
+getCoefficient(p, 2)       # coefficient of X^2
 getCoefficient(p, c(2, 0)) # same as getCoefficient(p, 2)
-getCoefficient(p, c(0, 1)) # coefficient of y (= x^0.y^1)
+getCoefficient(p, c(0, 1)) # coefficient of Y (because Y=X^0.Y^1)
 getCoefficient(p, 0)       # the constant term
-getCoefficient(p, 3)       # coefficient of x^3
+getCoefficient(p, 3)       # coefficient of X^3
 }
