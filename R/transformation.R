@@ -164,7 +164,7 @@ setGeneric("changeVariables")
 #' @name changeVariables
 #' @aliases changeVariables,symbolicQspray,list-method
 #' @docType methods
-#' @importFrom qspray changeVariables
+#' @importFrom qspray changeVariables showMonomialXYZ
 #' @title Change of variables in a 'symbolicQspray' polynomial
 #' @description Replaces the variables of a \code{symbolicQspray} polynomial
 #'   with some \code{symbolicQspray} polynomials. E.g. you have a polynomial
@@ -175,7 +175,9 @@ setGeneric("changeVariables")
 #' @param listOfQsprays a list containing at least \code{n}
 #'   \code{symbolicQspray} objects, or objects coercible to
 #'   \code{symbolicQspray} objects, where \code{n} is the number of
-#'   variables in the polynomial given in the \code{x} argument
+#'   variables in the polynomial given in the \code{x} argument; if
+#'   this list is named, their its names will be used in the show
+#'   options of the result
 #'
 #' @return The \code{symbolicQspray} polynomial obtained by replacing the
 #'   variables of the polynomial given in the \code{x} argument with the
@@ -229,6 +231,13 @@ setMethod(
       }
       result <- result + coeffs[[i]] * term
     }
+    sSQ <- getShowSymbolicQspray(x)
+    showSymbolicQsprayOption(result, "showRatioOfQsprays") <-
+      attr(sSQ, "showRatioOfQsprays")
+    if(isNamedList(listOfQsprays)) {
+      showSymbolicQsprayOption(result, "showMonomial") <-
+        showMonomialXYZ(names(listOfQsprays))
+    }
     result
   }
 )
@@ -243,12 +252,15 @@ setMethod(
 #' @param newParameters a list containing at least \code{n} \code{qspray}
 #'   objects, or objects coercible to \code{qspray} objects, where \code{n} is
 #'   the number of parameters in the symbolic polynomial given in the
-#'   \code{Qspray} argument
+#'   \code{Qspray} argument; if this list is named, then its names will be
+#'   used in the show options of the result
 #'
 #' @return The \code{symbolicQspray} polynomial obtained by replacing the
 #'   parameters of the symbolic polynomial given in the \code{Qspray} argument
 #'   with the polynomials given in the \code{newParameters} argument.
 #' @export
+#'
+#' @importFrom ratioOfQsprays showRatioOfQspraysXYZ
 #'
 #' @seealso If you want to change the variables of a symbolic qspray, use
 #'   \code{\link{changeVariables}}. If you want to assign some values to
@@ -272,9 +284,13 @@ changeParameters <- function(Qspray, newParameters) {
   toKeep <- vapply(newCoeffs, function(rOQ) {
     rOQ != 0L
   }, logical(1L))
-  new(
+  result <- new(
     "symbolicQspray",
     powers = Qspray@powers[toKeep],
     coeffs = newCoeffs[toKeep]
   )
+  if(isNamedList(newParameters)) {
+    showSymbolicQsprayOption(result, "showRatioOfQsprays") <-
+      showRatioOfQspraysXYZ(names(newParameters))
+  }
 }

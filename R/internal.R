@@ -126,3 +126,7 @@ powersMatrix <- function(qspray) {
 isPermutation <- function(x) {
   setequal(x, seq_along(x))
 }
+
+isNamedList <- function(x) {
+  is.list(x) && length(names(x)) == length(x)
+}
