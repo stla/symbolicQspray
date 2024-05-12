@@ -231,6 +231,12 @@ setMethod(
       }
       result <- result + coeffs[[i]] * term
     }
+    notSymbolicQsprays <- all(vapply(listOfQsprays, function(x) {
+      !inherits(x, "symbolicQspray")
+    }, logical(1L)))
+    if(notSymbolicQsprays) {
+      return(getConstantTerm(result))
+    }
     sSQ <- getShowSymbolicQspray(x)
     showSymbolicQsprayOption(result, "showRatioOfQsprays") <-
       attr(sSQ, "showRatioOfQsprays")
