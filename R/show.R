@@ -240,7 +240,7 @@ showSymbolicQsprayABCXYZ <- function(
     attr(sMdefault, "showTrivariate") <- showMonomialXYZ(c("X", "Y", "Z"))
   sM <- attr(sSQ, "showMonomial") %||% sMdefault
   #
-  sROQdefault <- showRatioOfQspraysX1X2X3(
+  sROQdefault <- showRatioOfQspraysXYZ(
     attr(showOpts, "a") %||% "a",
     quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
   )
