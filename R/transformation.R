@@ -293,4 +293,5 @@ changeParameters <- function(Qspray, newParameters) {
     showSymbolicQsprayOption(result, "showRatioOfQsprays") <-
       showRatioOfQspraysXYZ(names(newParameters))
   }
+  result
 }

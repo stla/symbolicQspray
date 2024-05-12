@@ -17,7 +17,7 @@ test_that("show options", {
   showSymbolicQsprayOption(Q, "a") <- "x"
   expect_identical(
     Print(Q),
-    "[ -x1^2.x3^3 - 5/2*x1^2 - 5/2*x3 ] %//% [ x1^4.x3^3 - 3/2*x2^4 ] } * X^3.Y  +  { [ 5/3*x1^4.x3^4 - 1/3*x1^2.x2.x3^3 ] %//% [ x1^2 - x2^2.x3^3 ] } * Y^3 "
+    "{ [ -x1^2.x3^3 - 5/2*x1^2 - 5/2*x3 ] %//% [ x1^4.x3^3 - 3/2*x2^4 ] } * X^3.Y  +  { [ 5/3*x1^4.x3^4 - 1/3*x1^2.x2.x3^3 ] %//% [ x1^2 - x2^2.x3^3 ] } * Y^3 "
   )
   showSymbolicQsprayOption(Q, "X") <- "A"
   expect_identical(
@@ -38,7 +38,7 @@ test_that("show options", {
     showRatioOfQspraysXYZ(c("a","b","c"), lbracket = "@ ", rbracket = " @")
   expect_identical(
     Print(Q),
-    "{ @ 2*a^2.c^3 + 5*a^2 + 5*c @  %//%  @ -2*a^4.c^3 + 3*b^4 @ } * U^3%V  +  { @ 5*a^4.c^4 - a^2.b.c^3 @  %//%  @ 3*a^2 - 3*b^2.c^3 @ } * V^3 "
+    "{ @ -a^2.c^3 - 5/2*a^2 - 5/2*c @  %//%  @ a^4.c^3 - 3/2*b^4 @ } * U^3%V  +  { @ 5/3*a^4.c^4 - 1/3*a^2.b.c^3 @  %//%  @ a^2 - b^2.c^3 @ } * V^3 "
   )
   expect_identical(
     Print(Q * qlone(4)),
