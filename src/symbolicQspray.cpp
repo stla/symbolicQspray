@@ -66,6 +66,3 @@ Rcpp::List SymbolicQspray_deriv(
   SymbolicQspray sqsprayPrime = sqspray.deriv(orders);
   return returnSymbolicQspray(sqsprayPrime);
 }
-
-
-
