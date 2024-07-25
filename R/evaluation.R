@@ -32,7 +32,7 @@ substituteParameters <- function(Qspray, values) {
 #'   \code{symbolicQspray} polynomial.
 #'
 #' @param Qspray a \code{symbolicQspray} object
-#' @param values vector of values to be substituted to the parameters; these
+#' @param values vector of values to be substituted to the variables; these
 #'   values must be coercible to \code{bigq} numbers
 #'
 #' @return A \code{ratioOfQsprays} object.

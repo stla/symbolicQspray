@@ -9,7 +9,7 @@ substituteVariables(Qspray, values)
 \arguments{
 \item{Qspray}{a \code{symbolicQspray} object}
 
-\item{values}{vector of values to be substituted to the parameters; these
+\item{values}{vector of values to be substituted to the variables; these
 values must be coercible to \code{bigq} numbers}
 }
 \value{
