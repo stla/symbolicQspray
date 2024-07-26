@@ -1,7 +1,7 @@
 The ‘symbolicQspray’ package
 ================
 Stéphane Laurent
-2024-05-01
+2024-07-26
 
 ***Multivariate polynomials with symbolic parameters.***
 
@@ -200,9 +200,9 @@ When this is possible, the result of an arithmetic operation between two
 ``` r
 set.seed(421)
 ( Q <- rSymbolicQspray() ) # a random symbolicQspray
-## { [ 2*a1^2.a3^3 + 5*a1^2 + 5*a3 ] %//% [ -2*a1^4.a3^3 + 3*a2^4 ] } * X^3.Y  +  { [ 5*a1^4.a3^4 - a1^2.a2.a3^3 ] %//% [ 3*a1^2 - 3*a2^2.a3^3 ] } * Y^3
+## { [ -a1^2.a3^3 - 5/2*a1^2 - 5/2*a3 ] %//% [ a1^4.a3^3 - 3/2*a2^4 ] } * X^3.Y  +  { [ 5/3*a1^4.a3^4 - 1/3*a1^2.a2.a3^3 ] %//% [ a1^2 - a2^2.a3^3 ] } * Y^3
 Qspray + Q
-## { [ 2*x1^2.x3^3 + 5*x1^2 + 5*x3 ] / [ -2*x1^4.x3^3 + 3*x2^4 ] } * A^3.B  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ 5*x1^4.x3^4 - x1^2.x2.x3^3 ] / [ 3*x1^2 - 3*x2^2.x3^3 ] } * B^3  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
+## { [ -x1^2.x3^3 - 5/2*x1^2 - 5/2*x3 ] / [ x1^4.x3^3 - 3/2*x2^4 ] } * A^3.B  +  { [ x1 ] / [ x2^2 + 1 ] } * A^2.B  +  { [ 5/3*x1^4.x3^4 - 1/3*x1^2.x2.x3^3 ] / [ x1^2 - x2^2.x3^3 ] } * B^3  +  { [ x2 + 1 ] } * C  +  { [ x1 ] / [ x2 ] }
 ```
 
 This behavior is the same as the ones implemented in **qspray** and in
